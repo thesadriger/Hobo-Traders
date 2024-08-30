@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Lottie from 'lottie-react'
-import ProgressBar from 'react-bootstrap/ProgressBar'
 import animationData from '/src/assets/User.json'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { BarIcon } from './DataIMGHeader'
 import { styled } from 'styled-components'
 
 
-const AvatarContainer = styled.section`
+const ExchangeContainer = styled.section`
  flex: 0 0 auto;
   width: 15%; /* Ширина в процентах от ширины контейнера */
   aspect-ratio: 1/1; /* Сохраняет пропорции квадрата */
@@ -18,7 +16,7 @@ const AvatarContainer = styled.section`
   justify-content: center;
   font-size: 1rem; /* Размер шрифта относительно корневого элемента */
 `;
-const AvatarVideo = styled.video`
+const ExchangeVideo = styled.video`
  flex: 0 0 auto;
   width: 100%;
   border-radius: 25%;
@@ -27,7 +25,7 @@ const AvatarVideo = styled.video`
   justify-content: center;
 `;
 
-const Avatar = () => {
+const Exchange = () => {
   const lottieRef = useRef(null);
 
   useEffect(()=>{
@@ -41,48 +39,15 @@ const Avatar = () => {
     }
   };
   return (
-    <AvatarContainer onClick={startAnimation}>
+    <ExchangeContainer onClick={startAnimation}>
       <Lottie
         lottieRef={lottieRef}
         animationData={animationData}
         style={{ width: '80%', height: '80%' }}
         loop={false}
       />
-    </AvatarContainer>
+    </ExchangeContainer>
   );
 };
 
-export default Avatar;
-
-
-
-// Импорт не Lootie, а MP4
-
-// const Avatar = () => {
-//   const videoRef = useRef(null);
-
-//   useEffect(() => {
-//     const videoElement = videoRef.current;
-
-//     if (videoElement) {
-//       const restartVideo = () => {
-//         setTimeout(() => {
-//           videoElement.currentTime = 0;
-//           videoElement.play();
-//         }, 5000);
-//       };
-
-//       videoElement.addEventListener('ended', restartVideo);
-
-      
-//       return () => {
-//         videoElement.removeEventListener('ended', restartVideo);
-//       };
-//     }
-//   }, []);
-//   return (
-//       <AvatarContainer>
-//         <AvatarVideo ref={videoRef} src={BarIcon.user.image} alt="" autoPlay muted/>
-//       </AvatarContainer>
-//   );
-// };
+export default Exchange;

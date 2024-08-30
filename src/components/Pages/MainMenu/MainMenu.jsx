@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { styled } from 'styled-components'
 
 import Header from './Header/Header.jsx'
+import Footer from './Footer/Footer.jsx'
 
 const MenuBody = styled.body`
  display: flex;
@@ -43,7 +44,7 @@ function MainMenu() {
         {/* Здесь добавьте другие элементы меню */}
       </main>
       <footer>
-      <h3>Footer Menu</h3>
+      <Footer/>
       </footer>
     </MenuBody>
   );

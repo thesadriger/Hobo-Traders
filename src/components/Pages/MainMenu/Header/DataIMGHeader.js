@@ -22,6 +22,6 @@ export const BarIcon = {
       image: '/src/assets/User.mp4',
     },
     settings: {
-      image: '/src/assets/Wallet.png',
+      image: '/src/assets/Exp.json',
     },
   };
