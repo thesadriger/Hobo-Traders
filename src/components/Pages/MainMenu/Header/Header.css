@@ -1,0 +1,42 @@
+
+  .section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    width: 100%;
+    height: 50%; /* Высота section */
+    padding: 0 1rem;
+  }
+  .characters {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 65%;
+    flex-wrap: nowrap;
+  }
+  
+  .statusBars {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70%;
+    width: 100%;
+    align-content: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    padding: 0.25rem 0;
+  }
+  .currentsBars {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30%;
+    width: 100%;
+    align-content: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    padding: 0.25rem 0;
+    background-color: #303030;
+}
