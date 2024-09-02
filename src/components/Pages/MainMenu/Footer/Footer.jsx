@@ -10,12 +10,11 @@ import Food from './Menu/Food.jsx'
 import Shop from './Menu/Shop.jsx'
 
 const FooterSection = styled.footer`
- display: flex;
+ flex: 0 1 10%; 
+display: flex;
     justify-content: center;
     align-items: center;
     background-color: #323232;
-    /* height: 8rem; Общая высота Header */
-    flex-direction: column;
     width: 100%;
 `;
 const MainFooterSection = styled.section`
