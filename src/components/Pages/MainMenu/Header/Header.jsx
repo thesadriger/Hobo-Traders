@@ -35,12 +35,11 @@ import Avatar from './Avatar'
 
 
 const HeaderSection = styled.header`
- display: flex;
+flex: 0 1 10%; 
+display: flex;
     justify-content: center;
     align-items: center;
     background-color: #323232;
-    /* height: 8rem; Общая высота Header */
-    flex-direction: column;
     width: 100%;
 `;
 const MainHeadSection = styled.section`

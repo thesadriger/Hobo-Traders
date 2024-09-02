@@ -3,16 +3,17 @@ import { gsap } from 'gsap'
 import { styled } from 'styled-components'
 
 import Header from './Header/Header.jsx'
+import Main from './Main/Main.jsx'
 import Footer from './Footer/Footer.jsx'
 
 const MenuBody = styled.body`
  display: flex;
     flex-direction: column;
-    min-height: 250vh;
     box-sizing: border-box;
+    height: 100vh;
+    // justify-content: space-between;
   }
 `;
-
 function MainMenu() {
   const mainMenuRef = useRef(null);
 
@@ -40,8 +41,7 @@ function MainMenu() {
         <Header/>
       </header>
       <main>
-        <h1>Main Menu</h1>
-        {/* Здесь добавьте другие элементы меню */}
+        <Main/>
       </main>
       <footer>
       <Footer/>
