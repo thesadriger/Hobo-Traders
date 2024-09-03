@@ -11,7 +11,7 @@ const MenuBody = styled.body`
     flex-direction: column;
     box-sizing: border-box;
     height: 100vh;
-    // justify-content: space-between;
+    justify-content: space-between;
   }
 `;
 function MainMenu() {
