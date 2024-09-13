@@ -12,7 +12,18 @@ const MenuBody = styled.body`
     box-sizing: border-box;
     height: 100vh;
     justify-content: space-between;
-  }
+`;
+const HeaderSection = styled.header`
+  flex: 0 0 10%; /* Header takes 10% of viewport height */
+`;
+
+const MainSection = styled.main`
+  flex: 1; /* Main takes remaining space */
+  overflow-y: auto; /* Allow scrolling if content overflows */
+`;
+
+const FooterSection = styled.footer`
+  flex: 0 0 10%; /* Footer takes 10% of viewport height */
 `;
 function MainMenu() {
   const mainMenuRef = useRef(null);
@@ -37,15 +48,15 @@ function MainMenu() {
 
   return (
     <MenuBody ref={mainMenuRef}>
-      <header>
+      <HeaderSection>
         <Header/>
-      </header>
-      <main>
+      </HeaderSection>
+      <MainSection>
         <Main/>
-      </main>
-      <footer>
+      </MainSection>
+      <FooterSection>
       <Footer/>
-      </footer>
+      </FooterSection>
     </MenuBody>
   );
 }

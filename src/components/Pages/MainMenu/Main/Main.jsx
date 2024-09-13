@@ -1,12 +1,14 @@
 import React, { useRef, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { styled } from 'styled-components'
-import { Tabs, Swiper } from 'antd-mobile'
+import { Tabs as AntdTabs } from 'antd';
+import { HomeOutlined, ReadOutlined, CarOutlined} from '@ant-design/icons';
+import { Swiper} from 'antd-mobile'
 // import { SwiperRef } from 'antd-mobile/es/components/swiper'
 
-import AppartamentsBtn from './Btn/AppartamentsBtn.jsx'
-import EducationBtn from './Btn/EducationBtn.jsx'
-import CarsBtn from './Btn/CarsBtn.jsx'
+import AppartamentsPage from './Pages/AppartamentsPage.jsx'
+import EducationPage from './Pages/EducationPage.jsx';
+import CarsPage from './Pages/CarsPage.jsx';
 
 const MainSection = styled.main`
   display: flex;
@@ -22,14 +24,15 @@ const MainBodySection = styled.section`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 50%;
+  height: 90%;
   width: 100%;
   padding: 0.5rem;
   align-content: flex-end;
   flex-wrap: wrap;
 `;
 const SwiperCard = styled.button`
-  height: 120px;
+  height: 100%;
+  width: 100%;
     color: #999999;
     display: flex;
     justify-content: center;
@@ -37,34 +40,40 @@ const SwiperCard = styled.button`
     font-size: 24px;
     user-select: none;
 `;
+const TabIconWrapper = styled.div`
+  font-size: 24px; /* Adjust size to fit the tab item */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 
 
 const tabItems = [
-  { key: 'fruits', title: 'fruits' },
-  { key: 'vegetables', title: 'vegetables' },
-  { key: 'animals', title: 'animals' },
+  { key: '1', title: 'apartaments', icon: <HomeOutlined />  },
+  { key: '2', title: 'education', icon: <ReadOutlined /> },
+  { key: '3', title: 'cars', icon: <CarOutlined /> },
 ];
 
 const Main = () => {
   const swiperRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(1);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   return (
     <MainSection>
       <MainBodySection>
-        <Tabs
+      <AntdTabs
           activeKey={tabItems[activeIndex].key}
           onChange={key => {
             const index = tabItems.findIndex(item => item.key === key);
             setActiveIndex(index);
             swiperRef.current?.swipeTo(index);
           }}
-        >
-          {tabItems.map(item => (
-            <Tabs.Tab title={item.title} key={item.key} />
-          ))}
-        </Tabs>
+          items={tabItems.map(item => ({
+            key: item.key,
+            label: <TabIconWrapper>{item.icon}</TabIconWrapper>,
+          }))}
+        />
         <Swiper
           direction='horizontal'
           loop
@@ -77,20 +86,21 @@ const Main = () => {
         >
           <Swiper.Item>
             <SwiperCard>
-              <AppartamentsBtn/>
+              <AppartamentsPage/>
             </SwiperCard>
           </Swiper.Item>
           <Swiper.Item>
             <SwiperCard>
-              <EducationBtn/>
+              <EducationPage/>
             </SwiperCard>
           </Swiper.Item>
           <Swiper.Item>
             <SwiperCard>
-              <CarsBtn/>
+              <CarsPage/>
             </SwiperCard>
           </Swiper.Item>
         </Swiper>
+        
       </MainBodySection>
     </MainSection>
   );
