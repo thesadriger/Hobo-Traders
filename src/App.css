@@ -1,82 +1,52 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  text-align: center;
-
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #242424;
 }
+
+.bullButton, .bearButton {
+  width: 5rem;
+  height: 5rem;
+  margin: 2rem;
+  border: 0.2rem solid #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  font-size: 1rem;
+  color: #fff;
+}
+
 .bullButton {
-  width: 5rem;
-  height: 5rem;
-  margin: 2rem;
   background-color: #00d435;
-  border: 0.2rem solid #fff;
-  border-radius: 50%;
-  cursor: pointer;
-  display: inline-flex; /* Используем inline-flex для центрирования текста */
-  align-items: center; /* Вертикальное центрирование текста */
-  justify-content: center; /* Горизонтальное центрирование текста */
-  transition: background-color 0.3s ease, transform 0.3s ease; /* Добавляем плавный переход для цвета фона и трансформаций */
-  font-size: 1rem; /* Размер текста */
-  color: #fff
-}
-.bullButton:hover {
-  background-color: #008cff;
-  transform: scale(1.1); /* Увеличиваем кнопку при наведении */
-}
-@media (max-width: 1200px) {
-  .bullButton {
-    width: 120px; /* Уменьшаем размер кнопки на меньших экранах */
-    height: 120px;
-    font-size: 0.875rem; /* Уменьшаем размер шрифта */
-  }
 }
 
-@media (max-width: 480px) {
-  .bullButton {
-    width: 80px; /* Еще больше уменьшаем размер кнопки на очень маленьких экранах */
-    height: 80px;
-    font-size: 0.75rem; /* Еще меньше размер шрифта */
-  }
-}
 .bearButton {
-  width: 5rem;
-  height: 5rem;
-  margin: 2rem;
   background-color: #ff0000;
-  border: 0.2rem solid #fff;
-  border-radius: 50%;
-  cursor: pointer;
-  display: inline-flex; /* Используем inline-flex для центрирования текста */
-  align-items: center; /* Вертикальное центрирование текста */
-  justify-content: center; /* Горизонтальное центрирование текста */
-  transition: background-color 0.3s ease, transform 0.3s ease; /* Добавляем плавный переход для цвета фона и трансформаций */
-  font-size: 1rem; /* Размер текста */
-  color: #fff
 }
-.bearButton:hover {
+
+.bullButton:hover, .bearButton:hover {
   background-color: #008cff;
-  transform: scale(1.1); /* Увеличиваем кнопку при наведении */
+  transform: scale(1.1);
 }
+
 @media (max-width: 1200px) {
-  .bearButton {
-    width: 120px; /* Уменьшаем размер кнопки на меньших экранах */
-    height: 120px;
-    font-size: 0.875rem; /* Уменьшаем размер шрифта */
+  .bullButton, .bearButton {
+    width: 4rem;
+    height: 4rem;
+    font-size: 0.875rem;
   }
 }
 
 @media (max-width: 480px) {
-  .bearButton {
-    width: 80px; /* Еще больше уменьшаем размер кнопки на очень маленьких экранах */
-    height: 80px;
-    font-size: 0.75rem; /* Еще меньше размер шрифта */
+  .bullButton, .bearButton {
+    width: 3rem;
+    height: 3rem;
+    font-size: 0.75rem;
   }
 }

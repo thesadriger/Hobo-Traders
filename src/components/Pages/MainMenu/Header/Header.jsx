@@ -35,21 +35,21 @@ import Avatar from './Avatar'
 
 
 const HeaderSection = styled.header`
-flex: 0 1 10%; 
-display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #323232;
-    width: 100%;
+  flex: 0 0 10%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #323232;
+  width: 100%;
 `;
 const MainHeadSection = styled.section`
- display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: column;
-    height: 50%; /* Высота section */
-    width: 100%;
-    padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 100%;
+  padding: 0.5rem;
+  flex: 1; /* Позволяем секции занимать доступное пространство */
 `;
 
 

@@ -6,24 +6,24 @@ import Header from './Header/Header.jsx'
 import Main from './Main/Main.jsx'
 import Footer from './Footer/Footer.jsx'
 
-const MenuBody = styled.body`
- display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    height: 100vh;
-    justify-content: space-between;
+const MenuBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 100vh;
+  justify-content: space-between;
 `;
 const HeaderSection = styled.header`
-  flex: 0 0 10%; /* Header takes 10% of viewport height */
+  flex: 0 0 10%;
 `;
 
 const MainSection = styled.main`
-  flex: 1; /* Main takes remaining space */
-  overflow-y: auto; /* Allow scrolling if content overflows */
+  flex: 1; 
+  overflow-y: auto;
 `;
 
 const FooterSection = styled.footer`
-  flex: 0 0 10%; /* Footer takes 10% of viewport height */
+  flex: 0 0 10%;
 `;
 function MainMenu() {
   const mainMenuRef = useRef(null);
