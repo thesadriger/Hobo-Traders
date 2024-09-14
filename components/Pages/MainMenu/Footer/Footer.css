@@ -1,0 +1,11 @@
+
+.section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    width: 100%;
+    height: 50%; /* Высота section */
+    padding: 0 1rem;
+  }
