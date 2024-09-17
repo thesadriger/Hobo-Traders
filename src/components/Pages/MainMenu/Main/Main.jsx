@@ -21,6 +21,7 @@ const MainBodySection = styled.section`
   flex-direction: column;
   flex: 1;
   width: 100%;
+  align-items: center;
 `;
 
 const SwiperCard = styled.div`
@@ -58,7 +59,7 @@ const Main = () => {
             setActiveIndex(index);
             swiperRef.current?.swipeTo(index);
           }}
-          tabBarStyle={{ display: 'flex', justifyContent: 'center' }} // Центрируем табы
+          tabBarStyle={{ display: 'flex', justifyContent: 'center !important' }}
           items={tabItems.map((item) => ({
             key: item.key,
             label: (
