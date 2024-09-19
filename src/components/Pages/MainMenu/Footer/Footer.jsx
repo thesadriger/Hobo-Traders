@@ -5,11 +5,15 @@ import { Drawer } from 'antd';
 import { AnimatePresence, motion, useMotionValue, useTransform } from 'framer-motion';
 
 import Exchange from './Menu/Exchange.jsx';
-import ExchangePage from './Pages/ExchangePage.jsx';
+import ExchangePage from './Pages/ExchangePage/ExchangePage.jsx';
 import Fun from './Menu/Fun.jsx';
 import Health from './Menu/Health.jsx';
 import Food from './Menu/Food.jsx';
 import Shop from './Menu/Shop.jsx';
+import HealthPage from './Pages/HealthPage.jsx';
+import FunPage from './Pages/FunPage.jsx';
+import FoodPage from './Pages/FoodPage.jsx';
+import ShopPage from './Pages/ShopPage.jsx';
 
 const FooterSection = styled.footer`
   flex: 0 0 10%;
@@ -108,16 +112,16 @@ const Footer = () => {
         content = <ExchangePage />;
         break;
       case 'fun':
-        content = <Fun />;
+        content = <FunPage />;
         break;
       case 'health':
-        content = <Health />;
+        content = <HealthPage />;
         break;
       case 'food':
-        content = <Food />;
+        content = <FoodPage />;
         break;
       case 'shop':
-        content = <Shop />;
+        content = <ShopPage />;
         break;
       default:
         content = null;

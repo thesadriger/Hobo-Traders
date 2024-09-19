@@ -56,7 +56,7 @@ const tasks = [
   { title: 'Найти временную работу', icon: '', profit: '+', currency: '₽' },
 ];
 
-const ExchangePage = () => {
+const ShopPage = () => {
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -90,4 +90,4 @@ const ExchangePage = () => {
   );
 };
 
-export default ExchangePage;
+export default ShopPage;
