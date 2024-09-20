@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Line } from '@ant-design/plots';
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 
 // Стили для карточки графика
 const ChartWrapper = styled.div`
   position: relative;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin-bottom: 10px;
-  padding: 2px;
+  border: 1px solid #d1d1d1; /* Светлый бордер */
+  background-color: #e9ecef; /* Немного темнее основного фона */
+  padding: 10px;
+  width: 100%;
 `;
 
 // Анимация движения слева направо
@@ -28,8 +30,8 @@ const Overlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(82, 196, 26, 0.3); /* Полупрозрачная зелёная оболочка */
-  display: ${({ isVisible }) => (isVisible ? 'block' : 'none')}; /* Появляется только при нажатии на кнопку */
+  background-color: rgba(82, 196, 26, 0.3);
+  display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
 `;
 
 // Анимация от левого края до правого
@@ -39,9 +41,22 @@ const AnimationOverlay = styled.div`
   left: -100%;
   right: 0;
   bottom: 0;
-  background-color: rgba(82, 196, 26, 0.7); /* Менее прозрачный зелёный слой */
-  animation: ${({ isAnimating }) =>
-    isAnimating ? `${slideAnimation} 3s linear` : 'none'};
+  background-color: rgba(82, 196, 26, 0.7);
+  ${({ isAnimating }) =>
+    isAnimating &&
+    css`
+      animation: ${slideAnimation} 3s linear;
+    `}
+`;
+
+// Стили для текста в конце анимации
+const ResultText = styled.div`
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #52c41a;
 `;
 
 const getNextPrice = (currentPrice) => {
@@ -64,7 +79,7 @@ const generateInitialData = (initialPrice, points) => {
 };
 
 // Компонент графика
-const Graphic = ({ setCurrentPrice, intervalSpeed, isTradeActive }) => {
+const Graphic = ({ setCurrentPrice, intervalSpeed, isTradeActive, randomValue }) => {
   const [data, setData] = useState(generateInitialData(1, 200)); // Генерация начальных данных
 
   useEffect(() => {
@@ -93,9 +108,9 @@ const Graphic = ({ setCurrentPrice, intervalSpeed, isTradeActive }) => {
     // Обновляем currentPrice только после того, как данные обновятся
     const lastDataPoint = data[data.length - 1];
     if (lastDataPoint && typeof setCurrentPrice === 'function') {
-      setCurrentPrice(lastDataPoint.value); // Проверяем, что setCurrentPrice — это функция
+      setCurrentPrice(lastDataPoint.value);
     }
-  }, [data, setCurrentPrice]); // Зависимость от data, чтобы обновлять только когда данные изменятся
+  }, [data, setCurrentPrice]);
 
   const config = {
     data,
@@ -106,20 +121,21 @@ const Graphic = ({ setCurrentPrice, intervalSpeed, isTradeActive }) => {
     height: 100, // Высота графика
     color: '#52c41a', // Цвет линии графика
     areaStyle: () => {
-      return { fill: 'l(270) 0:#ffffff 0.5:#52c41a 1:#52c41a' }; // Градиент под графиком
+      return { fill: 'l(270) 0:#ffffff 0.5:#52c41a 1:#52c41a' };
     },
     yAxis: {
       label: {
-        formatter: (v) => `$${v}`, // Форматирование значений оси Y
+        formatter: (v) => `$${v}`,
       },
-      min: 1, // Минимум оси Y
-      max: 5, // Максимум оси Y
+      min: 1,
+      max: 5,
     },
     xAxis: {
       label: {
-        autoHide: true, // Скрытие меток оси X, если места мало
+        autoHide: true,
       },
     },
+    tooltip: false, // Отключаем всплывающее окно с value
     animation: {
       appear: {
         animation: 'path-in',
@@ -133,6 +149,7 @@ const Graphic = ({ setCurrentPrice, intervalSpeed, isTradeActive }) => {
       <Overlay isVisible={isTradeActive}>
         <AnimationOverlay isAnimating={isTradeActive} />
       </Overlay>
+      {!isTradeActive && randomValue && <ResultText>{randomValue}</ResultText>}
       <Line {...config} />
     </ChartWrapper>
   );

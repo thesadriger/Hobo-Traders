@@ -16,7 +16,7 @@ const PageWrapper = styled.div`
 
 // Обертка для MainSectionGraphic с бордером и изменённым фоном
 const GraphicWrapper = styled.div`
-  background-color: #e9ecef; /* Немного темнее основного фона */
+  background-color: #fff; /* Немного темнее основного фона */
   border: 1px solid #d1d1d1; /* Светлый бордер */
   border-radius: 10px;
   padding: 20px;

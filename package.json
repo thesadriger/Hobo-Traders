@@ -11,6 +11,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@ant-design/icons-svg": "^4.4.2",
     "@ant-design/plots": "^2.3.2",
     "antd": "^5.20.4",
     "antd-mobile": "^5.37.1",
