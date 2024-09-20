@@ -99,7 +99,7 @@ const MainSectionGraphic = () => {
       const randomNum = (Math.random() * 100 + 1).toFixed(0); // Генерируем случайное число от 1 до 10
       setRandomValue(`${randomNum} $`);
       setIsTextVisible(true); // Показываем число
-    }, 2000);
+    }, 1000);
 
     // Таймер на 3 секунды, после которого кнопка снова станет активной, а анимация и текст исчезнут
     setTimeout(() => {

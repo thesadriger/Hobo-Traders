@@ -80,7 +80,7 @@ const generateInitialData = (initialPrice, points) => {
 
 // Компонент графика
 const Graphic = ({ setCurrentPrice, intervalSpeed, isTradeActive, randomValue }) => {
-  const [data, setData] = useState(generateInitialData(1, 200)); // Генерация начальных данных
+  const [data, setData] = useState(generateInitialData(1, 50)); // Уменьшили количество точек данных
 
   useEffect(() => {
     const updateChart = () => {
@@ -89,9 +89,9 @@ const Graphic = ({ setCurrentPrice, intervalSpeed, isTradeActive, randomValue })
         const newTime = lastDataPoint.time + 1; // Увеличиваем временную метку
         const newValue = getNextPrice(lastDataPoint.value); // Генерируем новую цену на основе предыдущей
 
-        // Ограничиваем количество точек на графике до 200
+        // Ограничиваем количество точек на графике до 50
         const updatedData = [...prevData, { time: newTime, value: parseFloat(newValue) }];
-        if (updatedData.length > 200) {
+        if (updatedData.length > 50) {
           updatedData.shift(); // Удаляем старую точку
         }
 
@@ -117,7 +117,7 @@ const Graphic = ({ setCurrentPrice, intervalSpeed, isTradeActive, randomValue })
     padding: 'auto',
     xField: 'time',
     yField: 'value',
-    smooth: true, // Сглаживание графика
+    smooth: false, // Отключаем сглаживание графика
     height: 100, // Высота графика
     color: '#52c41a', // Цвет линии графика
     areaStyle: () => {
