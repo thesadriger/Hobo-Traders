@@ -1,6 +1,6 @@
 // MainSectionGraphic.jsx
 import React, { useState } from 'react';
-import { Row, Col, Button } from 'antd'; // Ант дизайн компоненты
+import { Row, Col, Button, Spin } from 'antd'; // Ант дизайн компоненты
 import styled from 'styled-components';
 import Graphic from './Graphic'; // Импортируем компонент графика
 
@@ -44,14 +44,23 @@ const MainSectionGraphic = () => {
   const [currentPrice, setCurrentPrice] = useState(1.00); // Текущая цена
   const [intervalSpeed, setIntervalSpeed] = useState(1000); // Скорость обновления
   const [isButtonDisabled, setIsButtonDisabled] = useState(false); // Состояние для отслеживания активности кнопки
+  const [countdown, setCountdown] = useState(3); // Время обратного отсчёта
 
   // Функция ускорения графика
   const handleTradeClick = () => {
     setIsButtonDisabled(true); // Отключаем кнопку
     setIntervalSpeed(200); // Ускоряем график
 
+    let count = 3; // Начальное значение обратного отсчёта
+    const countdownInterval = setInterval(() => {
+      setCountdown(count);
+      count -= 1;
+    }, 1000);
+
     // Таймер на 3 секунды, после которого кнопка снова станет активной
     setTimeout(() => {
+      clearInterval(countdownInterval); // Очищаем интервал
+      setCountdown(3); // Сбрасываем обратный отсчёт
       setIntervalSpeed(1000); // Возвращаем скорость
       setIsButtonDisabled(false); // Включаем кнопку
     }, 3000);
@@ -73,7 +82,13 @@ const MainSectionGraphic = () => {
           onClick={handleTradeClick} 
           disabled={isButtonDisabled} // Кнопка будет неактивной, если isButtonDisabled === true
         >
-          Торговать
+          {isButtonDisabled ? (
+            <>
+              <Spin /> Подождите {/* Обратный отсчёт и индикатор Spin */}
+            </>
+          ) : (
+            "Торговать"
+          )}
         </TradeButton>
       </Col>
     </Row>

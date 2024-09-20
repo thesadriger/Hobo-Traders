@@ -1,17 +1,49 @@
-// Graphic.jsx
 import React, { useEffect, useState } from 'react';
 import { Line } from '@ant-design/plots';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 // Стили для карточки графика
 const ChartWrapper = styled.div`
+  position: relative;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
   padding: 2px;
 `;
 
-// Компонент для генерации случайного изменения цены
+// Анимация движения слева направо
+const slideAnimation = keyframes`
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+`;
+
+// Стили для зелёной оболочки, которая будет покрывать график
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(82, 196, 26, 0.3); /* Полупрозрачная зелёная оболочка */
+  display: ${({ isVisible }) => (isVisible ? 'block' : 'none')}; /* Появляется только при нажатии на кнопку */
+`;
+
+// Анимация от левого края до правого
+const AnimationOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: -100%;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(82, 196, 26, 0.7); /* Менее прозрачный зелёный слой */
+  animation: ${({ isAnimating }) =>
+    isAnimating ? `${slideAnimation} 3s linear` : 'none'};
+`;
+
 const getNextPrice = (currentPrice) => {
   const change = (Math.random() * 0.2 - 0.1).toFixed(2);
   let newPrice = parseFloat(currentPrice) + parseFloat(change);
@@ -32,7 +64,7 @@ const generateInitialData = (initialPrice, points) => {
 };
 
 // Компонент графика
-const Graphic = ({ setCurrentPrice, intervalSpeed }) => {
+const Graphic = ({ setCurrentPrice, intervalSpeed, isTradeActive }) => {
   const [data, setData] = useState(generateInitialData(1, 200)); // Генерация начальных данных
 
   useEffect(() => {
@@ -98,6 +130,9 @@ const Graphic = ({ setCurrentPrice, intervalSpeed }) => {
 
   return (
     <ChartWrapper>
+      <Overlay isVisible={isTradeActive}>
+        <AnimationOverlay isAnimating={isTradeActive} />
+      </Overlay>
       <Line {...config} />
     </ChartWrapper>
   );
