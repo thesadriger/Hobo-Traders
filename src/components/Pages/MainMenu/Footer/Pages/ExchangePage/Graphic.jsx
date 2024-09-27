@@ -1,8 +1,9 @@
+// Graphic.jsx
 import React, { useEffect, useState } from 'react';
 import { Line } from '@ant-design/plots';
-import styled, { keyframes, css } from 'styled-components';
+import styled from 'styled-components';
 
-// Стили для карточки графика
+// Стили для обёртки графика
 const ChartWrapper = styled.div`
   position: relative;
   border-radius: 10px;
@@ -11,54 +12,10 @@ const ChartWrapper = styled.div`
   background-color: #e9ecef; /* Немного темнее основного фона */
   padding: 10px;
   width: 100%;
+  overflow: hidden;
 `;
 
-// Анимация движения слева направо
-const slideAnimation = keyframes`
-  0% {
-    left: -100%;
-  }
-  100% {
-    left: 100%;
-  }
-`;
-
-// Стили для зелёной оболочки, которая будет покрывать график
-const Overlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(82, 196, 26, 0.3);
-  display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
-`;
-
-// Анимация от левого края до правого
-const AnimationOverlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: -100%;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(82, 196, 26, 0.7);
-  ${({ isAnimating }) =>
-    isAnimating &&
-    css`
-      animation: ${slideAnimation} 3s linear;
-    `}
-`;
-
-// Стили для текста в конце анимации
-const ResultText = styled.div`
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  font-size: 24px;
-  font-weight: bold;
-  color: #52c41a;
-`;
-
+// Функция для получения следующей цены
 const getNextPrice = (currentPrice) => {
   const change = (Math.random() * 0.2 - 0.1).toFixed(2);
   let newPrice = parseFloat(currentPrice) + parseFloat(change);
@@ -79,7 +36,7 @@ const generateInitialData = (initialPrice, points) => {
 };
 
 // Компонент графика
-const Graphic = ({ setCurrentPrice, intervalSpeed, isTradeActive, randomValue }) => {
+const Graphic = ({ setCurrentPrice, intervalSpeed, isTradeActive }) => {
   const [data, setData] = useState(generateInitialData(1, 50)); // Уменьшили количество точек данных
 
   useEffect(() => {
@@ -142,15 +99,15 @@ const Graphic = ({ setCurrentPrice, intervalSpeed, isTradeActive, randomValue })
         duration: 500,
       },
     },
+    interactions: [],
   };
 
   return (
     <ChartWrapper>
-      <Overlay isVisible={isTradeActive}>
-        <AnimationOverlay isAnimating={isTradeActive} />
-      </Overlay>
-      {!isTradeActive && randomValue && <ResultText>{randomValue}</ResultText>}
-      <Line {...config} />
+      {/* Применяем размытие к графику во время активной торговли */}
+      <div style={{ filter: isTradeActive ? 'blur(5px)' : 'none', transition: 'filter 0.3s' }}>
+        <Line {...config} />
+      </div>
     </ChartWrapper>
   );
 };
