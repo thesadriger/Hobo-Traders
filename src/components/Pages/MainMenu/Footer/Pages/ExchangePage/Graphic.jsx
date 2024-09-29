@@ -1,112 +1,137 @@
-// Graphic.jsx
-import React, { useEffect, useState } from 'react';
+// Graphic.js
+import React, { useEffect, useState, useMemo } from 'react';
 import { Line } from '@ant-design/plots';
 import styled from 'styled-components';
 
-// Стили для обёртки графика
 const ChartWrapper = styled.div`
   position: relative;
+  width: 100%;
+  height: 100%; /* Высота на 100% родителя */
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border: 1px solid #d1d1d1; /* Светлый бордер */
-  background-color: #e9ecef; /* Немного темнее основного фона */
+  border: 1px solid #d1d1d1;
+  background-color: #e9ecef;
   padding: 10px;
-  width: 100%;
   overflow: hidden;
 `;
 
-// Функция для получения следующей цены
-const getNextPrice = (currentPrice) => {
-  const change = (Math.random() * 0.2 - 0.1).toFixed(2);
-  let newPrice = parseFloat(currentPrice) + parseFloat(change);
-  if (newPrice < 1) newPrice = 1;
-  if (newPrice > 5) newPrice = 5;
-  return newPrice.toFixed(2);
-};
-
-// Генерация начальных данных для графика
-const generateInitialData = (initialPrice, points) => {
-  const data = [];
-  let currentPrice = initialPrice;
-  for (let i = 0; i < points; i++) {
-    currentPrice = getNextPrice(currentPrice);
-    data.push({ time: i, value: parseFloat(currentPrice) });
-  }
-  return data;
-};
+const BlurOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  pointer-events: none;
+  opacity: ${({ isActive }) => (isActive ? 1 : 0)};
+  transition: opacity 0.3s;
+`;
 
 // Компонент графика
-const Graphic = ({ setCurrentPrice, intervalSpeed, isTradeActive }) => {
-  const [data, setData] = useState(generateInitialData(1, 50)); // Уменьшили количество точек данных
+const Graphic = ({ setCurrentPrice, intervalSpeed, isTradeActive, initialPrice, range }) => {
+  const [data, setData] = useState([]);
+
+  const minPrice = range[0];
+  const maxPrice = range[1];
+
+  // Функция для получения следующей цены
+  const getNextPrice = (currentPrice) => {
+    const change = (Math.random() * 0.2 - 0.1).toFixed(2);
+    let newPrice = parseFloat(currentPrice) + parseFloat(change);
+    if (newPrice < minPrice) newPrice = minPrice;
+    if (newPrice > maxPrice) newPrice = maxPrice;
+    return newPrice.toFixed(2);
+  };
+
+  // Генерация начальных данных с фиксированным индексом
+  const generateInitialData = () => {
+    const initialData = [];
+    let currentPrice = initialPrice;
+    for (let i = 1; i <= 50; i++) {
+      currentPrice = getNextPrice(currentPrice);
+      initialData.push({ index: i, value: parseFloat(currentPrice) });
+    }
+    return initialData;
+  };
+
+  // Обновляем данные при изменении монеты
+  useEffect(() => {
+    setData(generateInitialData());
+  }, [initialPrice, minPrice, maxPrice]);
 
   useEffect(() => {
     const updateChart = () => {
       setData((prevData) => {
-        const lastDataPoint = prevData[prevData.length - 1]; // Последняя точка на графике
-        const newTime = lastDataPoint.time + 1; // Увеличиваем временную метку
-        const newValue = getNextPrice(lastDataPoint.value); // Генерируем новую цену на основе предыдущей
+        const newData = prevData.slice(1); // Удаляем первый элемент
+        const lastIndex = prevData[prevData.length - 1].index;
+        const newIndex = lastIndex + 1;
+        const newValue = getNextPrice(prevData[prevData.length - 1].value);
 
-        // Ограничиваем количество точек на графике до 50
-        const updatedData = [...prevData, { time: newTime, value: parseFloat(newValue) }];
-        if (updatedData.length > 50) {
-          updatedData.shift(); // Удаляем старую точку
-        }
-
-        return updatedData;
+        newData.push({ index: newIndex, value: parseFloat(newValue) });
+        return newData;
       });
     };
 
     const interval = setInterval(updateChart, intervalSpeed);
 
-    return () => clearInterval(interval); // Очистка интервала при размонтировании компонента
-  }, [intervalSpeed]);
+    return () => clearInterval(interval);
+  }, [intervalSpeed, minPrice, maxPrice]);
 
   useEffect(() => {
-    // Обновляем currentPrice только после того, как данные обновятся
     const lastDataPoint = data[data.length - 1];
     if (lastDataPoint && typeof setCurrentPrice === 'function') {
       setCurrentPrice(lastDataPoint.value);
     }
   }, [data, setCurrentPrice]);
 
-  const config = {
-    data,
-    padding: 'auto',
-    xField: 'time',
-    yField: 'value',
-    smooth: false, // Отключаем сглаживание графика
-    height: 100, // Высота графика
-    color: '#52c41a', // Цвет линии графика
-    areaStyle: () => {
-      return { fill: 'l(270) 0:#ffffff 0.5:#52c41a 1:#52c41a' };
-    },
-    yAxis: {
-      label: {
-        formatter: (v) => `$${v}`,
+  const config = useMemo(
+    () => ({
+      data,
+      padding: 'auto',
+      xField: 'index', // Используем 'index' вместо 'time'
+      yField: 'value',
+      smooth: false,
+      autoFit: true,
+      color: '#52c41a',
+      areaStyle: () => {
+        return { fill: 'l(270) 0:#ffffff 0.5:#52c41a 1:#52c41a' };
       },
-      min: 1,
-      max: 5,
-    },
-    xAxis: {
-      label: {
-        autoHide: true,
+      yAxis: {
+        label: {
+          formatter: (v) => `$${v}`,
+        },
+        min: minPrice,
+        max: maxPrice,
       },
-    },
-    tooltip: false, // Отключаем всплывающее окно с value
-    animation: {
-      appear: {
-        animation: 'path-in',
-        duration: 500,
+      xAxis: {
+        label: {
+          autoHide: true,
+        },
+        tickCount: 5, // Устанавливаем количество меток на оси X
       },
-    },
-    interactions: [],
-  };
+      tooltip: false,
+      animation: {
+        appear: {
+          animation: 'path-in',
+          duration: 500,
+        },
+      },
+      interactions: [],
+    }),
+    [data, minPrice, maxPrice]
+  );
 
   return (
     <ChartWrapper>
-      {/* Применяем размытие к графику во время активной торговли */}
-      <div style={{ filter: isTradeActive ? 'blur(5px)' : 'none', transition: 'filter 0.3s' }}>
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          position: 'relative',
+        }}
+      >
         <Line {...config} />
+        <BlurOverlay isActive={isTradeActive} />
       </div>
     </ChartWrapper>
   );

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { styled } from 'styled-components';
+import styled from 'styled-components';
 import { Tabs as AntdTabs } from 'antd';
 import { HomeOutlined, ReadOutlined, CarOutlined } from '@ant-design/icons';
 import { Swiper } from 'antd-mobile';
@@ -52,14 +52,14 @@ const Main = () => {
   return (
     <MainSection>
       <MainBodySection>
-      <AntdTabs
+        <AntdTabs
           activeKey={tabItems[activeIndex].key}
           onChange={(key) => {
             const index = tabItems.findIndex((item) => item.key === key);
             setActiveIndex(index);
             swiperRef.current?.swipeTo(index);
           }}
-          tabBarStyle={{ display: 'flex', justifyContent: 'center !important' }}
+          tabBarStyle={{ display: 'flex', justifyContent: 'center' }}
           items={tabItems.map((item) => ({
             key: item.key,
             label: (
@@ -102,6 +102,7 @@ const Main = () => {
 };
 
 export default Main;
+
 
 
 

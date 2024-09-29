@@ -1,10 +1,13 @@
-import React, { useEffect, useRef } from 'react'
-import { gsap } from 'gsap'
-import { styled } from 'styled-components'
+// MainMenu.js
+import React, { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import styled from 'styled-components';
+import { Provider } from 'react-redux';
+import store from '@/store/store'; // импортируем store
 
-import Header from './Header/Header.jsx'
-import Main from './Main/Main.jsx'
-import Footer from './Footer/Footer.jsx'
+import Header from './Header/Header.jsx';
+import Main from './Main/Main.jsx';
+import Footer from './Footer/Footer.jsx';
 
 const MenuBody = styled.div`
   display: flex;
@@ -13,6 +16,7 @@ const MenuBody = styled.div`
   height: 100vh;
   justify-content: space-between;
 `;
+
 const HeaderSection = styled.header`
   flex: 0 0 10%;
 `;
@@ -25,6 +29,7 @@ const MainSection = styled.main`
 const FooterSection = styled.footer`
   flex: 0 0 10%;
 `;
+
 function MainMenu() {
   const mainMenuRef = useRef(null);
 
@@ -47,17 +52,19 @@ function MainMenu() {
   }, []);
 
   return (
-    <MenuBody ref={mainMenuRef}>
-      <HeaderSection>
-        <Header/>
-      </HeaderSection>
-      <MainSection>
-        <Main/>
-      </MainSection>
-      <FooterSection>
-      <Footer/>
-      </FooterSection>
-    </MenuBody>
+    <Provider store={store}>
+      <MenuBody ref={mainMenuRef}>
+        <HeaderSection>
+          <Header />
+        </HeaderSection>
+        <MainSection>
+          <Main />
+        </MainSection>
+        <FooterSection>
+          <Footer />
+        </FooterSection>
+      </MenuBody>
+    </Provider>
   );
 }
 

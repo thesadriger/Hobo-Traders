@@ -1,86 +1,149 @@
-// MainSectionGraphic.jsx
-import React, { useState } from 'react';
-import { Row, Col, Button } from 'antd'; // Компоненты Ant Design
+// MainSectionGraphic.js
+import React, { useState, useEffect } from 'react';
+import { Button, Spin } from 'antd';
 import styled, { keyframes, css } from 'styled-components';
-import Graphic from './Graphic'; // Импортируем компонент графика
+import Graphic from './Graphic';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateTotalWinnings } from '@/store/actions';
 
-// Стили для обёртки заголовка и цены
-const TitleWrapper = styled.div`
+
+// Контейнер для всей информации сверху
+const InfoContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
+  align-items: flex-start;
+  width: 100%;
   padding: 0 20px;
+  margin-bottom: 10px;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
-// Стили для текста цены
-const PriceText = styled.span`
-  font-size: 20px;
-  font-weight: bold;
-  color: #389e0d;
+// Левая часть информации
+const LeftInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 `;
 
-// Стили для заголовка
-const TitleText = styled.h3`
+// Правая часть информации
+const RightInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  @media (max-width: 768px) {
+    align-items: flex-start;
+    margin-top: 10px;
+  }
+`;
+
+// Название монеты
+const CoinName = styled.h3`
   font-size: 24px;
   font-weight: 600;
   margin: 0;
   color: #181818;
 `;
 
-// Анимация змейки на бордере
-const snakeAnimation = keyframes`
-  0% {
-    background-position: 0% center;
-  }
-  100% {
-    background-position: 200% center;
+// Подзаголовок "Цена последней сделки"
+const LastPriceLabel = styled.span`
+  font-size: 14px;
+  color: #999;
+  margin-top: 5px;
+`;
+
+// Цена
+const PriceText = styled.span`
+  font-size: 40px;
+  font-weight: bold;
+  color: #4096ff;
+  margin-top: 5px;
+
+  @media (max-width: 768px) {
+    font-size: 36px;
   }
 `;
 
-// Стили для кнопки "Торговать" с анимацией змейки на бордере
+// Стиль для правой части информации
+const InfoText = styled.span`
+  font-size: 12px;
+  color: #181818;
+  margin-bottom: 5px;
+`;
+
+const InfoValue = styled.span`
+  font-weight: bold;
+  font-size: 12px;
+`;
+
+// Контейнер для графика и кнопки
+const MainGraphicContainer = styled.div`
+  width: 100%;
+  max-width: 600px;
+  background-color: #fff;
+  border: 1px solid #d1d1d1;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    padding: 15px;
+  }
+`;
+
+// Стили для контейнера графика
+const GraphContainer = styled.div`
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    aspect-ratio: auto;
+    height: 200px;
+  }
+`;
+
+// Анимация пульсации кнопки
+const pulseAnimation = keyframes`
+  0% {
+    box-shadow: 0 0 0 0 rgba(64, 169, 255, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(64, 169, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(64, 169, 255, 0);
+  }
+`;
+
+// Стили для кнопки "Торговать"
 const TradeButton = styled(Button)`
   position: relative;
-  overflow: hidden;
-  z-index: 0;
   margin-top: 20px;
   width: 100%;
   height: 50px;
   font-size: 16px;
-  background-color: #40a9ff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  &:hover {
-    background-color: #1890ff;
-  }
-  &:disabled {
-    background-color: #d9d9d9;
-    color: #bfbfbf;
-  }
+  transition: all 0.5s ease-in-out;
+
   ${({ isAnimating }) =>
     isAnimating &&
     css`
-      &::after {
-        content: '';
-        position: absolute;
-        top: -2px;
-        left: -2px;
-        right: -2px;
-        bottom: -2px;
-        background: linear-gradient(
-          to right,
-          #52c41a,
-          #40a9ff,
-          #52c41a,
-          #40a9ff,
-          #52c41a
-        );
-        background-size: 200% auto;
-        z-index: -1;
-        animation: ${snakeAnimation} 4s linear infinite;
-      }
+      animation: ${pulseAnimation} 2s infinite;
     `}
+
+  @media (max-width: 768px) {
+    height: 45px;
+    font-size: 14px;
+  }
 `;
 
 // Стили для текста с выигрышем
@@ -90,81 +153,116 @@ const RandomText = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 60px;
+  font-size: 40px;
   font-weight: bold;
-  color: #389e0d;
+  color: #4096ff;
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
   transition: opacity 0.5s ease-in-out;
+
+  @media (max-width: 768px) {
+    font-size: 32px;
+  }
 `;
 
 // Основной компонент
-const MainSectionGraphic = () => {
-  const [currentPrice, setCurrentPrice] = useState(1.0); // Текущая цена
-  const [intervalSpeed, setIntervalSpeed] = useState(1000); // Скорость обновления графика
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false); // Состояние кнопки
-  const [isTradeActive, setIsTradeActive] = useState(false); // Активность анимации на графике
-  const [randomValue, setRandomValue] = useState(null); // Случайное число выигрыша
-  const [isTextVisible, setIsTextVisible] = useState(false); // Видимость текста с выигрышем
+const MainSectionGraphic = ({ coinKey, coinData }) => {
+  const { title, range, initialPrice, maxWin } = coinData;
 
-  // Функция обработки нажатия на кнопку "Торговать"
+  const dispatch = useDispatch();
+  const totalWinnings = useSelector(
+    (state) => state.totalWinningsPerCoin[coinKey] || 0
+  );
+
+  const [currentPrice, setCurrentPrice] = useState(initialPrice);
+  const [intervalSpeed, setIntervalSpeed] = useState(1000);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [isTradeActive, setIsTradeActive] = useState(false);
+  const [randomValue, setRandomValue] = useState(null);
+  const [isTextVisible, setIsTextVisible] = useState(false);
+
+  // Для максимальной и минимальной цены
+  const [maxPrice, setMaxPrice] = useState(initialPrice);
+  const [minPrice, setMinPrice] = useState(initialPrice);
+
+  useEffect(() => {
+    setCurrentPrice(initialPrice);
+    setMaxPrice(initialPrice);
+    setMinPrice(initialPrice);
+  }, [initialPrice]);
+
   const handleTradeClick = () => {
-    setIsButtonDisabled(true); // Отключаем кнопку
-    setIsTradeActive(true); // Запускаем анимацию
-    setIntervalSpeed(200); // Ускоряем график
+    setIsButtonDisabled(true);
+    setIsTradeActive(true);
+    setIntervalSpeed(200);
 
-    // Показываем случайное число через 1 секунду
     setTimeout(() => {
-      const randomNum = (Math.random() * 100 + 1).toFixed(0); // Генерируем случайное число от 1 до 100
-      setRandomValue(`${randomNum} $`);
-      setIsTextVisible(true); // Показываем число
+      const randomNum = Math.floor(Math.random() * maxWin) + 1; // Генерируем целое число от 1 до maxWin
+      setRandomValue(`+${randomNum} $`);
+      dispatch(updateTotalWinnings(coinKey, randomNum)); // Обновляем totalWinnings в Redux
+      setIsTextVisible(true);
     }, 1000);
 
-    // Через 3 секунды возвращаем всё в исходное состояние
     setTimeout(() => {
-      setIntervalSpeed(1000); // Возвращаем скорость графика
-      setIsTradeActive(false); // Останавливаем анимацию
-      setIsButtonDisabled(false); // Активируем кнопку
-      setIsTextVisible(false); // Скрываем текст с выигрышем
+      setIntervalSpeed(1000);
+      setIsTradeActive(false);
+      setIsButtonDisabled(false);
+      setIsTextVisible(false);
     }, 3000);
   };
 
-  return (
-    <Row justify="center" gutter={[16, 16]}>
-      <Col xs={24} sm={18} md={16} lg={12}>
-        <TitleWrapper>
-          <TitleText>HBTRD Цена</TitleText>
-          <PriceText>{`$${parseFloat(currentPrice).toFixed(2)}`}</PriceText>
-        </TitleWrapper>
-        <div
-          style={{
-            position: 'relative',
-            borderRadius: '10px',
-            overflow: 'hidden',
-          }}
-        >
-          <Graphic
-            setCurrentPrice={setCurrentPrice}
-            intervalSpeed={intervalSpeed}
-            isTradeActive={isTradeActive}
-          />
-          {/* Текст с выигрышем */}
-          {randomValue && (
-            <RandomText isVisible={isTextVisible}>+{randomValue}</RandomText>
-          )}
-        </div>
-      </Col>
+  // Функция для обновления максимальной и минимальной цены
+  const updatePriceExtremes = (price) => {
+    setMaxPrice((prevMax) => (price > prevMax ? price : prevMax));
+    setMinPrice((prevMin) => (price < prevMin ? price : prevMin));
+  };
 
-      <Col xs={24} sm={18} md={16} lg={12}>
-        <TradeButton
-          type="primary"
-          onClick={handleTradeClick}
-          disabled={isButtonDisabled}
-          isAnimating={isTradeActive} // Анимация бордера при активной торговле
-        >
-          Торговать
-        </TradeButton>
-      </Col>
-    </Row>
+  return (
+    <MainGraphicContainer>
+      <InfoContainer>
+        <LeftInfo>
+          <CoinName>{title}</CoinName>
+          <LastPriceLabel>Цена последней сделки:</LastPriceLabel>
+          <PriceText>{`$${parseFloat(currentPrice).toFixed(2)}`}</PriceText>
+        </LeftInfo>
+        <RightInfo>
+          <InfoText>
+            Максимальная цена:{' '}
+            <InfoValue>{`$${parseFloat(maxPrice).toFixed(2)}`}</InfoValue>
+          </InfoText>
+          <InfoText>
+            Минимальная цена:{' '}
+            <InfoValue>{`$${parseFloat(minPrice).toFixed(2)}`}</InfoValue>
+          </InfoText>
+          <InfoText>
+            Оборот торговли:{' '}
+            <InfoValue>{`$${totalWinnings}`}</InfoValue>
+          </InfoText>
+        </RightInfo>
+      </InfoContainer>
+      <GraphContainer>
+        <Graphic
+          setCurrentPrice={(price) => {
+            setCurrentPrice(price);
+            updatePriceExtremes(price);
+          }}
+          intervalSpeed={intervalSpeed}
+          isTradeActive={isTradeActive}
+          initialPrice={initialPrice}
+          range={range}
+        />
+        {randomValue && (
+          <RandomText isVisible={isTextVisible}>{randomValue}</RandomText>
+        )}
+      </GraphContainer>
+      <TradeButton
+        type="primary"
+        onClick={handleTradeClick}
+        disabled={isButtonDisabled}
+        isAnimating={isTradeActive}
+      >
+        {isTradeActive ? <Spin /> : 'Торговать'}
+      </TradeButton>
+    </MainGraphicContainer>
   );
 };
 
