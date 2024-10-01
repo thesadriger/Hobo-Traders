@@ -5,6 +5,14 @@ import styled, { keyframes, css } from 'styled-components';
 import Graphic from './Graphic';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateTotalWinnings } from '@/store/slices/totalWinningsSlice';
+import { addUSDT } from '@/store/slices/balanceSlice';
+import {
+  decreaseHealth,
+  decreaseFun,
+  decreaseFood,
+  resetIndicators, // Импортируем действие сброса индикаторов
+} from '@/store/slices/indicatorsSlice';
+import { increaseLevel } from '@/store/slices/levelSlice';// Для увеличения уровня
 
 
 // Контейнер для всей информации сверху
@@ -164,11 +172,28 @@ const RandomText = styled.div`
   }
 `;
 
+// функция для генерации случайного уменьшения с заданными вероятностями
+  const getRandomDeduction = () => {
+    const rand = Math.random();
+    if (rand < 0.6) {
+      // 60% шанс отнять 1-3 единицы
+      return Math.floor(Math.random() * 3) + 1;
+    } else if (rand < 0.9) {
+      // 30% шанс отнять 4-6 единиц
+      return Math.floor(Math.random() * 3) + 4;
+    } else {
+      // 10% шанс отнять 7-10 единиц
+      return Math.floor(Math.random() * 4) + 7;
+    }
+  };
+
+
 // Основной компонент
 const MainSectionGraphic = ({ coinKey, coinData }) => {
   const { title, range, initialPrice, maxWin } = coinData;
 
   const dispatch = useDispatch();
+  const level = useSelector((state) => state.level.level);
   const totalWinnings = useSelector(
     (state) => state.totalWinnings.totalWinningsPerCoin[coinKey] || 0
   );
@@ -199,7 +224,32 @@ const MainSectionGraphic = ({ coinKey, coinData }) => {
       const randomNum = Math.floor(Math.random() * maxWin) + 1;
       setRandomValue(`+${randomNum} $`);
       dispatch(updateTotalWinnings({ coinKey, amount: randomNum }));
+      dispatch(addUSDT(randomNum)); // Обновляем баланс USDT
       setIsTextVisible(true);
+
+      // Уменьшаем индикаторы
+      const healthDeduction = getRandomDeduction();
+      const funDeduction = getRandomDeduction();
+      const foodDeduction = getRandomDeduction();
+
+      dispatch(decreaseHealth(healthDeduction));
+      dispatch(decreaseFun(funDeduction));
+      dispatch(decreaseFood(foodDeduction));
+
+      // Получаем предыдущее значение уровня
+      const previousLevel = level;
+
+      // Увеличиваем уровень на 0.05
+      dispatch(increaseLevel(0.05));
+
+      // Получаем новое значение уровня
+      const newLevel = previousLevel + 0.05;
+
+      // Проверяем, перешёл ли уровень на новое целое число
+      if (Math.floor(newLevel) > Math.floor(previousLevel)) {
+        // Если да, сбрасываем индикаторы до 100
+        dispatch(resetIndicators());
+      }
     }, 1000);
 
     setTimeout(() => {

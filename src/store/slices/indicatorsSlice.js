@@ -2,26 +2,37 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  health: 0,
-  fun: 0,
-  food: 0,
+  health: 100,
+  fun: 100,
+  food: 100,
 };
 
 const indicatorsSlice = createSlice({
   name: 'indicators',
   initialState,
   reducers: {
-    increaseHealth: (state, action) => {
-      state.health = Math.min(state.health + action.payload, 100);
+    decreaseHealth: (state, action) => {
+      state.health = Math.max(state.health - action.payload, 0);
     },
-    increaseFun: (state, action) => {
-      state.fun = Math.min(state.fun + action.payload, 100);
+    decreaseFun: (state, action) => {
+      state.fun = Math.max(state.fun - action.payload, 0);
     },
-    increaseFood: (state, action) => {
-      state.food = Math.min(state.food + action.payload, 100);
+    decreaseFood: (state, action) => {
+      state.food = Math.max(state.food - action.payload, 0);
+    },
+    // Новое действие для сброса индикаторов
+    resetIndicators: (state) => {
+      state.health = 100;
+      state.fun = 100;
+      state.food = 100;
     },
   },
 });
 
-export const { increaseHealth, increaseFun, increaseFood } = indicatorsSlice.actions;
+export const {
+  decreaseHealth,
+  decreaseFun,
+  decreaseFood,
+  resetIndicators, // Экспортируем новое действие
+} = indicatorsSlice.actions;
 export default indicatorsSlice.reducer;
