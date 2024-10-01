@@ -7,7 +7,7 @@ import { CoinsList } from './CoinList';
 
 // Стили для страницы
 const PageWrapper = styled.div`
-  padding: 40px 20px;
+  padding: 20px 20px;
   background-color: #f0f2f5;
   min-height: 100vh;
   display: flex;

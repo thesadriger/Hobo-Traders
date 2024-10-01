@@ -4,7 +4,7 @@ import { Button, Spin } from 'antd';
 import styled, { keyframes, css } from 'styled-components';
 import Graphic from './Graphic';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateTotalWinnings } from '@/store/actions';
+import { updateTotalWinnings } from '@/store/slices/totalWinningsSlice';
 
 
 // Контейнер для всей информации сверху
@@ -170,7 +170,7 @@ const MainSectionGraphic = ({ coinKey, coinData }) => {
 
   const dispatch = useDispatch();
   const totalWinnings = useSelector(
-    (state) => state.totalWinningsPerCoin[coinKey] || 0
+    (state) => state.totalWinnings.totalWinningsPerCoin[coinKey] || 0
   );
 
   const [currentPrice, setCurrentPrice] = useState(initialPrice);
@@ -196,9 +196,9 @@ const MainSectionGraphic = ({ coinKey, coinData }) => {
     setIntervalSpeed(200);
 
     setTimeout(() => {
-      const randomNum = Math.floor(Math.random() * maxWin) + 1; // Генерируем целое число от 1 до maxWin
+      const randomNum = Math.floor(Math.random() * maxWin) + 1;
       setRandomValue(`+${randomNum} $`);
-      dispatch(updateTotalWinnings(coinKey, randomNum)); // Обновляем totalWinnings в Redux
+      dispatch(updateTotalWinnings({ coinKey, amount: randomNum }));
       setIsTextVisible(true);
     }, 1000);
 

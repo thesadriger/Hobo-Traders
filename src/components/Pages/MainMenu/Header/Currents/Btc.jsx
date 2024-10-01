@@ -1,45 +1,42 @@
-import React from 'react'
-import ProgressBar from 'react-bootstrap/ProgressBar'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import { BarIcon } from '../DataIMGHeader'
-import { styled } from 'styled-components'
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { BarIcon } from '../DataIMGHeader';
+import styled from 'styled-components';
 
-const BtcContainer = styled.section`
+const BtcContainer = styled.div`
   display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #646464;
-    border-radius: 10px;
-    font-size: 12px;
-    padding: 0 0.5rem;
-    width: 30%;
-    apect-ratio: 3 / 1;
-    align-content: center;
-    flex-direction: row;
+  align-items: center;
+  background-color: #646464;
+  border-radius: 10px;
+  padding: 0.25rem;
+  width: 80px;
+
+  @media (max-width: 768px) {
+    width: 70px;
+    padding: 0.2rem;
+  }
 `;
+
 const ImgBtc = styled.img`
-  width: 1rem;
-    height: 1rem;
-    background-color: #323232;
-    border-radius: 20%;
+  width: 15px;
+  height: 15px;
 `;
+
 const BalanceBtc = styled.span`
-font-family: 'SF Pro Display', sans-serif;
-  font-size: 80%;
+  font-family: 'SF Pro Display', sans-serif;
+  font-size: 70%;
   font-weight: 700;
-  font-style: normal;
-  color: #fff
+  color: #fff;
+  margin-left: 5px;
 `;
 
 const Btc = () => {
+  const btcBalance = useSelector((state) => state.balance.btc);
+
   return (
     <BtcContainer>
-              <ImgBtc src={BarIcon.btc.image} alt="" />
-              <BalanceBtc>
-                <span>
-                  1000$
-                </span>
-              </BalanceBtc>
+      <ImgBtc src={BarIcon.btc.image} alt="BTC" />
+      <BalanceBtc>{btcBalance} BTC</BalanceBtc>
     </BtcContainer>
   );
 };

@@ -1,41 +1,49 @@
-import React from 'react'
-import ProgressBar from 'react-bootstrap/ProgressBar'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import { BarIcon } from '../DataIMGHeader'
-import { styled } from 'styled-components'
+import React from 'react';
+import { useSelector } from 'react-redux';
+import ProgressBar from 'react-bootstrap/ProgressBar';
+import { BarIcon } from '../DataIMGHeader';
+import styled from 'styled-components';
 
-const HealthContainer = styled.section`
+const HealthContainer = styled.div`
   display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 30%;
-    apect-ratio: 3 / 1;
-    align-content: center;
-    flex-direction: row;
+  align-items: center;
 `;
-const HealthImg = styled.img`
-    width: 30%;
-    height: 30%;
-    border-radius: 20%;
-    background-color: #646464;
-`;
-const ProgressHealthContainer = styled.div`
-  width: 100%;
-  height: 100%;
 
-  .progress-bar {
-    height: 100%; /* Высота внутреннего прогресс-бара */
-    background-color: #4caf50; /* Цвет прогресс-бара */
-    transition: width 1s ease-in-out; /* Анимация прогресс-бара */
+const HealthImg = styled.img`
+  width: 20px;
+  height: 20px;
+
+  @media (max-width: 768px) {
+    width: 15px;
+    height: 15px;
   }
 `;
+
+const ProgressHealthContainer = styled.div`
+  width: 60px;
+  margin-left: 5px;
+
+  @media (max-width: 768px) {
+    width: 50px;
+    margin-left: 2px;
+  }
+
+  .progress-bar {
+    height: 8px;
+    background-color: #4caf50;
+    transition: width 1s ease-in-out;
+  }
+`;
+
 const Health = () => {
+  const health = useSelector((state) => state.indicators.health);
+
   return (
     <HealthContainer>
-              <HealthImg src={BarIcon.health.image} alt="" />
-              <ProgressHealthContainer>
-                <ProgressBar now={100} animated/>
-              </ProgressHealthContainer>
+      <HealthImg src={BarIcon.health.image} alt="Health" />
+      <ProgressHealthContainer>
+        <ProgressBar now={health} animated />
+      </ProgressHealthContainer>
     </HealthContainer>
   );
 };

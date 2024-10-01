@@ -1,13 +1,20 @@
-import React, { useRef, useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// Main.jsx
+import React from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { Tabs as AntdTabs } from 'antd';
-import { HomeOutlined, ReadOutlined, CarOutlined } from '@ant-design/icons';
-import { Swiper } from 'antd-mobile';
+import { AnimatePresence, motion } from 'framer-motion';
+import AnimatedPage from './AnimatedPage';
 
+// Импорт страниц
 import AppartamentsPage from './Pages/AppartamentsPage.jsx';
 import EducationPage from './Pages/EducationPage.jsx';
 import CarsPage from './Pages/CarsPage.jsx';
+import ExchangePage from '../Footer/Pages/ExchangePage/ExchangePage.jsx';
+import FunPage from '../Footer/Pages/FunPage.jsx';
+import HealthPage from '../Footer/Pages/HealthPage.jsx';
+import FoodPage from '../Footer/Pages/FoodPage.jsx';
+import ShopPage from '../Footer/Pages/ShopPage.jsx';
+import Background from './Background.jsx';
 
 const MainSection = styled.main`
   display: flex;
@@ -22,248 +29,96 @@ const MainBodySection = styled.section`
   flex: 1;
   width: 100%;
   align-items: center;
+  position: relative; /* Добавлено для анимации */
 `;
-
-const SwiperCard = styled.div`
-  display: flex;
-  flex: 1;
-  width: 100%;
-  overflow-y: auto;
-`;
-
-const TabIconWrapper = styled.div`
-  font-size: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 1rem;
-`;
-
-const tabItems = [
-  { key: '1', title: 'apartaments', icon: <HomeOutlined />, ariaLabel: 'Apartaments' },
-  { key: '2', title: 'education', icon: <ReadOutlined />, ariaLabel: 'Education' },
-  { key: '3', title: 'cars', icon: <CarOutlined />, ariaLabel: 'Cars' },
-];
 
 const Main = () => {
-  const swiperRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const location = useLocation();
 
   return (
     <MainSection>
       <MainBodySection>
-        <AntdTabs
-          activeKey={tabItems[activeIndex].key}
-          onChange={(key) => {
-            const index = tabItems.findIndex((item) => item.key === key);
-            setActiveIndex(index);
-            swiperRef.current?.swipeTo(index);
-          }}
-          tabBarStyle={{ display: 'flex', justifyContent: 'center' }}
-          items={tabItems.map((item) => ({
-            key: item.key,
-            label: (
-              <TabIconWrapper aria-label={item.ariaLabel}>
-                {item.icon}
-              </TabIconWrapper>
-            ),
-          }))}
-        />
-        <Swiper
-          style={{ flex: 1, width: '100%' }}
-          direction="horizontal"
-          loop={false}
-          indicator={() => null}
-          ref={swiperRef}
-          defaultIndex={activeIndex}
-          onIndexChange={(index) => {
-            setActiveIndex(index);
-          }}
-        >
-          <Swiper.Item>
-            <SwiperCard>
-              <AppartamentsPage />
-            </SwiperCard>
-          </Swiper.Item>
-          <Swiper.Item>
-            <SwiperCard>
-              <EducationPage />
-            </SwiperCard>
-          </Swiper.Item>
-          <Swiper.Item>
-            <SwiperCard>
-              <CarsPage />
-            </SwiperCard>
-          </Swiper.Item>
-        </Swiper>
+        <AnimatePresence mode="wait" initial={false}>
+          <Routes location={location} key={location.pathname}>
+            <Route
+              path="/appartaments"
+              element={
+                <AnimatedPage>
+                  <AppartamentsPage />
+                </AnimatedPage>
+              }
+            />
+            <Route
+              path="education"
+              element={
+                <AnimatedPage>
+                  <EducationPage />
+                </AnimatedPage>
+              }
+            />
+            <Route
+              path="cars"
+              element={
+                <AnimatedPage>
+                  <CarsPage />
+                </AnimatedPage>
+              }
+            />
+            {/* Другие маршруты */}
+            <Route
+              path="exchange"
+              element={
+                <AnimatedPage>
+                  <ExchangePage />
+                </AnimatedPage>
+              }
+            />
+            <Route
+              path="fun"
+              element={
+                <AnimatedPage>
+                  <FunPage />
+                </AnimatedPage>
+              }
+            />
+            <Route
+              path="health"
+              element={
+                <AnimatedPage>
+                  <HealthPage />
+                </AnimatedPage>
+              }
+            />
+            <Route
+              path="food"
+              element={
+                <AnimatedPage>
+                  <FoodPage />
+                </AnimatedPage>
+              }
+            />
+            <Route
+              path="shop"
+              element={
+                <AnimatedPage>
+                  <ShopPage />
+                </AnimatedPage>
+              }
+            />
+            {/* Маршрут по умолчанию */}
+            <Route
+              path="*"
+              element={
+                <AnimatedPage>
+                  <Background/>
+                </AnimatedPage>
+              }
+            />
+          </Routes>
+        </AnimatePresence>
       </MainBodySection>
     </MainSection>
   );
 };
 
 export default Main;
-
-
-
-
-// import React, { useRef, useState } from 'react'
-// import 'bootstrap/dist/css/bootstrap.min.css'
-// import { styled } from 'styled-components'
-// import { Tabs as AntdTabs } from 'antd';
-// import { HomeOutlined, ReadOutlined, CarOutlined} from '@ant-design/icons';
-// import { Swiper} from 'antd-mobile'
-
-// import AppartamentsPage from './Pages/AppartamentsPage.jsx'
-// import EducationPage from './Pages/EducationPage.jsx';
-// import CarsPage from './Pages/CarsPage.jsx';
-
-// const MainSection = styled.main`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   background-color: #323232;
-//   flex-direction: column;
-//   width: 100%;
-// `;
-
-// const MainBodySection = styled.section`
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   flex-direction: column;
-//   height: 90%;
-//   width: 100%;
-//   padding: 0.5rem;
-//   align-content: flex-end;
-//   flex-wrap: wrap;
-// `;
-// const SwiperCard = styled.button`
-//   height: 100%;
-//   width: 100%;
-//     color: #999999;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     font-size: 24px;
-//     user-select: none;
-// `;
-// const TabIconWrapper = styled.div`
-//   font-size: 24px; /* Adjust size to fit the tab item */
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// `;
-
-
-
-// const tabItems = [
-//   { key: '1', title: 'apartaments', icon: <HomeOutlined />  },
-//   { key: '2', title: 'education', icon: <ReadOutlined /> },
-//   { key: '3', title: 'cars', icon: <CarOutlined /> },
-// ];
-
-// const Main = () => {
-//   const swiperRef = useRef(null);
-//   const [activeIndex, setActiveIndex] = useState(0);
-
-//   return (
-//     <MainSection>
-//       <MainBodySection>
-//       <AntdTabs
-//           activeKey={tabItems[activeIndex].key}
-//           onChange={key => {
-//             const index = tabItems.findIndex(item => item.key === key);
-//             setActiveIndex(index);
-//             swiperRef.current?.swipeTo(index);
-//           }}
-//           items={tabItems.map(item => ({
-//             key: item.key,
-//             label: <TabIconWrapper>{item.icon}</TabIconWrapper>,
-//           }))}
-//         />
-//         <Swiper
-//           direction='horizontal'
-//           loop
-//           indicator={() => null}
-//           ref={swiperRef}
-//           defaultIndex={activeIndex}
-//           onIndexChange={index => {
-//             setActiveIndex(index);
-//           }}
-//         >
-//           <Swiper.Item>
-//             <SwiperCard>
-//               <AppartamentsPage/>
-//             </SwiperCard>
-//           </Swiper.Item>
-//           <Swiper.Item>
-//             <SwiperCard>
-//               <EducationPage/>
-//             </SwiperCard>
-//           </Swiper.Item>
-//           <Swiper.Item>
-//             <SwiperCard>
-//               <CarsPage/>
-//             </SwiperCard>
-//           </Swiper.Item>
-//         </Swiper>
-        
-//       </MainBodySection>
-//     </MainSection>
-//   );
-// };
-
-// export default Main;
-
-// __________________________________________________
-
-// import React from 'react'
-// import 'bootstrap/dist/css/bootstrap.min.css'
-// import { styled } from 'styled-components'
-
-// import AppartamentsBtn from './Btn/AppartamentsBtn.jsx'
-// import EducationBtn from './Btn/EducationBtn.jsx'
-// import CarsBtn from './Btn/CarsBtn.jsx'
-// import Background from './Background.jsx'
-
-// const MainSection = styled.main`
-//  display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     background-color: #323232;
-//     flex-direction: column;
-//     width: 100%;
-// `;
-// const MainBodySection = styled.section`
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     flex-direction: column;
-//     height: 50%;
-//     width: 100%;
-//     padding: 0.5rem;
-//     align-content: flex-end;
-//     flex-wrap: wrap;
-// }
-// `;
-
-
-
-// const Main = () => {
-
-
-//   return (
-    
-//     <MainSection>
-//       <MainBodySection>
-//         <AppartamentsBtn/>
-//         <EducationBtn/>
-//         <CarsBtn/>
-//         <Background/>
-//       </MainBodySection>
-//     </MainSection>
-//   );
-// }
-
-// export default Main;
-

@@ -1,11 +1,22 @@
 // src/store/store.js
-import { createStore } from 'redux';
-import rootReducer from './reducers'; // Импортируем из './reducers/index.js'
+import { configureStore } from '@reduxjs/toolkit';
+import balanceReducer from '../store/slices/balanceSlice';
+import indicatorsReducer from '../store/slices/indicatorsSlice';
+import levelReducer from '../store/slices/levelSlice';
+import totalWinningsReducer from '../store/slices/totalWinningsSlice';
+// Импортируйте другие редьюсеры, если они есть
 
-const store = createStore(
-  rootReducer,
+
+const store = configureStore({
+  reducer: {
+    balance: balanceReducer,
+    indicators: indicatorsReducer,
+    level: levelReducer,
+    totalWinnings: totalWinningsReducer,
+    // другие редьюсеры
+  },
   // Подключение Redux DevTools Extension для удобной отладки
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+  devTools: process.env.NODE_ENV !== 'production',
+});
 
 export default store;

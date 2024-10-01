@@ -1,10 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { BarIcon } from '../DataIMGHeader';
 import styled from 'styled-components';
 
-const UsdtContainer = styled.section`
+const HbtrdContainer = styled.section`
   display: flex;
   align-items: center;
   background-color: #646464;
@@ -18,30 +17,29 @@ const UsdtContainer = styled.section`
   }
 `;
 
-const ImgUsdt = styled.img`
+const ImgHbtrd = styled.img`
   width: 15px;
   height: 15px;
 `;
-
-const BalanceUsdt = styled.span`
+const BalanceHbtrd = styled.span`
   font-family: 'SF Pro Display', sans-serif;
-  font-size: 70%;
+  font-size: 60%;
   font-weight: 700;
   color: #fff;
   margin-left: 5px;
 `;
 
-const Usdt = () => {
-  const usdtBalance = useSelector((state) => state.balance.usdt);
+const Hbtrd = () => {
+  const hbtrdBalance = useSelector((state) => state.balance.hbtrd);
 
   return (
-    <UsdtContainer>
-      <ImgUsdt src={BarIcon.usdt.image} alt="Usdt" />
-      <BalanceUsdt>
-        <span>{usdtBalance}$</span>
-      </BalanceUsdt>
-    </UsdtContainer>
+    <HbtrdContainer>
+      <ImgHbtrd src={BarIcon.hbtrd.image} alt="Hbtrd" />
+      <BalanceHbtrd>
+        <span>{hbtrdBalance} HBTRD</span>
+      </BalanceHbtrd>
+    </HbtrdContainer>
   );
 };
 
-export default Usdt;
+export default Hbtrd;

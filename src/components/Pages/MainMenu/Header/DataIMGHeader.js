@@ -15,7 +15,7 @@ export const BarIcon = {
     usdt: {
       image: '/src/assets/cash_green.png',
     },
-    ivg: {
+    hbtrd: {
       image: '/src/assets/pie_chart2.png',
     },
     user: {
