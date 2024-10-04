@@ -1,3 +1,4 @@
+// Header.jsx
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
@@ -17,11 +18,9 @@ import Avatar from './Avatar';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
 
-// Styled Components
-
 const Section = styled.header`
   display: flex;
-  flex-direction: column; /* Добавили для вертикального размещения элементов */
+  flex-direction: column; /* Для вертикального размещения элементов */
   align-items: center;
   justify-content: space-between;
   width: 100%;
@@ -68,7 +67,8 @@ const CurrentsBars = styled.div`
   align-items: center;
   width: 100%;
   padding: 0.25rem 0;
-  background-color: #303030;
+  border-radius: 5px;
+  background-color: #424242;
   flex-wrap: wrap;
 `;
 
@@ -87,14 +87,19 @@ const RightSection = styled.div`
 `;
 
 const BackButton = styled.button`
-   flex: 0 0 auto;
+  background-color: #646464;
+  border: none;
+  border-radius: 25%;
   width: 60px;
   aspect-ratio: 1/1;
-  background-color: #646464;
-  border-radius: 25%;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #525252;
+  }
 `;
 
 const AvatarContainer = styled.section`
@@ -123,7 +128,7 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const isBackgroundPage = location.pathname === '/' || location.pathname === '/background';
+  const isBackgroundPage = location.pathname === '/main-menu' || location.pathname === '/background';
 
   return (
     <Section>

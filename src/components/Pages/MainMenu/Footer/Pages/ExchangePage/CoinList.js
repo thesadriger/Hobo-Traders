@@ -21,7 +21,7 @@ export const CoinsList = {
         title: 'BOME',
         range: [0.100, 0.300],
         initialPrice: 0.1500,
-        maxWin: 15000,
+        maxWin: 150000000000,
       },
   };
   

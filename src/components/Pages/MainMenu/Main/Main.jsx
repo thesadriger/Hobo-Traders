@@ -12,7 +12,7 @@ import CarsPage from './Pages/CarsPage.jsx';
 import ExchangePage from '../Footer/Pages/ExchangePage/ExchangePage.jsx';
 import FunPage from '../Footer/Pages/FunPage.jsx';
 import HealthPage from '../Footer/Pages/HealthPage.jsx';
-import FoodPage from '../Footer/Pages/FoodPage.jsx';
+import FoodPage from '../Footer/Pages/FoodPage/FoodPage.jsx';
 import ShopPage from '../Footer/Pages/ShopPage.jsx';
 import Background from './Background.jsx';
 

@@ -10,7 +10,7 @@ const levelSlice = createSlice({
   initialState,
   reducers: {
     increaseLevel: (state, action) => {
-      state.level += action.payload;
+      state.level = parseFloat((state.level + action.payload).toFixed(3));
     },
   },
 });

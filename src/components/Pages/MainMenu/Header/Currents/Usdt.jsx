@@ -1,3 +1,4 @@
+// Usdt.jsx
 import React from 'react';
 import { useSelector } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -7,7 +8,6 @@ import styled from 'styled-components';
 const UsdtContainer = styled.section`
   display: flex;
   align-items: center;
-  background-color: #646464;
   border-radius: 10px;
   padding: 0.25rem;
   width: 80px;
@@ -34,11 +34,29 @@ const BalanceUsdt = styled.span`
 const Usdt = () => {
   const usdtBalance = useSelector((state) => state.balance.usdt);
 
+  // Функция для форматирования баланса с суффиксами K, M, B
+  const formatBalance = (number) => {
+    if (number >= 1_000_000_000_000) {
+      return `${(number / 1_000_000_000_000).toFixed(2)}КB$`;
+    } else if (number >= 1_000_000_000) {
+      return `${(number / 1_000_000_000).toFixed(2)}B$`;
+    } else if (number >= 1_000_000) {
+      return `${(number / 1_000_000).toFixed(2)}M$`;
+    } else if (number >= 1_000) {
+      return `${(number / 1_000).toFixed(2)}K$`;
+    } else {
+      return `${number}$`;
+    }
+  };
+
+  // Получаем отформатированный баланс
+  const displayBalance = formatBalance(usdtBalance);
+
   return (
     <UsdtContainer>
       <ImgUsdt src={BarIcon.usdt.image} alt="Usdt" />
       <BalanceUsdt>
-        <span>{usdtBalance}$</span>
+        <span>{displayBalance}</span>
       </BalanceUsdt>
     </UsdtContainer>
   );

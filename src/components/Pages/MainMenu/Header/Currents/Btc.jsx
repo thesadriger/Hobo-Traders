@@ -6,7 +6,6 @@ import styled from 'styled-components';
 const BtcContainer = styled.div`
   display: flex;
   align-items: center;
-  background-color: #646464;
   border-radius: 10px;
   padding: 0.25rem;
   width: 80px;

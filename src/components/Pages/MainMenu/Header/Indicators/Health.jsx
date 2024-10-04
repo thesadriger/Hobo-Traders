@@ -29,7 +29,6 @@ const ProgressHealthContainer = styled.div`
   }
 
   .progress-bar {
-    height: 8px;
     background-color: #4caf50;
     transition: width 1s ease-in-out;
   }

@@ -12,8 +12,7 @@ import {
   decreaseFood,
   resetIndicators, // Импортируем действие сброса индикаторов
 } from '@/store/slices/indicatorsSlice';
-import { increaseLevel } from '@/store/slices/levelSlice';// Для увеличения уровня
-
+import { increaseLevel } from '@/store/slices/levelSlice'; // Для увеличения уровня
 
 // Контейнер для всей информации сверху
 const InfoContainer = styled.div`
@@ -172,21 +171,35 @@ const RandomText = styled.div`
   }
 `;
 
-// функция для генерации случайного уменьшения с заданными вероятностями
-  const getRandomDeduction = () => {
-    const rand = Math.random();
-    if (rand < 0.6) {
-      // 60% шанс отнять 1-3 единицы
-      return Math.floor(Math.random() * 3) + 1;
-    } else if (rand < 0.9) {
-      // 30% шанс отнять 4-6 единиц
-      return Math.floor(Math.random() * 3) + 4;
-    } else {
-      // 10% шанс отнять 7-10 единиц
-      return Math.floor(Math.random() * 4) + 7;
-    }
-  };
+// Функция для форматирования баланса с суффиксами
+const formatBalance = (number) => {
+  if (number >= 1_000_000_000_000) {
+    return `${(number / 1_000_000_000_000).toFixed(2)}КB$`;
+  } else if (number >= 1_000_000_000) {
+    return `${(number / 1_000_000_000).toFixed(2)}B$`;
+  } else if (number >= 1_000_000) {
+    return `${(number / 1_000_000).toFixed(2)}M$`;
+  } else if (number >= 1_000) {
+    return `${(number / 1_000).toFixed(2)}K$`;
+  } else {
+    return `${number}$`;
+  }
+};
 
+// Функция для генерации случайного уменьшения с заданными вероятностями
+const getRandomDeduction = () => {
+  const rand = Math.random();
+  if (rand < 0.6) {
+    // 60% шанс отнять 1-3 единицы
+    return Math.floor(Math.random() * 3) + 1;
+  } else if (rand < 0.9) {
+    // 30% шанс отнять 4-6 единиц
+    return Math.floor(Math.random() * 3) + 4;
+  } else {
+    // 10% шанс отнять 7-10 единиц
+    return Math.floor(Math.random() * 4) + 7;
+  }
+};
 
 // Основной компонент
 const MainSectionGraphic = ({ coinKey, coinData }) => {
@@ -239,15 +252,14 @@ const MainSectionGraphic = ({ coinKey, coinData }) => {
       // Получаем предыдущее значение уровня
       const previousLevel = level;
 
-      // Увеличиваем уровень на 0.05
-      dispatch(increaseLevel(0.05));
-
-      // Получаем новое значение уровня
-      const newLevel = previousLevel + 0.05;
-
+      const increment = 0.05;
+      dispatch(increaseLevel(increment));
+    
+      // Получаем новое значение уровня с учётом округления
+      const newLevel = parseFloat((previousLevel + increment).toFixed(2));
+    
       // Проверяем, перешёл ли уровень на новое целое число
-      if (Math.floor(newLevel) > Math.floor(previousLevel)) {
-        // Если да, сбрасываем индикаторы до 100
+      if (Math.floor(newLevel + 0.0001) > Math.floor(previousLevel + 0.0001)) {
         dispatch(resetIndicators());
       }
     }, 1000);
@@ -265,6 +277,12 @@ const MainSectionGraphic = ({ coinKey, coinData }) => {
     setMaxPrice((prevMax) => (price > prevMax ? price : prevMax));
     setMinPrice((prevMin) => (price < prevMin ? price : prevMin));
   };
+
+  // Получаем отформатированные значения
+  const formattedTotalWinnings = formatBalance(totalWinnings);
+  const formattedRandomValue = randomValue
+    ? `+${formatBalance(parseFloat(randomValue.replace('+', '').replace('$', '')))}`
+    : '';
 
   return (
     <MainGraphicContainer>
@@ -285,7 +303,7 @@ const MainSectionGraphic = ({ coinKey, coinData }) => {
           </InfoText>
           <InfoText>
             Оборот торговли:{' '}
-            <InfoValue>{`$${totalWinnings}`}</InfoValue>
+            <InfoValue>{formattedTotalWinnings}</InfoValue>
           </InfoText>
         </RightInfo>
       </InfoContainer>
@@ -301,7 +319,7 @@ const MainSectionGraphic = ({ coinKey, coinData }) => {
           range={range}
         />
         {randomValue && (
-          <RandomText isVisible={isTextVisible}>{randomValue}</RandomText>
+          <RandomText isVisible={isTextVisible}>{formattedRandomValue}</RandomText>
         )}
       </GraphContainer>
       <TradeButton
