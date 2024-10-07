@@ -6,11 +6,13 @@ import { Provider } from 'react-redux';
 import store from '@/store/store';
 import App from './App.jsx';
 import MainMenu from './components/Pages/MainMenu/MainMenu.jsx';
+import LevelNotifier from './components/LevelNotifier.jsx';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
+    <LevelNotifier />
       <Router basename="/Hobo-Traders">
         <Routes>
           <Route path="/" element={<App />} />

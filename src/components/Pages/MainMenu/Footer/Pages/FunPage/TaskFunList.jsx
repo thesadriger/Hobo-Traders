@@ -1,4 +1,4 @@
-// src/data/TaskFoodList.js
+// src/data/TaskFunList.js
 import React from 'react';
 import {
   SmileOutlined,
@@ -8,7 +8,7 @@ import {
 } from '@ant-design/icons';
 
 /**
- * Объект задач для страницы FoodPage.
+ * Объект задач для страницы FunPage.
  * Ключи объекта - уникальные идентификаторы задач.
  * Каждая задача содержит:
  * - title: Название задачи
@@ -20,32 +20,32 @@ import {
  */
 export const TasksList = {
   task1: {
-    title: 'Пожрать на помойке',
-    effects: { food: 10 },
+    title: 'Пукнуть в автобусе',
+    effects: { fun: 10 },
     initialPrice: 0, // Бесплатно
     currency: 'usdt',
     icon: <DollarOutlined />,
     additionalIcon: <CarryOutOutlined />,
   },
   task2: {
-    title: 'Искать еду на улице',
-    effects: { food: 10, fun: 5 },
+    title: 'Рыгнуть в столовой',
+    effects: { fun: 10, health: 5 },
     initialPrice: 0, // Бесплатно
     currency: 'usdt',
     icon: <CarryOutOutlined />,
     additionalIcon: <SmileOutlined />,
   },
   task3: {
-    title: 'Попрошайничать у пельменной',
-    effects: { food: 10 },
+    title: 'Ляпнуть пиваса',
+    effects: { fun: 10, food: 5 },
     initialPrice: 5, // 5$
     currency: 'usdt',
     icon: <SmileOutlined />,
     additionalIcon: <SolutionOutlined />,
   },
   task4: {
-    title: 'Закупиться в "просрочке"',
-    effects: { food: 10 },
+    title: 'Свернуть унитаз',
+    effects: { fun: 10 },
     initialPrice: 10, // 9.99$
     currency: 'usdt',
     icon: <SolutionOutlined />,
@@ -53,80 +53,88 @@ export const TasksList = {
   },
   // Добавьте остальные задачи аналогично
   task5: {
-    title: 'Купить шаурмы',
-    effects: { food: 10 },
+    title: 'Надуть на памятник',
+    effects: { fun: 10 },
     initialPrice: 8, // 8$
     currency: 'usdt',
     icon: <CarryOutOutlined />,
     additionalIcon: <DollarOutlined />,
   },
   task6: {
-    title: 'Пожрать в столовой',
-    effects: { food: 10 },
+    title: 'Выпить водки',
+    effects: { fun: 10 },
     initialPrice: 2, // 2$
     currency: 'usdt',
     icon: <SmileOutlined />,
     additionalIcon: <CarryOutOutlined />,
   },
   task7: {
-    title: 'Сходить в Точку',
-    effects: { food: 10 },
+    title: 'Сходить в кино',
+    effects: { fun: 10 },
     initialPrice: 4, // 4$
     currency: 'usdt',
     icon: <SolutionOutlined />,
     additionalIcon: <SmileOutlined />,
   },
   task8: {
-    title: 'Заказать еду',
-    effects: { food: 10 },
+    title: 'Залить вискаря',
+    effects: { fun: 10 },
     initialPrice: 0, // Бесплатно
     currency: 'usdt',
     icon: <SmileOutlined />,
     additionalIcon: <SolutionOutlined />,
   },
   task9: {
-    title: 'Посетить ресторан',
-    effects: { food: 10 },
+    title: 'Сходить в паб',
+    effects: { fun: 10 },
     initialPrice: 6, // 6$
     currency: 'usdt',
     icon: <CarryOutOutlined />,
     additionalIcon: <SmileOutlined />,
   },
   task10: {
-    title: 'Жениться',
-    effects: { food: 10 },
+    title: 'Устроить "фейерверк"',
+    effects: { fun: 10 },
     initialPrice: 7, // 7$
     currency: 'usdt',
     icon: <CarryOutOutlined />,
     additionalIcon: <SolutionOutlined />,
   },
   task11: {
-    title: 'Личный повар',
-    effects: { food: 10 },
+    title: 'Заказать массовую драку',
+    effects: { fun: 10 },
     initialPrice: 7, // 7$
     currency: 'usdt',
     icon: <CarryOutOutlined />,
     additionalIcon: <SolutionOutlined />,
   },
   task12: {
-    title: 'Купить себе кафе',
-    effects: { food: 10 },
+    title: 'Раздеть всех девушек в клубе',
+    effects: { fun: 10 },
     initialPrice: 7, // 7$
     currency: 'usdt',
     icon: <CarryOutOutlined />,
     additionalIcon: <SolutionOutlined />,
   },
   task13: {
-    title: 'Купить себе ресторан',
-    effects: { food: 10 },
+    title: 'Избить Бибера',
+    effects: { fun: 10 },
     initialPrice: 7, // 7$
     currency: 'usdt',
     icon: <CarryOutOutlined />,
     additionalIcon: <SolutionOutlined />,
   },
   task14: {
-    title: 'Основать сеть ресторанов',
-    effects: { food: 10 },
+    title: 'Напиться с любимым актером',
+    effects: { fun: 10 },
+    initialPrice: 7, // 7$
+    currency: 'usdt',
+    icon: <CarryOutOutlined />,
+    additionalIcon: <SolutionOutlined />,
+  },
+  task15: {
+    title: 'Купаться в шампанском с мисс мира',
+    effects: { fun: 10 },
     initialPrice: 7, // 7$
     currency: 'usdt',
     icon: <CarryOutOutlined />,

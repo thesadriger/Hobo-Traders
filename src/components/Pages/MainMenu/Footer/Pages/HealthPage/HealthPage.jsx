@@ -1,8 +1,8 @@
-// src/pages/FoodPage.jsx
+// src/pages/HealthPage.jsx
 import React from 'react';
 import styled from 'styled-components';
-import { TasksList } from './TaskFoodList';
-import TaskSection from './TaskFoodSection';
+import { TasksList } from './TaskHealthList';
+import TaskSection from './TaskHealthSection';
 
 // Стили для страницы
 const PageWrapper = styled.div`
@@ -24,7 +24,7 @@ const TaskWrapper = styled.div`
 `;
 
 // Основной компонент страницы
-const FoodPage = () => {
+const HealthPage = () => {
   return (
     <PageWrapper>
       <TaskWrapper>
@@ -43,4 +43,4 @@ const FoodPage = () => {
   );
 };
 
-export default FoodPage;
+export default HealthPage;

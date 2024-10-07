@@ -52,11 +52,11 @@ const Footer = () => {
         <FooterButton to="exchange" aria-label="Exchange">
           <Exchange />
         </FooterButton>
-        <FooterButton to="fun" aria-label="Fun">
-          Fun
-        </FooterButton>
         <FooterButton to="health" aria-label="Health">
           Health
+        </FooterButton>
+        <FooterButton to="fun" aria-label="Fun">
+          Fun
         </FooterButton>
         <FooterButton to="food" aria-label="Food">
           Food

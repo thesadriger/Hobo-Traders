@@ -1,4 +1,4 @@
-// src/data/TaskFoodList.js
+// src/data/TaskHealthList.js
 import React from 'react';
 import {
   SmileOutlined,
@@ -8,7 +8,7 @@ import {
 } from '@ant-design/icons';
 
 /**
- * Объект задач для страницы FoodPage.
+ * Объект задач для страницы HealthPage.
  * Ключи объекта - уникальные идентификаторы задач.
  * Каждая задача содержит:
  * - title: Название задачи
@@ -20,115 +20,128 @@ import {
  */
 export const TasksList = {
   task1: {
-    title: 'Пожрать на помойке',
-    effects: { food: 10 },
+    title: 'Поспать',
+    effects: { health: 10 },
     initialPrice: 0, // Бесплатно
     currency: 'usdt',
     icon: <DollarOutlined />,
     additionalIcon: <CarryOutOutlined />,
   },
   task2: {
-    title: 'Искать еду на улице',
-    effects: { food: 10, fun: 5 },
-    initialPrice: 0, // Бесплатно
+    title: 'Лечебные травы',
+    effects: { health: 10, fun: 15 },
+    initialPrice: 150, // Бесплатно
     currency: 'usdt',
     icon: <CarryOutOutlined />,
     additionalIcon: <SmileOutlined />,
   },
   task3: {
-    title: 'Попрошайничать у пельменной',
-    effects: { food: 10 },
-    initialPrice: 5, // 5$
+    title: 'Заняться спортом',
+    effects: { health: 10 },
+    initialPrice: 0,
     currency: 'usdt',
     icon: <SmileOutlined />,
     additionalIcon: <SolutionOutlined />,
   },
   task4: {
-    title: 'Закупиться в "просрочке"',
-    effects: { food: 10 },
-    initialPrice: 10, // 9.99$
+    title: 'Сделать пробежку',
+    effects: { health: 10 },
+    initialPrice: 0,
     currency: 'usdt',
     icon: <SolutionOutlined />,
     additionalIcon: <SmileOutlined />,
   },
-  // Добавьте остальные задачи аналогично
   task5: {
-    title: 'Купить шаурмы',
-    effects: { food: 10 },
-    initialPrice: 8, // 8$
+    title: 'Сходить на туники',
+    effects: { health: 10, fun: 5 },
+    initialPrice: 0,
     currency: 'usdt',
     icon: <CarryOutOutlined />,
     additionalIcon: <DollarOutlined />,
   },
   task6: {
-    title: 'Пожрать в столовой',
-    effects: { food: 10 },
-    initialPrice: 2, // 2$
+    title: 'Вызвать скорую',
+    effects: { health: 10 },
+    initialPrice: 400,
     currency: 'usdt',
     icon: <SmileOutlined />,
     additionalIcon: <CarryOutOutlined />,
   },
   task7: {
-    title: 'Сходить в Точку',
-    effects: { food: 10 },
-    initialPrice: 4, // 4$
+    title: 'Сходить в поликлинику',
+    effects: { health: 10 },
+    initialPrice: 500,
     currency: 'usdt',
     icon: <SolutionOutlined />,
     additionalIcon: <SmileOutlined />,
   },
   task8: {
     title: 'Заказать еду',
-    effects: { food: 10 },
+    effects: { health: 10 },
     initialPrice: 0, // Бесплатно
     currency: 'usdt',
     icon: <SmileOutlined />,
     additionalIcon: <SolutionOutlined />,
   },
   task9: {
-    title: 'Посетить ресторан',
-    effects: { food: 10 },
-    initialPrice: 6, // 6$
+    title: 'Пойти в фитнес-центр',
+    effects: { health: 10 },
+    initialPrice: 5000,
     currency: 'usdt',
     icon: <CarryOutOutlined />,
     additionalIcon: <SmileOutlined />,
   },
   task10: {
-    title: 'Жениться',
-    effects: { food: 10 },
-    initialPrice: 7, // 7$
-    currency: 'usdt',
+    title: 'Персональный тренер',
+    effects: { health: 10 },
+    initialPrice: 1000,
+    currency: 'hbtrd',
     icon: <CarryOutOutlined />,
     additionalIcon: <SolutionOutlined />,
   },
   task11: {
-    title: 'Личный повар',
-    effects: { food: 10 },
-    initialPrice: 7, // 7$
-    currency: 'usdt',
+    title: 'Посетить частный медцентр',
+    effects: { health: 10, fun: 10},
+    initialPrice: 10000,
+    currency: 'hbtrd',
     icon: <CarryOutOutlined />,
     additionalIcon: <SolutionOutlined />,
   },
   task12: {
-    title: 'Купить себе кафе',
-    effects: { food: 10 },
-    initialPrice: 7, // 7$
-    currency: 'usdt',
-    icon: <CarryOutOutlined />,
-    additionalIcon: <SolutionOutlined />,
+    title: 'Персональный врач',
+    effects: {},
+    initialPrice: 5000,
+    currency: 'hbtrd',
   },
   task13: {
-    title: 'Купить себе ресторан',
-    effects: { food: 10 },
-    initialPrice: 7, // 7$
-    currency: 'usdt',
+    title: 'Лечение за ганицей',
+    effects: { health: 10, fun: 10, food: 10 },
+    initialPrice: 50000,
+    currency: 'hbtrd',
     icon: <CarryOutOutlined />,
     additionalIcon: <SolutionOutlined />,
   },
   task14: {
-    title: 'Основать сеть ресторанов',
-    effects: { food: 10 },
-    initialPrice: 7, // 7$
-    currency: 'usdt',
+    title: 'Пересадка органов',
+    effects: { health: 10 },
+    initialPrice: 300000,
+    currency: 'hbtrd',
+    icon: <CarryOutOutlined />,
+    additionalIcon: <SolutionOutlined />,
+  },
+  task15: {
+    title: 'Генные модификации',
+    effects: { health: 10 },
+    initialPrice: 50000000,
+    currency: 'hbtrd',
+    icon: <CarryOutOutlined />,
+    additionalIcon: <SolutionOutlined />,
+  },
+  task16: {
+    title: 'Остановка старения',
+    effects: { health: 10 },
+    initialPrice: 90000000,
+    currency: 'hbtrd',
     icon: <CarryOutOutlined />,
     additionalIcon: <SolutionOutlined />,
   },

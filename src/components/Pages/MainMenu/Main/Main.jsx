@@ -10,8 +10,8 @@ import AppartamentsPage from './Pages/AppartamentsPage.jsx';
 import EducationPage from './Pages/EducationPage.jsx';
 import CarsPage from './Pages/CarsPage.jsx';
 import ExchangePage from '../Footer/Pages/ExchangePage/ExchangePage.jsx';
-import FunPage from '../Footer/Pages/FunPage.jsx';
-import HealthPage from '../Footer/Pages/HealthPage.jsx';
+import FunPage from '../Footer/Pages/FunPage/FunPage.jsx';
+import HealthPage from '../Footer/Pages/HealthPage/HealthPage.jsx';
 import FoodPage from '../Footer/Pages/FoodPage/FoodPage.jsx';
 import ShopPage from '../Footer/Pages/ShopPage.jsx';
 import Background from './Background.jsx';
@@ -74,18 +74,18 @@ const Main = () => {
               }
             />
             <Route
-              path="fun"
-              element={
-                <AnimatedPage>
-                  <FunPage />
-                </AnimatedPage>
-              }
-            />
-            <Route
               path="health"
               element={
                 <AnimatedPage>
                   <HealthPage />
+                </AnimatedPage>
+              }
+            />
+            <Route
+              path="fun"
+              element={
+                <AnimatedPage>
+                  <FunPage />
                 </AnimatedPage>
               }
             />
