@@ -1,3 +1,4 @@
+// Health.jsx
 import React from 'react';
 import { useSelector } from 'react-redux';
 import ProgressBar from 'react-bootstrap/ProgressBar';
@@ -27,10 +28,17 @@ const ProgressHealthContainer = styled.div`
     width: 50px;
     margin-left: 2px;
   }
+`;
+
+const StyledProgressBar = styled(ProgressBar)`
+  height: 15px;
+  border-radius: 5px;
+  background-color: #424242;
+  overflow: hidden;
 
   .progress-bar {
-    background-color: #4caf50;
-    transition: width 1s ease-in-out;
+    background-color: #f44336; /* Health bar color */
+    transition: width 0.5s ease-in-out;
   }
 `;
 
@@ -41,7 +49,7 @@ const Health = () => {
     <HealthContainer>
       <HealthImg src={BarIcon.health.image} alt="Health" />
       <ProgressHealthContainer>
-        <ProgressBar now={health} animated />
+        <StyledProgressBar now={health} />
       </ProgressHealthContainer>
     </HealthContainer>
   );

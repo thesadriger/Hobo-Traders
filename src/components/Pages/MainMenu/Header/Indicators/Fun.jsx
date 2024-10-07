@@ -1,3 +1,4 @@
+// Fun.jsx
 import React from 'react';
 import { useSelector } from 'react-redux';
 import ProgressBar from 'react-bootstrap/ProgressBar';
@@ -20,17 +21,24 @@ const FunImg = styled.img`
 `;
 
 const ProgressFunContainer = styled.div`
-    width: 60px;
+  width: 60px;
   margin-left: 5px;
 
   @media (max-width: 768px) {
     width: 50px;
     margin-left: 2px;
   }
+`;
+
+const StyledProgressBar = styled(ProgressBar)`
+  height: 15px;
+  border-radius: 5px;
+  background-color: #424242;
+  overflow: hidden;
 
   .progress-bar {
-    background-color: #4caf50;
-    transition: width 1s ease-in-out;
+    background-color: #4caf50; /* Fun bar color */
+    transition: width 0.5s ease-in-out;
   }
 `;
 
@@ -41,7 +49,7 @@ const Fun = () => {
     <FunContainer>
       <FunImg src={BarIcon.fun.image} alt="Fun" />
       <ProgressFunContainer>
-        <ProgressBar now={fun} animated />
+        <StyledProgressBar now={fun} />
       </ProgressFunContainer>
     </FunContainer>
   );

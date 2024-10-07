@@ -24,55 +24,61 @@ export const TasksList = {
     effects: { food: 10 },
     initialPrice: 0, // Бесплатно
     currency: 'usdt',
+    requiredLevel: 0,
     icon: <DollarOutlined />,
     additionalIcon: <CarryOutOutlined />,
   },
   task2: {
     title: 'Искать еду на улице',
     effects: { food: 10, fun: 5 },
-    initialPrice: 0, // Бесплатно
+    initialPrice: 0,
     currency: 'usdt',
+    requiredLevel: 8,
     icon: <CarryOutOutlined />,
     additionalIcon: <SmileOutlined />,
   },
   task3: {
     title: 'Попрошайничать у пельменной',
     effects: { food: 10 },
-    initialPrice: 5, // 5$
+    initialPrice: 5,
     currency: 'usdt',
+    requiredLevel: 18,
     icon: <SmileOutlined />,
     additionalIcon: <SolutionOutlined />,
   },
   task4: {
     title: 'Закупиться в "просрочке"',
     effects: { food: 10 },
-    initialPrice: 10, // 9.99$
+    initialPrice: 10,
     currency: 'usdt',
+    requiredLevel: 28,
     icon: <SolutionOutlined />,
     additionalIcon: <SmileOutlined />,
   },
-  // Добавьте остальные задачи аналогично
   task5: {
     title: 'Купить шаурмы',
     effects: { food: 10 },
-    initialPrice: 8, // 8$
+    initialPrice: 8,
     currency: 'usdt',
+    requiredLevel: 38,
     icon: <CarryOutOutlined />,
     additionalIcon: <DollarOutlined />,
   },
   task6: {
     title: 'Пожрать в столовой',
     effects: { food: 10 },
-    initialPrice: 2, // 2$
+    initialPrice: 2,
     currency: 'usdt',
+    requiredLevel: 48,
     icon: <SmileOutlined />,
     additionalIcon: <CarryOutOutlined />,
   },
   task7: {
     title: 'Сходить в Точку',
     effects: { food: 10 },
-    initialPrice: 4, // 4$
+    initialPrice: 4,
     currency: 'usdt',
+    requiredLevel: 47,
     icon: <SolutionOutlined />,
     additionalIcon: <SmileOutlined />,
   },
@@ -81,6 +87,7 @@ export const TasksList = {
     effects: { food: 10 },
     initialPrice: 0, // Бесплатно
     currency: 'usdt',
+    requiredLevel: 52,
     icon: <SmileOutlined />,
     additionalIcon: <SolutionOutlined />,
   },
@@ -89,6 +96,7 @@ export const TasksList = {
     effects: { food: 10 },
     initialPrice: 6, // 6$
     currency: 'usdt',
+    requiredLevel: 61,
     icon: <CarryOutOutlined />,
     additionalIcon: <SmileOutlined />,
   },
@@ -97,6 +105,7 @@ export const TasksList = {
     effects: { food: 10 },
     initialPrice: 7, // 7$
     currency: 'usdt',
+    requiredLevel: 64,
     icon: <CarryOutOutlined />,
     additionalIcon: <SolutionOutlined />,
   },
@@ -105,6 +114,7 @@ export const TasksList = {
     effects: { food: 10 },
     initialPrice: 7, // 7$
     currency: 'usdt',
+    requiredLevel: 72,
     icon: <CarryOutOutlined />,
     additionalIcon: <SolutionOutlined />,
   },
@@ -113,6 +123,7 @@ export const TasksList = {
     effects: { food: 10 },
     initialPrice: 7, // 7$
     currency: 'usdt',
+    requiredLevel: 75,
     icon: <CarryOutOutlined />,
     additionalIcon: <SolutionOutlined />,
   },
@@ -121,6 +132,7 @@ export const TasksList = {
     effects: { food: 10 },
     initialPrice: 7, // 7$
     currency: 'usdt',
+    requiredLevel: 78,
     icon: <CarryOutOutlined />,
     additionalIcon: <SolutionOutlined />,
   },
@@ -129,6 +141,7 @@ export const TasksList = {
     effects: { food: 10 },
     initialPrice: 7, // 7$
     currency: 'usdt',
+    requiredLevel: 80,
     icon: <CarryOutOutlined />,
     additionalIcon: <SolutionOutlined />,
   },

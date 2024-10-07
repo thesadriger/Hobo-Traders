@@ -1,3 +1,4 @@
+// Food.jsx
 import React from 'react';
 import { useSelector } from 'react-redux';
 import ProgressBar from 'react-bootstrap/ProgressBar';
@@ -10,7 +11,7 @@ const FoodContainer = styled.div`
 `;
 
 const FoodImg = styled.img`
- width: 20px;
+  width: 20px;
   height: 20px;
 
   @media (max-width: 768px) {
@@ -20,17 +21,24 @@ const FoodImg = styled.img`
 `;
 
 const ProgressFoodContainer = styled.div`
-   width: 60px;
+  width: 60px;
   margin-left: 5px;
 
   @media (max-width: 768px) {
     width: 50px;
     margin-left: 2px;
   }
+`;
+
+const StyledProgressBar = styled(ProgressBar)`
+  height: 15px;
+  border-radius: 5px;
+  background-color: #424242;
+  overflow: hidden;
 
   .progress-bar {
-    background-color: #4caf50;
-    transition: width 1s ease-in-out;
+    background-color: #ff9800; /* Food bar color */
+    transition: width 0.5s ease-in-out;
   }
 `;
 
@@ -41,7 +49,7 @@ const Food = () => {
     <FoodContainer>
       <FoodImg src={BarIcon.food.image} alt="Food" />
       <ProgressFoodContainer>
-        <ProgressBar now={food} animated />
+        <StyledProgressBar now={food} />
       </ProgressFoodContainer>
     </FoodContainer>
   );

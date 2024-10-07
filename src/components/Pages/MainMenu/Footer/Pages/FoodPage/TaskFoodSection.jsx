@@ -6,17 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { increaseFood, increaseFun, increaseHealth, decreaseFun, decreaseFood, decreaseHealth, resetIndicators } from '@/store/slices/indicatorsSlice';
 import { decreaseUSDT, decreaseBTC, decreaseHBTRD} from '@/store/slices/balanceSlice'; // Импортируем действия для уменьшения баланса
 import { increaseLevel } from '@/store/slices/levelSlice';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, LockOutlined } from '@ant-design/icons';
 
-// Анимация прокрутки текста
-const scrollLeft = keyframes`
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-`;
 
 // Анимация пульсации кнопки
 const pulseAnimation = keyframes`
@@ -47,11 +38,11 @@ const IconContainer = styled.div`
 const TaskInfo = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1; /* Занимает оставшееся пространство */
+  flex: 1; /* Occupies remaining space */
   margin-left: 1rem;
-  overflow: hidden; /* Для предотвращения выхода содержимого */
+  overflow: hidden; /* Prevents content overflow */
+  min-width: 0; /* Allows the container to shrink below its content width */
 `;
-
 // Контейнер для дополнительных элементов
 const SubContainer = styled.div`
   display: flex;
@@ -99,28 +90,37 @@ const AnotherIconContainer = styled.div`
   }
 `;
 
+// Обертка для содержимого карточки
+const ContentWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  filter: ${({ isLocked }) => (isLocked ? 'blur(2px)' : 'none')};
+  pointer-events: ${({ isLocked }) => (isLocked ? 'none' : 'auto')};
+`;
+
 // Карточка задачи
 const TaskCard = styled(Card)`
   display: flex;
   align-items: center;
-  background-color: #ffffff; /* Светлый фон */
+  background-color: #ffffff;
   border-radius: 0.625rem;
   box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
   padding: 0.5rem;
   transition: background-color 0.3s ease;
   width: 100%;
-  max-width: 600px; /* Ограничение максимальной ширины */
-  margin: 0.15rem; /* Отступ от краёв */
+  max-width: 600px;
+  margin: 0.15rem;
+  position: relative; // Для позиционирования оверлея
 
   &:hover {
-    background-color: #f0f0f0; /* Немного тёмнее при наведении */
+    background-color: #f0f0f0;
   }
 
-  /* Стили для внутреннего .ant-card-body */
   .ant-card-body {
     display: flex;
     align-items: center;
-    padding: 0; /* Убираем внутренние отступы */
+    padding: 0;
     width: 100%;
   }
 
@@ -133,16 +133,13 @@ const TaskCard = styled(Card)`
 
 // Заголовок задачи с анимацией прокрутки
 const TaskTitle = styled.span`
-  font-size: 0.8rem;
+  font-size: ${({ fontSize }) => `${fontSize}rem`};
   font-weight: bold;
-  color: #181818; /* Тёмный текст */
-  white-space: nowrap; /* Предотвращает перенос текста */
-  overflow: hidden; /* Скрывает переполненный текст */
-  text-overflow: ellipsis; /* Добавляет многоточие при переполнении */
+  color: #181818; /* Dark text */
+  white-space: nowrap; /* Prevents text wrapping */
+  overflow: hidden; /* Hides overflowed text */
+  text-overflow: ellipsis; /* Adds ellipsis when text overflows */
   position: relative;
-
-  /* Если текст длиннее контейнера, запускаем анимацию прокрутки */
-  animation: ${({ isOverflow }) => (isOverflow ? css`${scrollLeft} 10s linear infinite` : 'none')};
 `;
 
 // Кнопка задачи с анимацией пульсации
@@ -173,6 +170,33 @@ const TaskTitleWrapper = styled.div`
   width: 100%;
   overflow: hidden;
   position: relative;
+`;
+
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(50, 50, 50, 0.7); // Полупрозрачный темный фон
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  border-radius: 0.625rem;
+`;
+
+const OverlayContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const OverlayText = styled.div`
+  color: #ffffff;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  text-align: center;
 `;
 
 // Функция для форматирования баланса с суффиксами и валютой
@@ -218,35 +242,45 @@ const getRandomDeduction = () => {
 
 // Компонент для отображения одной задачи
 const TaskSection = ({ taskKey, taskData }) => {
-    const { title, effects, initialPrice, currency, icon, additionalIcon } = taskData;
-  
+    const { title, effects, initialPrice, currency, icon, additionalIcon, requiredLevel } = taskData;
     const dispatch = useDispatch();
     const level = useSelector((state) => state.level.level);
     const balance = useSelector((state) => state.balance); // Получаем баланс пользователя
+
+    const isTaskUnlocked = level >= requiredLevel; // Проверяем, доступна ли задача
   
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const [isTaskActive, setIsTaskActive] = useState(false);
     const [randomValue, setRandomValue] = useState(null);
     const [isTextVisible, setIsTextVisible] = useState(false);
     const [isOverflow, setIsOverflow] = useState(false);
+    const [fontSize, setFontSize] = useState(1); // Starting font size in rem units
+    const hasAdjustedFontSize = useRef(false); // To prevent infinite loops
+
     const titleRef = useRef(null);
+  
   
   
     // Проверка переполнения текста
     useLayoutEffect(() => {
-      const checkOverflow = () => {
-        if (titleRef.current) {
-          setIsOverflow(titleRef.current.scrollWidth > titleRef.current.clientWidth);
-        }
-      };
+      if (titleRef.current && !hasAdjustedFontSize.current) {
+        let currentFontSize = fontSize;
+        const minFontSize = 0.4; // Minimum font size in rem units
+        const titleElement = titleRef.current;
   
-      checkOverflow();
-      window.addEventListener('resize', checkOverflow);
+        const adjustFontSize = () => {
+          const isOverflown = titleElement.scrollWidth > titleElement.clientWidth;
+          if (isOverflown && currentFontSize > minFontSize) {
+            currentFontSize -= 0.05;
+            setFontSize(currentFontSize);
+          } else {
+            hasAdjustedFontSize.current = true;
+          }
+        };
   
-      return () => {
-        window.removeEventListener('resize', checkOverflow);
-      };
-    }, [title]);
+        adjustFontSize();
+      }
+    }, [title, fontSize]);
   
   
     const handleTaskAction = () => {
@@ -313,6 +347,15 @@ const TaskSection = ({ taskKey, taskData }) => {
   
     return (
       <TaskCard>
+        {!isTaskUnlocked && (
+          <Overlay>
+            <OverlayContent>
+              <LockOutlined style={{ fontSize: '2rem', color: '#ffffff' }} />
+              <OverlayText>Требуется уровень {requiredLevel}</OverlayText>
+            </OverlayContent>
+          </Overlay>
+        )}
+        <ContentWrapper isLocked={!isTaskUnlocked}>
         {/* Контейнер для основной иконки задачи */}
         <IconContainer>{icon}</IconContainer>
   
@@ -337,10 +380,10 @@ const TaskSection = ({ taskKey, taskData }) => {
   
         {/* Кнопка "СДЕЛАТЬ" с ценой */}
         <TaskButton
-          type="primary"
-          onClick={handleTaskAction}
-          disabled={isButtonDisabled}
-          isAnimating={isTaskActive}
+           type="primary"
+           onClick={handleTaskAction}
+           disabled={isButtonDisabled || !isTaskUnlocked}
+           isAnimating={isTaskActive}
         >
           {isTaskActive ? (
             <Spin size="small" />
@@ -350,6 +393,7 @@ const TaskSection = ({ taskKey, taskData }) => {
             'Сделать'
           )}
         </TaskButton>
+        </ContentWrapper>
       </TaskCard>
     );
   };
