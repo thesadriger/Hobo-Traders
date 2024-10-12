@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { notification } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetIndicators } from '@/store/slices/indicatorsSlice';
-import './LevelNotifier.css'; // Импортируем файл стилей
+import './LevelNotifier.css';
 
 const LevelNotifier = () => {
   const dispatch = useDispatch();
@@ -20,7 +20,8 @@ const LevelNotifier = () => {
       notification.open({
         message: `Поздравляем! Вы достигли нового уровня: ${currentFloor}`,
         placement: 'bottom',
-        className: 'custom-notification', // Добавляем кастомный класс
+        className: 'custom-notification',
+        duration: 5, // Время отображения уведомления в секундах
       });
     }
 
