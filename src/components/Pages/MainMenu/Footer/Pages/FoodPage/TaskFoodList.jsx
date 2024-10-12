@@ -20,7 +20,7 @@ import {
  */
 export const TasksList = {
   task1: {
-    title: 'Пожрать на помойке',
+    title: 'Забирать еду у голубей',
     effects: { food: 10 },
     initialPrice: 0, // Бесплатно
     currency: 'usdt',
@@ -29,117 +29,126 @@ export const TasksList = {
     additionalIcon: <CarryOutOutlined />,
   },
   task2: {
+    title: 'Пожрать на помойке',
+    effects: { food: 10 },
+    initialPrice: 0, // Бесплатно
+    currency: 'usdt',
+    requiredLevel: 3,
+    icon: <DollarOutlined />,
+    additionalIcon: <CarryOutOutlined />,
+  },
+  task3: {
     title: 'Искать еду на улице',
-    effects: { food: 10, fun: 5 },
+    effects: { food: 10},
     initialPrice: 0,
     currency: 'usdt',
     requiredLevel: 8,
     icon: <CarryOutOutlined />,
     additionalIcon: <SmileOutlined />,
   },
-  task3: {
+  task4: {
     title: 'Попрошайничать у пельменной',
     effects: { food: 10 },
-    initialPrice: 5,
+    initialPrice: 0,
     currency: 'usdt',
-    requiredLevel: 18,
+    requiredLevel: 15,
     icon: <SmileOutlined />,
     additionalIcon: <SolutionOutlined />,
   },
-  task4: {
+  task5: {
     title: 'Закупиться в "просрочке"',
-    effects: { food: 10 },
-    initialPrice: 10,
+    effects: { food: 10, fun: 5 },
+    initialPrice: 5,
     currency: 'usdt',
-    requiredLevel: 28,
+    requiredLevel: 21,
     icon: <SolutionOutlined />,
     additionalIcon: <SmileOutlined />,
   },
-  task5: {
+  task6: {
     title: 'Купить шаурмы',
     effects: { food: 10 },
-    initialPrice: 8,
+    initialPrice: 20,
     currency: 'usdt',
-    requiredLevel: 38,
+    requiredLevel: 29,
     icon: <CarryOutOutlined />,
     additionalIcon: <DollarOutlined />,
   },
-  task6: {
+  task7: {
     title: 'Пожрать в столовой',
     effects: { food: 10 },
-    initialPrice: 2,
+    initialPrice: 30,
     currency: 'usdt',
-    requiredLevel: 48,
+    requiredLevel: 37,
     icon: <SmileOutlined />,
     additionalIcon: <CarryOutOutlined />,
   },
-  task7: {
+  task8: {
     title: 'Сходить в Точку',
     effects: { food: 10 },
-    initialPrice: 4,
+    initialPrice: 50,
     currency: 'usdt',
     requiredLevel: 47,
     icon: <SolutionOutlined />,
     additionalIcon: <SmileOutlined />,
   },
-  task8: {
+  task9: {
     title: 'Заказать еду',
-    effects: { food: 10 },
-    initialPrice: 0, // Бесплатно
+    effects: { food: 10, fun: 5  },
+    initialPrice: 100,
     currency: 'usdt',
     requiredLevel: 52,
     icon: <SmileOutlined />,
     additionalIcon: <SolutionOutlined />,
   },
-  task9: {
+  task10: {
     title: 'Посетить ресторан',
-    effects: { food: 10 },
-    initialPrice: 6, // 6$
+    effects: { food: 10, fun: 5  },
+    initialPrice: 1000,
     currency: 'usdt',
     requiredLevel: 61,
     icon: <CarryOutOutlined />,
     additionalIcon: <SmileOutlined />,
   },
-  task10: {
+  task11: {
     title: 'Жениться',
     effects: { food: 10 },
-    initialPrice: 7, // 7$
+    initialPrice: 0,
     currency: 'usdt',
     requiredLevel: 64,
     icon: <CarryOutOutlined />,
     additionalIcon: <SolutionOutlined />,
   },
-  task11: {
+  task12: {
     title: 'Личный повар',
     effects: { food: 10 },
-    initialPrice: 7, // 7$
-    currency: 'usdt',
+    initialPrice: 500,
+    currency: 'hbtrd',
     requiredLevel: 72,
     icon: <CarryOutOutlined />,
     additionalIcon: <SolutionOutlined />,
   },
-  task12: {
+  task13: {
     title: 'Купить себе кафе',
     effects: { food: 10 },
-    initialPrice: 7, // 7$
-    currency: 'usdt',
+    initialPrice: 9000,
+    currency: 'hbtrd',
     requiredLevel: 75,
     icon: <CarryOutOutlined />,
     additionalIcon: <SolutionOutlined />,
   },
-  task13: {
+  task14: {
     title: 'Купить себе ресторан',
     effects: { food: 10 },
-    initialPrice: 7, // 7$
-    currency: 'usdt',
+    initialPrice: 100000,
+    currency: 'hbtrd',
     requiredLevel: 78,
     icon: <CarryOutOutlined />,
     additionalIcon: <SolutionOutlined />,
   },
-  task14: {
+  task15: {
     title: 'Основать сеть ресторанов',
     effects: { food: 10 },
-    initialPrice: 7, // 7$
+    initialPrice: 800000,
     currency: 'usdt',
     requiredLevel: 80,
     icon: <CarryOutOutlined />,

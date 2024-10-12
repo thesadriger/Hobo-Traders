@@ -22,7 +22,7 @@ export const TasksList = {
   task1: {
     title: 'Пукнуть в автобусе',
     effects: { fun: 10 },
-    initialPrice: 0, // Бесплатно
+    initialPrice: 0,
     currency: 'usdt',
     requiredLevel: 0,
     icon: <DollarOutlined />,
@@ -30,7 +30,7 @@ export const TasksList = {
   },
   task2: {
     title: 'Рыгнуть в столовой',
-    effects: { fun: 10, health: 5 },
+    effects: { fun: 10 },
     initialPrice: 0,
     currency: 'usdt',
     requiredLevel: 5,
@@ -40,43 +40,43 @@ export const TasksList = {
   task3: {
     title: 'Ляпнуть пиваса',
     effects: { fun: 10, food: 5 },
-    initialPrice: 5,
+    initialPrice: 10,
     currency: 'usdt',
-    requiredLevel: 15,
+    requiredLevel: 10,
     icon: <SmileOutlined />,
     additionalIcon: <SolutionOutlined />,
   },
   task4: {
     title: 'Свернуть унитаз',
     effects: { fun: 10 },
-    initialPrice: 10,
+    initialPrice: 0,
     currency: 'usdt',
-    requiredLevel: 25,
+    requiredLevel: 16,
     icon: <SolutionOutlined />,
     additionalIcon: <SmileOutlined />,
   },
   task5: {
     title: 'Надуть на памятник',
     effects: { fun: 10 },
-    initialPrice: 8,
+    initialPrice: 0,
     currency: 'usdt',
-    requiredLevel: 35,
+    requiredLevel: 24,
     icon: <CarryOutOutlined />,
     additionalIcon: <DollarOutlined />,
   },
   task6: {
     title: 'Выпить водки',
     effects: { fun: 10 },
-    initialPrice: 2,
+    initialPrice: 50,
     currency: 'usdt',
-    requiredLevel: 45,
+    requiredLevel: 35,
     icon: <SmileOutlined />,
     additionalIcon: <CarryOutOutlined />,
   },
   task7: {
     title: 'Сходить в кино',
     effects: { fun: 10 },
-    initialPrice: 4,
+    initialPrice: 100,
     currency: 'usdt',
     requiredLevel: 41,
     icon: <SolutionOutlined />,
@@ -85,8 +85,8 @@ export const TasksList = {
   task8: {
     title: 'Залить вискаря',
     effects: { fun: 10 },
-    initialPrice: 0, // Бесплатно
-    currency: 'usdt',
+    initialPrice: 50,
+    currency: 'hbtrd',
     requiredLevel: 47,
     icon: <SmileOutlined />,
     additionalIcon: <SolutionOutlined />,
@@ -94,7 +94,7 @@ export const TasksList = {
   task9: {
     title: 'Сходить в паб',
     effects: { fun: 10 },
-    initialPrice: 6, // 6$
+    initialPrice: 500,
     currency: 'usdt',
     requiredLevel: 53,
     icon: <CarryOutOutlined />,
@@ -103,8 +103,8 @@ export const TasksList = {
   task10: {
     title: 'Устроить "фейерверк"',
     effects: { fun: 10 },
-    initialPrice: 7, // 7$
-    currency: 'usdt',
+    initialPrice: 100,
+    currency: 'hbtrd',
     requiredLevel: 60,
     icon: <CarryOutOutlined />,
     additionalIcon: <SolutionOutlined />,
@@ -112,8 +112,8 @@ export const TasksList = {
   task11: {
     title: 'Заказать массовую драку',
     effects: { fun: 10 },
-    initialPrice: 7, // 7$
-    currency: 'usdt',
+    initialPrice: 1500,
+    currency: 'hbtrd',
     requiredLevel: 68,
     icon: <CarryOutOutlined />,
     additionalIcon: <SolutionOutlined />,
@@ -121,8 +121,8 @@ export const TasksList = {
   task12: {
     title: 'Раздеть всех девушек в клубе',
     effects: { fun: 10 },
-    initialPrice: 7, // 7$
-    currency: 'usdt',
+    initialPrice: 5000,
+    currency: 'hbtrd',
     requiredLevel: 74,
     icon: <CarryOutOutlined />,
     additionalIcon: <SolutionOutlined />,
@@ -130,7 +130,7 @@ export const TasksList = {
   task13: {
     title: 'Избить Бибера',
     effects: { fun: 10 },
-    initialPrice: 7, // 7$
+    initialPrice: 0,
     currency: 'usdt',
     requiredLevel: 77,
     icon: <CarryOutOutlined />,
@@ -139,8 +139,8 @@ export const TasksList = {
   task14: {
     title: 'Напиться с любимым актером',
     effects: { fun: 10 },
-    initialPrice: 7, // 7$
-    currency: 'usdt',
+    initialPrice: 100000,
+    currency: 'hbtrd',
     requiredLevel: 79,
     icon: <CarryOutOutlined />,
     additionalIcon: <SolutionOutlined />,
@@ -148,8 +148,8 @@ export const TasksList = {
   task15: {
     title: 'Купаться в шампанском с мисс мира',
     effects: { fun: 10 },
-    initialPrice: 7, // 7$
-    currency: 'usdt',
+    initialPrice: 5000000,
+    currency: 'hbtrd',
     requiredLevel: 80,
     icon: <CarryOutOutlined />,
     additionalIcon: <SolutionOutlined />,

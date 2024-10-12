@@ -7,6 +7,7 @@ import { increaseFood, increaseFun, increaseHealth, decreaseFun, decreaseFood, d
 import { decreaseUSDT, decreaseBTC, decreaseHBTRD} from '@/store/slices/balanceSlice'; // Импортируем действия для уменьшения баланса
 import { increaseLevel } from '@/store/slices/levelSlice';
 import { PlusOutlined, LockOutlined } from '@ant-design/icons';
+import { FaStar } from 'react-icons/fa';
 
 
 // Анимация пульсации кнопки
@@ -178,7 +179,7 @@ const Overlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(50, 50, 50, 0.7); // Полупрозрачный темный фон
+  background-color: rgba(22, 119, 255, 0.7); // Полупрозрачный голубой фон
   display: flex;
   justify-content: center;
   align-items: center;
@@ -188,15 +189,26 @@ const Overlay = styled.div`
 
 const OverlayContent = styled.div`
   display: flex;
-  flex-direction: row;
   align-items: center;
+  justify-content: center;
+
+  & > *:not(:last-child) {
+    margin-right: 8px; /* Отступ между замочком и уровнем */
+  }
 `;
 
 const OverlayText = styled.div`
   color: #ffffff;
-  font-size: 1rem;
-  margin-top: 0.5rem;
+  font-size: 1.5rem; /* Размер для уровня и замочка */
   text-align: center;
+  display: flex;
+  align-items: center;
+
+  svg {
+    font-size: 0.75rem; /* Размер звезды в половину от уровня */
+    margin-left: 4px; /* Отступ между уровнем и звездой */
+    color: #ffffff; /* Цвет иконки звезды */
+  }
 `;
 
 // Функция для форматирования баланса с суффиксами и валютой
@@ -350,8 +362,8 @@ const TaskSection = ({ taskKey, taskData }) => {
         {!isTaskUnlocked && (
           <Overlay>
             <OverlayContent>
-              <LockOutlined style={{ fontSize: '2rem', color: '#ffffff' }} />
-              <OverlayText>Требуется уровень {requiredLevel}</OverlayText>
+              <LockOutlined style={{ fontSize: '1.5rem', color: '#ffffff' }} />
+              <OverlayText>{requiredLevel} <FaStar /></OverlayText>
             </OverlayContent>
           </Overlay>
         )}
