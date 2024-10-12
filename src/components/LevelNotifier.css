@@ -1,0 +1,20 @@
+/* LevelNotifier.css */
+.custom-notification {
+  background-color: rgba(0, 0, 0, 0.8) !important; /* Тёмный фон с прозрачностью */
+  color: #ffffff !important; /* Белый цвет текста */
+  backdrop-filter: blur(5px); /* Эффект размытия */
+  border-radius: 5px !important; /* Скруглённые углы */
+  text-align: center; /* Центрируем текст */
+}
+
+/* Переопределяем стили для позиционирования по центру над Footer */
+.ant-notification {
+  width: 100%;
+  margin: 0;
+  left: 0;
+  bottom: 50px; /* Отступ над Footer, можно настроить по вашему усмотрению */
+}
+
+.ant-notification-notice {
+  margin: 0 auto;
+}
