@@ -307,9 +307,8 @@ const MainSectionGraphic = ({ coinKey, coinData }) => {
         type="primary"
         onClick={handleTradeClick}
         disabled={isButtonDisabled}
-        isAnimating={isTradeActive}
       >
-        {isTradeActive ? <Spin /> : 'Торговать'}
+        Торговать
       </TradeButton>
     </MainGraphicContainer>
   );

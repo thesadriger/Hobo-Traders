@@ -65,6 +65,10 @@ export const theme = {
     // Цвета ActionButton
     actionButtonDisabledBackground: '#a0a0a0', // Цвет фона неактивной кнопки
     actionButtonBorderColor: '#4096ff', // Цвет обводки кнопки
+
+    // Цвета TradeButton
+    tradeButtonDisabledBackground: '#a0a0a0', // Цвет фона неактивной кнопки
+    tradeButtonBorderColor: '#4096ff', // Цвет обводки кнопки
   },
   fonts: {
     main: 'SF Pro Display, sans-serif', // Основной шрифт приложения
