@@ -13,7 +13,7 @@ import ExchangePage from '../Footer/Pages/ExchangePage/ExchangePage.jsx';
 import FunPage from '../Footer/Pages/FunPage/FunPage.jsx';
 import HealthPage from '../Footer/Pages/HealthPage/HealthPage.jsx';
 import FoodPage from '../Footer/Pages/FoodPage/FoodPage.jsx';
-import ShopPage from '../Footer/Pages/ShopPage.jsx';
+import ShopPage from '../Footer/Pages/ShopPage/ShopPage.jsx';
 import Background from './Background.jsx';
 
 const MainSection = styled.main`

@@ -4,7 +4,7 @@ export const theme = {
   colors: {
     // Основные цвета приложения (Main application colors)
     background: '#242424', // Цвет фона приложения
-    pageBackground: '#f0f2f5', // Цвет фона страниц
+    pageBackground: '', // Цвет фона страниц
     text: 'rgba(255, 255, 255, 0.87)', // Основной цвет текста
     primaryText: '#181818', // Цвет основного текста
     secondaryText: '#999', // Цвет второстепенного текста
@@ -20,7 +20,7 @@ export const theme = {
     pulseShadow: 'rgba(64, 169, 255, 0.7)', // Цвет тени для пульсации
 
     // Цвета для контейнеров и фонов (Container and background colors)
-    containerBackground: '#646464', // Цвет фона для контейнеров с иконками
+    containerBackground: '', // Цвет фона для контейнеров с иконками
     graphBackground: '#e9ecef', // Цвет фона графика
     iconBackground: '#4096ff', // Цвет фона иконок
     darkBackground: '#424242', // Темный фон для элементов
@@ -34,15 +34,15 @@ export const theme = {
     starIconColor: '#ffffff', // Цвет иконки звезды в оверлее
 
     // Стили Header (Header styles)
-    headerBackground: '#323232', // Фон хедера
+    headerBackground: 'rgba(22, 119, 255)', // Фон хедера
     backButtonBackground: '#646464', // Фон кнопки назад
     backButtonHoverBackground: '#525252', // Фон кнопки назад при наведении
     avatarBackground: '#646464', // Фон аватара
     settingsBackground: '#646464', // Фон для настроек и аватара
 
     // Стили Footer (Footer styles)
-    footerBackground: '#323232', // Цвет фона для подвала и кнопок
-    footerHoverBackground: '#4a4a4a', // Цвет фона при наведении и активном состоянии
+    footerBackground: 'rgba(22, 119, 255)', // Цвет фона для подвала и кнопок
+    footerHoverBackground: '#fff', // Цвет фона при наведении и активном состоянии
     footerTextColor: '#ffffff', // Цвет текста на кнопках подвала
 
     // Цвета индикаторов и прогресс-баров (Indicator and progress bar colors)
@@ -69,6 +69,22 @@ export const theme = {
     // Цвета TradeButton
     tradeButtonDisabledBackground: '#a0a0a0', // Цвет фона неактивной кнопки
     tradeButtonBorderColor: '#4096ff', // Цвет обводки кнопки
+
+    // Цвета для DonateButton
+    donateButtonGradientStart: '#FFD700', // Начало градиента (золотой)
+    donateButtonGradientEnd: '#FFA500', // Конец градиента (оранжевый)
+    donateButtonTextColor: '#ffffff', // Цвет текста на кнопке
+    donateButtonBorderColor: '#FFA500', // Цвет обводки для неактивной кнопки
+    donateButtonDisabledBackground: '#bfbfbf', // Фон для неактивной кнопки
+    donateButtonDisabledTextColor: '#ffffff', // Цвет текста на неактивной кнопке
+
+    // Цвета для фонового паттерна
+    backgroundPatternColor1: '#4096ff', // Основной цвет паттерна 1
+    backgroundPatternColor2: '#4fbeff', // Основной цвет паттерна 2
+    backgroundPatternTransparent1: 'rgba(0, 0, 0, 0)', // Прозрачность 1
+    backgroundPatternTransparent2: 'rgba(0, 0, 0, 0.5)', // Прозрачность 2
+    backgroundPatternColor3: '#e9ecef', // Дополнительный цвет паттерна 3
+    backgroundPatternColor4: '#e9ecef', // Дополнительный цвет паттерна 4
   },
   fonts: {
     main: 'SF Pro Display, sans-serif', // Основной шрифт приложения
@@ -95,9 +111,12 @@ export const theme = {
     marginSmall: '0.5rem', // Маленький отступ
     paddingSmall: '0.5rem', // Маленький внутренний отступ
 
+    // Размер для фонового паттерна
+    backgroundPatternSize: '140px', // Размер паттерна фона
+
     // Размеры иконок и контейнеров (Icon and container sizes)
-    iconContainerWidth: '3rem', // Ширина контейнера иконки
-    iconContainerHeight: '3rem', // Высота контейнера иконки
+    iconContainerWidth: '4rem', // Ширина контейнера иконки
+    iconContainerHeight: '4rem', // Высота контейнера иконки
     iconWidth: '80%', // Ширина иконки внутри контейнера
     iconHeight: '80%', // Высота иконки внутри контейнера
     iconSize: '50px', // Размер иконки задачи
@@ -106,6 +125,13 @@ export const theme = {
     circleIconSize: '15px', // Размер круга для символа "+"
     anotherIconSize: '20px', // Размер дополнительной иконки
     iconMarginRight: '4px', // Отступ справа от иконки
+
+    // Размеры для DonateButton
+    donateButtonWidth: '80px',
+    donateButtonHeight: '35px',
+    donateButtonFontSize: '16px',
+    donateButtonHeightMobile: '40px',
+    donateButtonFontSizeMobile: '14px',
 
     // Размеры прогресс-баров (Progress bar sizes)
     progressBarHeight: '15px', // Высота прогресс-бара
@@ -126,11 +152,11 @@ export const theme = {
     // Размеры для кнопок магазина
     shopButtonWidth: '15%', // Ширина кнопок магазина
     shopButtonBorderRadius: '25%', // Радиус скругления для кнопок магазина
-    shopButtonMargin: '0.5rem', // Отступ для кнопок магазина
+    shopButtonMargin: '0.25rem', // Отступ для кнопок магазина
 
     // Размеры футера (Footer sizes)
     footerButtonWidth: '15%', // Ширина кнопки в подвале
-    footerButtonBorderRadius: '25%', // Скругление углов кнопки в подвале
+    footerButtonBorderRadius: '15%', // Скругление углов кнопки в подвале
     footerPadding: '0.5rem 0', // Отступы для подвала
   },
   borderRadius: {

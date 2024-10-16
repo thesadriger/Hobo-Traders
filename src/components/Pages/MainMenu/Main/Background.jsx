@@ -31,7 +31,7 @@ const BackgroundSection = styled.section`
   justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
-  background-color: ${({ theme }) => theme.colors.background};
+  // background-color: ${({ theme }) => theme.colors.background};
   height: 100%;
   width: 100%;
 `;
