@@ -25,7 +25,7 @@ export const TasksList = {
     initialPrice: 0, // Бесплатно
     currency: 'usdt',
     requiredLevel: 0,
-    icon:<img src="./assets/page_icon/health/1.png" alt="icon" />,
+    icon:<CarryOutOutlined style={{ fontSize: '24px', color: '#1890ff' }} />,
     additionalIcon: <CarryOutOutlined />,
   },
   task2: {
@@ -34,7 +34,7 @@ export const TasksList = {
     initialPrice: 150, // Бесплатно
     currency: 'usdt',
     requiredLevel: 8,
-    icon: <CarryOutOutlined />,
+    icon: <CarryOutOutlined style={{ fontSize: '24px', color: '#1890ff' }} />,
     additionalIcon: <SmileOutlined />,
   },
   task3: {
@@ -43,7 +43,7 @@ export const TasksList = {
     initialPrice: 0,
     currency: 'usdt',
     requiredLevel: 15,
-    icon: <SmileOutlined />,
+    icon: <SmileOutlined style={{ fontSize: '24px', color: '#1890ff' }}/>,
     additionalIcon: <SolutionOutlined />,
   },
   task4: {
@@ -52,7 +52,7 @@ export const TasksList = {
     initialPrice: 0,
     currency: 'usdt',
     requiredLevel: 21,
-    icon: <SolutionOutlined />,
+    icon: <SolutionOutlined style={{ fontSize: '24px', color: '#1890ff' }}/>,
     additionalIcon: <SmileOutlined />,
   },
   task5: {
@@ -61,7 +61,7 @@ export const TasksList = {
     initialPrice: 0,
     currency: 'usdt',
     requiredLevel: 28,
-    icon: <CarryOutOutlined />,
+    icon: <CarryOutOutlined style={{ fontSize: '24px', color: '#1890ff' }}/>,
     additionalIcon: <DollarOutlined />,
   },
   task6: {
@@ -70,7 +70,7 @@ export const TasksList = {
     initialPrice: 40,
     currency: 'usdt',
     requiredLevel: 30,
-    icon: <SmileOutlined />,
+    icon: <SmileOutlined style={{ fontSize: '24px', color: '#1890ff' }}/>,
     additionalIcon: <CarryOutOutlined />,
   },
   task7: {
@@ -79,7 +79,7 @@ export const TasksList = {
     initialPrice: 50,
     currency: 'usdt',
     requiredLevel: 42,
-    icon: <SolutionOutlined />,
+    icon: <SolutionOutlined style={{ fontSize: '24px', color: '#1890ff' }}/>,
     additionalIcon: <SmileOutlined />,
   },
   task8: {
@@ -88,7 +88,7 @@ export const TasksList = {
     initialPrice: 500,
     currency: 'usdt',
     requiredLevel: 48,
-    icon: <CarryOutOutlined />,
+    icon: <CarryOutOutlined style={{ fontSize: '24px', color: '#1890ff' }}/>,
     additionalIcon: <SmileOutlined />,
   },
   task9: {
@@ -97,7 +97,7 @@ export const TasksList = {
     initialPrice: 100,
     currency: 'hbtrd',
     requiredLevel: 54,
-    icon: <CarryOutOutlined />,
+    icon: <CarryOutOutlined style={{ fontSize: '24px', color: '#1890ff' }}/>,
     additionalIcon: <SolutionOutlined />,
   },
   task10: {
@@ -106,7 +106,7 @@ export const TasksList = {
     initialPrice: 1000,
     currency: 'hbtrd',
     requiredLevel: 65,
-    icon: <CarryOutOutlined />,
+    icon: <CarryOutOutlined style={{ fontSize: '24px', color: '#1890ff' }}/>,
     additionalIcon: <SolutionOutlined />,
   },
   task11: {
@@ -114,6 +114,7 @@ export const TasksList = {
     effects: {},
     initialPrice: 500,
     currency: 'hbtrd',
+    icon: <CarryOutOutlined style={{ fontSize: '24px', color: '#1890ff' }}/>,
     requiredLevel: 69,
   },
   task12: {
@@ -122,7 +123,7 @@ export const TasksList = {
     initialPrice: 5000,
     currency: 'hbtrd',
     requiredLevel: 75,
-    icon: <CarryOutOutlined />,
+    icon: <CarryOutOutlined style={{ fontSize: '24px', color: '#1890ff' }}/>,
     additionalIcon: <SolutionOutlined />,
   },
   task13: {
@@ -131,7 +132,7 @@ export const TasksList = {
     initialPrice: 30000,
     currency: 'hbtrd',
     requiredLevel: 78,
-    icon: <CarryOutOutlined />,
+    icon: <CarryOutOutlined style={{ fontSize: '24px', color: '#1890ff' }}/>,
     additionalIcon: <SolutionOutlined />,
   },
   task14: {
@@ -140,7 +141,7 @@ export const TasksList = {
     initialPrice: 5000000,
     currency: 'hbtrd',
     requiredLevel: 79,
-    icon: <CarryOutOutlined />,
+    icon: <CarryOutOutlined style={{ fontSize: '24px', color: '#1890ff' }}/>,
     additionalIcon: <SolutionOutlined />,
   },
   task15: {
@@ -149,7 +150,7 @@ export const TasksList = {
     initialPrice: 9000000,
     currency: 'hbtrd',
     requiredLevel: 80,
-    icon: <CarryOutOutlined />,
+    icon: <CarryOutOutlined style={{ fontSize: '24px', color: '#1890ff' }}/>,
     additionalIcon: <SolutionOutlined />,
   },
 };

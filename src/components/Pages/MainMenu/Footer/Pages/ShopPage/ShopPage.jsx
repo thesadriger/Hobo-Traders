@@ -1,7 +1,7 @@
 // src/components/Pages/MainMenu/Footer/Pages/ShopPage.jsx
 import React from 'react';
 import styled from 'styled-components';
-import { TasksList } from './TaskShopList';
+import { TasksList } from './TaskShopsList';
 import TaskShopSection from './TaskShopSection';
 
 // Стили для страницы

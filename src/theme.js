@@ -170,4 +170,23 @@ export const theme = {
     main: '0 4px 12px rgba(0, 0, 0, 0.1)', // Основная тень для элементов
     cardShadow: '0 0.25rem 0.375rem rgba(0, 0, 0, 0.1)', // Тень для карточки задачи
   },
+  notifications: {
+    backgroundColor: '#ffffff', // Фон уведомления
+    textColor: '#000000', // Цвет текста уведомления
+    starColor: '#FFD700', // Цвет звездочки
+    congratsBoxBackground: '#f0f0f0', // Фон для прямоугольника с поздравлением
+    congratsBoxPadding: '8px 16px', // Отступы для прямоугольника
+    congratsBoxBorderRadius: '8px', // Радиус скругления для прямоугольника
+    marginBottom: '8px', // Нижний отступ
+    taskIconSize: '50px', // Размер иконок заданий
+    taskIconMargin: '4px', // Отступ вокруг иконок заданий
+    marginRight: '8px', // Отступ справа
+    notificationBorderRadius: '10px', // Радиус скругления для уведомления
+    notificationPadding: '16px', // Отступы внутри уведомления
+    fontSize: '16px', // Размер шрифта основного текста
+    headerFontSize: '18px', // Размер шрифта заголовка
+    fontFamily: 'SF Pro Display, sans-serif', // Шрифт для уведомления
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)', // Тень для уведомления
+  },
+  
 };

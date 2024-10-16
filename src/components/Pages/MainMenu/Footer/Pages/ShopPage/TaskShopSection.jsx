@@ -1,6 +1,7 @@
 // src/components/Pages/MainMenu/Footer/Pages/TaskShopSection.jsx
 import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
 import { Card, message } from 'antd';
+import styled, { keyframes, css } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { increaseFood, increaseFun, increaseHealth, decreaseFun, decreaseFood, decreaseHealth, resetIndicators } from '@/store/slices/indicatorsSlice';
 import { decreaseUSDT, decreaseBTC, decreaseHBTRD} from '@/store/slices/balanceSlice'; // Импортируем действия для уменьшения баланса

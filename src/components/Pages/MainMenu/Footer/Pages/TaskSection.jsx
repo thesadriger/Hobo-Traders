@@ -322,7 +322,7 @@ const formatBalance = (number, currency) => {
         }
   
         // Увеличиваем уровень
-        const increment = 0.01;
+        const increment = 0.5;
         dispatch(increaseLevel(increment));
   
         // Выполняем дополнительное действие, если оно передано
