@@ -6,25 +6,26 @@ import styled from 'styled-components';
 const HbtrdContainer = styled.section`
   display: flex;
   align-items: center;
-  border-radius: 10px;
+  border-radius: ${({ theme }) => theme.sizes.borderRadiusLarge};
   padding: 0.25rem;
   width: 80px;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.medium}) {
     width: 70px;
     padding: 0.2rem;
   }
 `;
 
 const ImgHbtrd = styled.img`
-  width: 15px;
-  height: 15px;
+  width: ${({ theme }) => theme.sizes.iconSizeSmall};
+  height: ${({ theme }) => theme.sizes.iconSizeSmall};
 `;
+
 const BalanceHbtrd = styled.span`
-  font-family: 'SF Pro Display', sans-serif;
-  font-size: 60%;
+  font-family: ${({ theme }) => theme.fonts.main};
+  font-size: ${({ theme }) => theme.fonts.sizes.tiny};
   font-weight: 700;
-  color: #fff;
+  color: ${({ theme }) => theme.colors.text};
   margin-left: 5px;
 `;
 
@@ -34,9 +35,7 @@ const Hbtrd = () => {
   return (
     <HbtrdContainer>
       <ImgHbtrd src={BarIcon.hbtrd.image} alt="Hbtrd" />
-      <BalanceHbtrd>
-        <span>{hbtrdBalance} HBTRD</span>
-      </BalanceHbtrd>
+      <BalanceHbtrd>{hbtrdBalance} HBTRD</BalanceHbtrd>
     </HbtrdContainer>
   );
 };

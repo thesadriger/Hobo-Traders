@@ -1,35 +1,32 @@
-import React, { useEffect, useRef, useState } from 'react'
-import Lottie from 'lottie-react'
-import animationData from '/src/assets/User.json'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import { styled } from 'styled-components'
+// EducationBtn.jsx
 
+import React, { useRef } from 'react';
+import Lottie from 'lottie-react';
+import animationData from '/src/assets/User.json';
+import styled from 'styled-components';
 
 const EducationBtnContainer = styled.section`
- flex: 0 0 auto;
-  width: 15%; /* Ширина в процентах от ширины контейнера */
-  aspect-ratio: 1/1; /* Сохраняет пропорции квадрата */
-  background-color: #646464;
-  border-radius: 25%; /* Округление на основе процента от ширины/высоты */
+  flex: 0 0 auto;
+  width: ${({ theme }) => theme.sizes.shopButtonWidth};
+  aspect-ratio: 1/1;
+  background-color: ${({ theme }) => theme.colors.shopButtonBackground};
+  border-radius: ${({ theme }) => theme.sizes.shopButtonBorderRadius};
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem; /* Размер шрифта относительно корневого элемента */
+  font-size: ${({ theme }) => theme.fonts.sizes.medium};
 `;
 
 const EducationBtn = () => {
   const lottieRef = useRef(null);
 
-  useEffect(()=>{
-
-  }, []);
-
   const startAnimation = () => {
     if (lottieRef.current) {
-      lottieRef.current.goToAndStop(0, true); // Устанавливаем начальную позицию анимации
+      lottieRef.current.goToAndStop(0, true);
       lottieRef.current.play();
     }
   };
+
   return (
     <EducationBtnContainer onClick={startAnimation}>
       <Lottie

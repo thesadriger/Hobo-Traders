@@ -7,37 +7,41 @@ import { FaStar } from 'react-icons/fa'; // Импорт иконки звезд
 
 const LevelProgressContainer = styled.div`
   width: 100%;
-  padding: 0.5rem 0;
+  padding: ${({ theme }) => theme.sizes.levelProgressPadding};
   position: relative;
 `;
 
 const ProgressLabel = styled.span`
   display: flex;
   align-items: center;
-  font-size: 1rem;
+  font-size: ${({ theme }) => theme.fonts.sizes.medium};
   font-weight: bold;
-  color: #424242;
+  color: ${({ theme }) => theme.colors.levelTextColor};
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: linear-gradient(to bottom, #fef712 50%, #f67e0c 100%); /* Градиентный фон */
-  padding: 4px 8px;
-  border-radius: 10px;
+  background: linear-gradient(
+    to bottom,
+    ${({ theme }) => theme.colors.levelGradientStart} 50%,
+    ${({ theme }) => theme.colors.levelGradientEnd} 100%
+  ); /* Градиентный фон из темы */
+  padding: ${({ theme }) => theme.sizes.progressLabelPadding};
+  border-radius: ${({ theme }) => theme.borderRadius.large};
 
   svg {
-    margin-right: 4px; /* Отступ между иконкой и номером уровня */
-    color: #424242; /* Цвет иконки звезды */
+    margin-right: ${({ theme }) => theme.sizes.iconMarginRight}; /* Отступ между иконкой и номером уровня */
+    color: ${({ theme }) => theme.colors.levelTextColor}; /* Цвет иконки звезды из темы */
   }
 `;
 
 const StyledProgressBar = styled(ProgressBar)`
-  height: 20px;
-  border-radius: 10px;
-  background-color: #424242;
+  height: ${({ theme }) => theme.sizes.levelProgressBarHeight};
+  border-radius: ${({ theme }) => theme.sizes.borderRadiusLarge};
+  background-color: ${({ theme }) => theme.colors.levelProgressBarBackground};
   overflow: hidden; /* Чтобы скругления применялись к дочерним элементам */
 
   .progress-bar {
-    background-color: #4096ff;
+    background-color: ${({ theme }) => theme.colors.levelProgressBarFill}; /* Цвет заполнения из темы */
     transition: width 0.5s ease-in-out;
   }
 `;

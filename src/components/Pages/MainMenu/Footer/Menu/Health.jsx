@@ -1,52 +1,31 @@
-import React, { useEffect, useRef, useState } from 'react'
-import Lottie from 'lottie-react'
-import animationData from '/src/assets/User.json'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import { styled } from 'styled-components'
-
-
-const HealthContainer = styled.section`
- flex: 0 0 auto;
-  width: 15%; /* Ширина в процентах от ширины контейнера */
-  aspect-ratio: 1/1; /* Сохраняет пропорции квадрата */
-  background-color: #646464;
-  border-radius: 25%; /* Округление на основе процента от ширины/высоты */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem; /* Размер шрифта относительно корневого элемента */
-`;
-const HealthVideo = styled.video`
- flex: 0 0 auto;
-  width: 100%;
-  border-radius: 25%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+// Health.jsx
+import React, { useRef } from 'react';
+import Lottie from 'lottie-react';
+import animationData from '/src/assets/User.json';
+import IconContainer from './IconContainer';
 
 const Health = () => {
   const lottieRef = useRef(null);
 
-  useEffect(()=>{
-
-  }, []);
-
   const startAnimation = () => {
     if (lottieRef.current) {
-      lottieRef.current.goToAndStop(0, true); // Устанавливаем начальную позицию анимации
+      lottieRef.current.goToAndStop(0, true);
       lottieRef.current.play();
     }
   };
+
   return (
-    <HealthContainer onClick={startAnimation}>
+    <IconContainer onClick={startAnimation}>
       <Lottie
         lottieRef={lottieRef}
         animationData={animationData}
-        style={{ width: '80%', height: '80%' }}
+        style={{
+          width: ({ theme }) => theme.sizes.iconWidth,
+          height: ({ theme }) => theme.sizes.iconHeight,
+        }}
         loop={false}
       />
-    </HealthContainer>
+    </IconContainer>
   );
 };
 

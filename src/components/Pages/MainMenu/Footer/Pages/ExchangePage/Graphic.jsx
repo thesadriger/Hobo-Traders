@@ -6,11 +6,11 @@ import styled from 'styled-components';
 const ChartWrapper = styled.div`
   position: relative;
   width: 100%;
-  height: 100%; /* Высота на 100% родителя */
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border: 1px solid #d1d1d1;
-  background-color: #e9ecef;
+  height: 100%;
+  border-radius: ${({ theme }) => theme.borderRadius.medium};
+  box-shadow: ${({ theme }) => theme.shadows.main};
+  border: 1px solid ${({ theme }) => theme.colors.borderColor};
+  background-color: ${({ theme }) => theme.colors.graphBackground};
   padding: 10px;
   overflow: hidden;
 `;

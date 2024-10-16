@@ -2,11 +2,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { TasksList } from './TaskHealthList';
-import TaskSection from './TaskHealthSection';
+import TaskHealthSection from './TaskHealthSection';
 
 // Стили для страницы
 const PageWrapper = styled.div`
-  background-color: #f0f2f5;
+  background-color: ${({ theme }) => theme.colors.pageBackground};
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -18,9 +18,9 @@ const TaskWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 1200px; /* Увеличенная ширина для большего количества задач */
-  gap: 0.1rem; /* Отступ между задачами */
-  padding: 0.5rem; /* Отступ от краёв */
+  max-width: ${({ theme }) => theme.breakpoints.large};
+  gap: 0.1rem;
+  padding: ${({ theme }) => theme.sizes.paddingSmall};
 `;
 
 // Основной компонент страницы
@@ -31,7 +31,7 @@ const HealthPage = () => {
         {Object.keys(TasksList).map((taskKey) => {
           const taskData = TasksList[taskKey];
           return (
-            <TaskSection
+            <TaskHealthSection
               key={taskKey}
               taskKey={taskKey}
               taskData={taskData}

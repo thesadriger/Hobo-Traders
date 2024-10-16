@@ -2,11 +2,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { TasksList } from './TaskFoodList';
-import TaskSection from './TaskFoodSection';
+import TaskFoodSection from './TaskFoodSection';
 
 // Стили для страницы
 const PageWrapper = styled.div`
-  background-color: #f0f2f5;
+  background-color: ${({ theme }) => theme.colors.pageBackground};
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -18,9 +18,9 @@ const TaskWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 1200px; /* Увеличенная ширина для большего количества задач */
+  max-width: ${({ theme }) => theme.breakpoints.large}; /* Используем точку останова из темы */
   gap: 0.1rem; /* Отступ между задачами */
-  padding: 0.5rem; /* Отступ от краёв */
+  padding: ${({ theme }) => theme.sizes.paddingSmall}; /* Отступ от краёв */
 `;
 
 // Основной компонент страницы
@@ -31,7 +31,7 @@ const FoodPage = () => {
         {Object.keys(TasksList).map((taskKey) => {
           const taskData = TasksList[taskKey];
           return (
-            <TaskSection
+            <TaskFoodSection
               key={taskKey}
               taskKey={taskKey}
               taskData={taskData}

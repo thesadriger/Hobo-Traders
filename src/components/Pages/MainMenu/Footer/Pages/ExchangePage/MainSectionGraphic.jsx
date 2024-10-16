@@ -13,6 +13,7 @@ import {
   resetIndicators, // Импортируем действие сброса индикаторов
 } from '@/store/slices/indicatorsSlice';
 import { increaseLevel } from '@/store/slices/levelSlice'; // Для увеличения уровня
+import TradeButton from '@/components/Pages/Elements/TradeButton';
 
 // Контейнер для всей информации сверху
 const InfoContainer = styled.div`
@@ -22,8 +23,8 @@ const InfoContainer = styled.div`
   width: 100%;
   padding: 0 20px;
   margin-bottom: 10px;
-  
-  @media (max-width: 768px) {
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.medium}) {
     flex-direction: column;
     align-items: flex-start;
   }
@@ -42,7 +43,7 @@ const RightInfo = styled.div`
   flex-direction: column;
   align-items: flex-end;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.medium}) {
     align-items: flex-start;
     margin-top: 10px;
   }
@@ -53,38 +54,38 @@ const CoinName = styled.h3`
   font-size: 24px;
   font-weight: 600;
   margin: 0;
-  color: #181818;
+  color: ${({ theme }) => theme.colors.primaryText};
 `;
 
 // Подзаголовок "Цена последней сделки"
 const LastPriceLabel = styled.span`
   font-size: 14px;
-  color: #999;
+  color: ${({ theme }) => theme.colors.secondaryText};
   margin-top: 5px;
 `;
 
 // Цена
 const PriceText = styled.span`
-  font-size: 40px;
+  font-size: ${({ theme }) => theme.fonts.sizes.extraLarge};
   font-weight: bold;
-  color: #4096ff;
+  color: ${({ theme }) => theme.colors.priceText};
   margin-top: 5px;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.medium}) {
     font-size: 36px;
   }
 `;
 
 // Стиль для правой части информации
 const InfoText = styled.span`
-  font-size: 12px;
-  color: #181818;
+  font-size: ${({ theme }) => theme.fonts.sizes.extraSmall};
+  color: ${({ theme }) => theme.colors.primaryText};
   margin-bottom: 5px;
 `;
 
 const InfoValue = styled.span`
   font-weight: bold;
-  font-size: 12px;
+  font-size: ${({ theme }) => theme.fonts.sizes.extraSmall};
 `;
 
 // Контейнер для графика и кнопки
@@ -92,15 +93,15 @@ const MainGraphicContainer = styled.div`
   width: 100%;
   max-width: 600px;
   background-color: #fff;
-  border: 1px solid #d1d1d1;
-  border-radius: 10px;
+  border: 1px solid ${({ theme }) => theme.colors.borderColor};
+  border-radius: ${({ theme }) => theme.borderRadius.medium};
   padding: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: ${({ theme }) => theme.shadows.main};
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.medium}) {
     padding: 15px;
   }
 `;
@@ -110,10 +111,10 @@ const GraphContainer = styled.div`
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  border-radius: 10px;
+  border-radius: ${({ theme }) => theme.borderRadius.medium};
   overflow: hidden;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.medium}) {
     aspect-ratio: auto;
     height: 200px;
   }
@@ -122,7 +123,7 @@ const GraphContainer = styled.div`
 // Анимация пульсации кнопки
 const pulseAnimation = keyframes`
   0% {
-    box-shadow: 0 0 0 0 rgba(64, 169, 255, 0.7);
+    box-shadow: 0 0 0 0 ${({ theme }) => theme.colors.pulseShadow};
   }
   70% {
     box-shadow: 0 0 0 10px rgba(64, 169, 255, 0);
@@ -132,26 +133,6 @@ const pulseAnimation = keyframes`
   }
 `;
 
-// Стили для кнопки "Торговать"
-const TradeButton = styled(Button)`
-  position: relative;
-  margin-top: 20px;
-  width: 100%;
-  height: 50px;
-  font-size: 16px;
-  transition: all 0.5s ease-in-out;
-
-  ${({ isAnimating }) =>
-    isAnimating &&
-    css`
-      animation: ${pulseAnimation} 2s infinite;
-    `}
-
-  @media (max-width: 768px) {
-    height: 45px;
-    font-size: 14px;
-  }
-`;
 
 // Стили для текста с выигрышем
 const RandomText = styled.div`
@@ -160,13 +141,13 @@ const RandomText = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 40px;
+  font-size: ${({ theme }) => theme.fonts.sizes.extraLarge};
   font-weight: bold;
-  color: #4096ff;
+  color: ${({ theme }) => theme.colors.priceText};
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
   transition: opacity 0.5s ease-in-out;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.medium}) {
     font-size: 32px;
   }
 `;

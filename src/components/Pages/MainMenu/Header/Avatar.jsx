@@ -6,16 +6,16 @@ import styled from 'styled-components';
 
 const AvatarContainer = styled.section`
   flex: 0 0 auto;
-  width: 80px; /* Ограничиваем размер */
+  width: ${({ theme }) => theme.sizes.avatarSize};
   aspect-ratio: 1/1;
-  background-color: #646464;
-  border-radius: 25%;
+  background-color: ${({ theme }) => theme.colors.avatarBackground};
+  border-radius: ${({ theme }) => theme.borderRadius.medium};
   display: flex;
   align-items: center;
   justify-content: center;
   
-  @media (max-width: 768px) {
-    width: 60px; /* Уменьшаем размер на маленьких экранах */
+  @media (max-width: ${({ theme }) => theme.breakpoints.medium}) {
+    width: ${({ theme }) => theme.sizes.avatarSizeMobile};
   }
 `;
 

@@ -25,7 +25,7 @@ export const TasksList = {
     initialPrice: 0, // Бесплатно
     currency: 'usdt',
     requiredLevel: 0,
-    icon:<img src="/page_icon/health/1.png" alt="icon" />,
+    icon:<img src="./assets/page_icon/health/1.png" alt="icon" />,
     additionalIcon: <CarryOutOutlined />,
   },
   task2: {

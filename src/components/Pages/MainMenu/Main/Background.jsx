@@ -1,42 +1,38 @@
 // Background.jsx
+
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
-// Импортируем стили кнопок из Footer или создаём новые
-// Если вы хотите использовать стили из Footer, импортируйте FooterButton
-// import { FooterButton } from '../Footer/Footer'; // Скорректируйте путь импорта
-
-// Если нет возможности импортировать, создадим новый стиль кнопки, основанный на стилях из Footer
 const BackgroundButton = styled(NavLink)`
-  background-color: #323232;
+  background-color: ${({ theme }) => theme.colors.shopButtonBackground};
   border: none;
-  color: #fff;
+  color: ${({ theme }) => theme.colors.shopButtonTextColor};
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 15%;
+  width: ${({ theme }) => theme.sizes.shopButtonWidth};
   aspect-ratio: 1 / 1;
-  border-radius: 25%;
+  border-radius: ${({ theme }) => theme.sizes.shopButtonBorderRadius};
   text-decoration: none;
-  margin: 0.5rem;
+  margin: ${({ theme }) => theme.sizes.shopButtonMargin};
   &:hover {
-    background-color: #4a4a4a;
+    background-color: ${({ theme }) => theme.colors.shopButtonHoverBackground};
   }
   &.active {
-    background-color: #4a4a4a;
+    background-color: ${({ theme }) => theme.colors.shopButtonHoverBackground};
   }
 `;
 
 const BackgroundSection = styled.section`
   display: flex;
   align-items: center;
-  justify-content: center; /* Центрируем кнопки */
-  flex-direction: row; /* Располагаем кнопки в ряд */
-  flex-wrap: wrap; /* Перенос кнопок на следующую строку при необходимости */
-  background-color: #fff;
-  height: 100%; /* Высота section */
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-color: ${({ theme }) => theme.colors.background};
+  height: 100%;
   width: 100%;
 `;
 

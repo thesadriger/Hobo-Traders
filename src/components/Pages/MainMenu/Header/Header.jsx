@@ -25,10 +25,10 @@ const Section = styled.header`
   justify-content: space-between;
   width: 100%;
   padding: 0 0.5rem;
-  background-color: #323232;
+  background-color: ${({ theme }) => theme.colors.headerBackground};
   box-sizing: border-box;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.medium}) {
     padding: 0 0.25rem;
   }
 `;
@@ -67,8 +67,8 @@ const CurrentsBars = styled.div`
   align-items: center;
   width: 100%;
   padding: 0.25rem 0;
-  border-radius: 5px;
-  background-color: #424242;
+  border-radius: ${({ theme }) => theme.borderRadius.small};
+  background-color: ${({ theme }) => theme.colors.indicatorBackground};
   flex-wrap: wrap;
 `;
 
@@ -87,10 +87,10 @@ const RightSection = styled.div`
 `;
 
 const BackButton = styled.button`
-  background-color: #646464;
+  background-color: ${({ theme }) => theme.colors.backButtonBackground};
   border: none;
-  border-radius: 25%;
-  width: 60px;
+  border-radius: ${({ theme }) => theme.borderRadius.medium};
+  width: ${({ theme }) => theme.sizes.avatarSizeMobile};
   aspect-ratio: 1/1;
   display: flex;
   align-items: center;
@@ -98,16 +98,16 @@ const BackButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: #525252;
+    background-color: ${({ theme }) => theme.colors.backButtonHoverBackground};
   }
 `;
 
 const AvatarContainer = styled.section`
   flex: 0 0 auto;
-  width: 60px;
+  width: ${({ theme }) => theme.sizes.avatarSizeMobile};
   aspect-ratio: 1/1;
-  background-color: #646464;
-  border-radius: 25%;
+  background-color: ${({ theme }) => theme.colors.avatarBackground};
+  border-radius: ${({ theme }) => theme.borderRadius.medium};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -115,10 +115,10 @@ const AvatarContainer = styled.section`
 
 const SettingsContainer = styled.section`
   flex: 0 0 auto;
-  width: 60px;
+  width: ${({ theme }) => theme.sizes.avatarSizeMobile};
   aspect-ratio: 1/1;
-  background-color: #646464;
-  border-radius: 25%;
+  background-color: ${({ theme }) => theme.colors.settingsBackground};
+  border-radius: ${({ theme }) => theme.borderRadius.medium};
   display: flex;
   align-items: center;
   justify-content: center;

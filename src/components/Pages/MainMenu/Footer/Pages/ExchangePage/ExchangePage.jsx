@@ -4,11 +4,10 @@ import styled from 'styled-components';
 import MainSectionGraphic from './MainSectionGraphic';
 import { CoinsList } from './CoinList';
 
-
 // Стили для страницы
 const PageWrapper = styled.div`
-  padding: 20px 20px;
-  background-color: #f0f2f5;
+  padding: 20px;
+  background-color: ${({ theme }) => theme.colors.pageBackground};
   min-height: 100vh;
   display: flex;
   flex-direction: column;

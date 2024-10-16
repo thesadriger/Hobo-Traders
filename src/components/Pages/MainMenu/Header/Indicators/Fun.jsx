@@ -11,12 +11,12 @@ const FunContainer = styled.div`
 `;
 
 const FunImg = styled.img`
-  width: 20px;
-  height: 20px;
+  width: ${({ theme }) => theme.sizes.iconSizeMedium};
+  height: ${({ theme }) => theme.sizes.iconSizeMedium};
 
-  @media (max-width: 768px) {
-    width: 15px;
-    height: 15px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.medium}) {
+    width: ${({ theme }) => theme.sizes.iconSizeSmall};
+    height: ${({ theme }) => theme.sizes.iconSizeSmall};
   }
 `;
 
@@ -24,20 +24,20 @@ const ProgressFunContainer = styled.div`
   width: 60px;
   margin-left: 5px;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.medium}) {
     width: 50px;
     margin-left: 2px;
   }
 `;
 
 const StyledProgressBar = styled(ProgressBar)`
-  height: 15px;
-  border-radius: 5px;
-  background-color: #424242;
+  height: ${({ theme }) => theme.sizes.progressBarHeight};
+  border-radius: ${({ theme }) => theme.sizes.progressBarBorderRadius};
+  background-color: ${({ theme }) => theme.colors.indicatorBackground};
   overflow: hidden;
 
   .progress-bar {
-    background-color: #4caf50; /* Fun bar color */
+    background-color: ${({ theme }) => theme.colors.funBarColor};
     transition: width 0.5s ease-in-out;
   }
 `;

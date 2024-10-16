@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import AnimatedPage from './AnimatedPage';
 
 // Импорт страниц
-import AppartamentsPage from './Pages/AppartamentsPage.jsx';
+import AppartamentsPage from './Pages/AppartamentsPage/AppartamentsPage.jsx';
 import EducationPage from './Pages/EducationPage.jsx';
 import CarsPage from './Pages/CarsPage.jsx';
 import ExchangePage from '../Footer/Pages/ExchangePage/ExchangePage.jsx';

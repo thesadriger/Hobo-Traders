@@ -3,7 +3,7 @@ import { Card, Button } from 'antd';
 import { styled } from 'styled-components';
 import { DollarOutlined } from '@ant-design/icons';
 const { Meta } = Card;
-import { AppartamentData } from './Data';
+import { AppartamentData } from '../Data';
 
 const AppartamentContainer = styled.div`
   display: flex;
