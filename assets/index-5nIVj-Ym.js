@@ -1267,7 +1267,7 @@ function print() { __p += __j.call(arguments, '') }
     margin-left: 0;
     margin-top: ${({theme:i})=>i.sizes.marginSmall};
   }
-`,DonateButton=({children:i,onClick:o,...s})=>{const[tt,nt]=reactExports.useState(!1),st=yt=>{o&&o(yt),nt(!0),setTimeout(()=>{nt(!1)},1e3)};return jsxRuntimeExports.jsx(StyledDonateButton,{...s,isInactive:tt,onClick:st,disabled:tt,children:i})},IconContainer$1=styled.div`
+`,DonateButton=({children:i,onClick:o,...s})=>{const[tt,nt]=reactExports.useState(!1),st=yt=>{o&&o(yt),nt(!0),setTimeout(()=>{nt(!1)},1e3)};return jsxRuntimeExports.jsx(StyledDonateButton,{...s,isInactive:tt,onClick:st,disabled:tt,children:i})},IconContainer$1=dt.div`
   width: ${({theme:i})=>i.sizes.iconSize};
   height: ${({theme:i})=>i.sizes.iconSize};
   background-color: ${({theme:i})=>i.colors.iconBackground}; /* Цвет фона иконки */
@@ -1276,24 +1276,24 @@ function print() { __p += __j.call(arguments, '') }
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-`,TaskInfo=styled.div`
+`,TaskInfo=dt.div`
   display: flex;
   flex-direction: column;
   flex: 1;
   margin-left: 1rem;
   overflow: hidden;
   min-width: 0;
-`,SubContainer=styled.div`
+`,SubContainer=dt.div`
   display: flex;
   align-items: center;
-`,ActionInfo=styled.div`
+`,ActionInfo=dt.div`
   display: flex;
   align-items: center;
   background-color: ${({theme:i})=>i.colors.darkBackground}; /* Темный фон */
   border-radius: ${({theme:i})=>i.borderRadius.small};
   padding: 0.2rem 0.2rem;
   margin-right: ${({theme:i})=>i.sizes.marginSmall};
-`,CircleIcon=styled.div`
+`,CircleIcon=dt.div`
   width: ${({theme:i})=>i.sizes.circleIconSize};
   height: ${({theme:i})=>i.sizes.circleIconSize};
   background-color: ${({theme:i})=>i.colors.iconBackground}; /* Цвет круга */
@@ -1304,7 +1304,7 @@ function print() { __p += __j.call(arguments, '') }
   color: ${({theme:i})=>i.colors.circleIconColor}; /* Белый цвет символа "+" */
   margin-right: 0.25rem;
   flex-shrink: 0;
-`,AnotherIconContainer=styled.div`
+`,AnotherIconContainer=dt.div`
   width: ${({theme:i})=>i.sizes.anotherIconSize};
   height: ${({theme:i})=>i.sizes.anotherIconSize};
   background-color: ${({theme:i})=>i.colors.additionalIconBackground}; /* Цвет фона */
@@ -1318,13 +1318,13 @@ function print() { __p += __j.call(arguments, '') }
     color: ${({theme:i})=>i.colors.iconBackground}; /* Цвет иконки */
     font-size: 1rem;
   }
-`,ContentWrapper=styled.div`
+`,ContentWrapper=dt.div`
   display: flex;
   align-items: center;
   width: 100%;
   filter: ${({isLocked:i})=>i?"blur(2px)":"none"};
   pointer-events: ${({isLocked:i})=>i?"none":"auto"};
-`,TaskCard=styled(Card)`
+`,TaskCard=dt(Card)`
   display: flex;
   align-items: center;
   background-color: ${({theme:i})=>i.colors.taskCardBackground};
@@ -1353,7 +1353,7 @@ function print() { __p += __j.call(arguments, '') }
     align-items: flex-start;
     max-width: 100%;
   }
-`,TaskTitle=styled.span`
+`,TaskTitle=dt.span`
   font-size: ${({fontSize:i})=>`${i}rem`};
   font-weight: bold;
   color: ${({theme:i})=>i.colors.primaryText}; /* Темный текст */
@@ -1361,11 +1361,11 @@ function print() { __p += __j.call(arguments, '') }
   overflow: hidden;
   text-overflow: ellipsis;
   position: relative;
-`,TaskTitleWrapper=styled.div`
+`,TaskTitleWrapper=dt.div`
   width: 100%;
   overflow: hidden;
   position: relative;
-`,Overlay=styled.div`
+`,Overlay=dt.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -1377,7 +1377,7 @@ function print() { __p += __j.call(arguments, '') }
   align-items: center;
   z-index: 1;
   border-radius: ${({theme:i})=>i.borderRadius.card};
-`,OverlayContent=styled.div`
+`,OverlayContent=dt.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1385,7 +1385,7 @@ function print() { __p += __j.call(arguments, '') }
   & > *:not(:last-child) {
     margin-right: 8px; /* Отступ между замочком и уровнем */
   }
-`,OverlayText=styled.div`
+`,OverlayText=dt.div`
   color: ${({theme:i})=>i.colors.overlayTextColor};
   font-size: ${({theme:i})=>i.fonts.sizes.overlayLevel};
   text-align: center;
