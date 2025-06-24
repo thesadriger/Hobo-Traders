@@ -56,7 +56,7 @@ export const TasksList = {
     additionalIcon: <SmileOutlined />,
   },
   task5: {
-    title: 'Сходить на туники',
+    title: 'Сходить на турники',
     effects: { health: 10, fun: 5 },
     initialPrice: 0,
     currency: 'usdt',
@@ -118,7 +118,7 @@ export const TasksList = {
     requiredLevel: 69,
   },
   task12: {
-    title: 'Лечение за ганицей',
+    title: 'Лечение заграницей',
     effects: { health: 10, fun: 10, food: 10 },
     initialPrice: 5000,
     currency: 'hbtrd',

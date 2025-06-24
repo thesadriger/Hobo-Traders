@@ -47,8 +47,8 @@ const StyledTradeButton = styled(Button)`
       0 0 0 6px var(--btn-bg-2);
   }
 
-  ${({ isInactive, theme }) =>
-    isInactive &&
+  ${({ $isInactive, theme }) =>
+    $isInactive &&
     css`
       background-image: none;
       background-color: ${theme.colors.tradeButtonDisabledBackground || '#a0a0a0'};
@@ -82,7 +82,7 @@ const TradeButton = ({ children, onClick, disabled, ...rest }) => {
   return (
     <StyledTradeButton
       {...rest}
-      isInactive={isInactive}
+      $isInactive={isInactive}
       onClick={handleClick}
       disabled={disabled || isInactive}
     >

@@ -27,7 +27,7 @@ export const TasksList = {
     initialPrice: 150,
     currency: 'hbtrd',
     requiredLevel: 0,
-    icon:<img src="./assets/page_icon/health/1.png" alt="icon" />,
+    icon: <img src="./assets/page_icon/health/1.png" alt="icon" />,
     additionalIcon: <CarryOutOutlined />,
   },
   task2: {

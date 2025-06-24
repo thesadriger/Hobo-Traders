@@ -5,7 +5,7 @@ export const theme = {
     // Основные цвета приложения (Main application colors)
     background: '#242424', // Цвет фона приложения
     pageBackground: '', // Цвет фона страниц
-    text: 'rgba(255, 255, 255, 0.87)', // Основной цвет текста
+    text: '#4096ff', // Основной цвет текста
     primaryText: '#181818', // Цвет основного текста
     secondaryText: '#999', // Цвет второстепенного текста
     priceText: '#4096ff', // Цвет текста цены
@@ -23,7 +23,7 @@ export const theme = {
     containerBackground: '', // Цвет фона для контейнеров с иконками
     graphBackground: '#e9ecef', // Цвет фона графика
     iconBackground: '#4096ff', // Цвет фона иконок
-    darkBackground: '#424242', // Темный фон для элементов
+    darkBackground: '#effdfa', // Темный фон для элементов
     lightBackground: '#f0f0f0', // Светлый фон при наведении
 
     // Цвета для иконок и оверлеев (Icons and overlay colors)
@@ -34,25 +34,25 @@ export const theme = {
     starIconColor: '#ffffff', // Цвет иконки звезды в оверлее
 
     // Стили Header (Header styles)
-    headerBackground: 'rgba(22, 119, 255)', // Фон хедера
-    backButtonBackground: '#646464', // Фон кнопки назад
-    backButtonHoverBackground: '#525252', // Фон кнопки назад при наведении
-    avatarBackground: '#646464', // Фон аватара
-    settingsBackground: '#646464', // Фон для настроек и аватара
+    headerBackground: '#e9ecef', // Фон хедера
+    backButtonBackground: 'rgb(64, 150, 255)', // Фон кнопки назад
+    backButtonHoverBackground: 'rgb(64, 150, 255)', // Фон кнопки назад при наведении
+    avatarBackground: 'rgb(64, 150, 255)', // Фон аватара
+    settingsBackground: 'rgb(64, 150, 255)', // Фон для настроек и аватара
 
     // Стили Footer (Footer styles)
-    footerBackground: 'rgba(22, 119, 255)', // Цвет фона для подвала и кнопок
+    footerBackground: 'rgb(233 243 252)', // Цвет фона для подвала и кнопок
     footerHoverBackground: '#fff', // Цвет фона при наведении и активном состоянии
     footerTextColor: '#ffffff', // Цвет текста на кнопках подвала
 
     // Цвета индикаторов и прогресс-баров (Indicator and progress bar colors)
-    indicatorBackground: '#424242', // Фон для индикаторов и прогресс-баров
+    indicatorBackground: '#effdfa', // Фон для индикаторов и прогресс-баров
     foodBarColor: '#ff9800', // Цвет прогресс-бара еды
     funBarColor: '#4caf50', // Цвет прогресс-бара веселья
     healthBarColor: '#f44336', // Цвет прогресс-бара здоровья
-    levelProgressBarBackground: '#424242', // Цвет фона прогресс-бара уровня
+    levelProgressBarBackground: '#effdfa', // Цвет фона прогресс-бара уровня
     levelProgressBarFill: '#4096ff', // Цвет заполнения прогресс-бара уровня
-    levelTextColor: '#424242', // Цвет текста и иконки в прогресс-баре уровня
+    levelTextColor: '#4096ff', // Цвет текста и иконки в прогресс-баре уровня
     levelGradientStart: '#fef712', // Начальный цвет градиента в лейбле уровня
     levelGradientEnd: '#f67e0c', // Конечный цвет градиента в лейбле уровня
 
@@ -129,9 +129,9 @@ export const theme = {
     // Размеры для DonateButton
     donateButtonWidth: '80px',
     donateButtonHeight: '35px',
-    donateButtonFontSize: '16px',
+    donateButtonFontSize: '10px',
     donateButtonHeightMobile: '40px',
-    donateButtonFontSizeMobile: '14px',
+    donateButtonFontSizeMobile: '6px',
 
     // Размеры прогресс-баров (Progress bar sizes)
     progressBarHeight: '15px', // Высота прогресс-бара
@@ -145,9 +145,9 @@ export const theme = {
     avatarSizeMobile: '60px', // Размер аватара на мобильных устройствах
     taskButtonWidth: '80px', // Ширина кнопки задачи
     taskButtonHeight: '35px', // Высота кнопки задачи
-    taskButtonFontSize: '16px', // Размер шрифта кнопки задачи
+    taskButtonFontSize: '10px', // Размер шрифта кнопки задачи
     taskButtonHeightMobile: '40px', // Высота кнопки на мобильных устройствах
-    taskButtonFontSizeMobile: '14px', // Размер шрифта кнопки на мобильных устройствах
+    taskButtonFontSizeMobile: '6px', // Размер шрифта кнопки на мобильных устройствах
 
     // Размеры для кнопок магазина
     shopButtonWidth: '15%', // Ширина кнопок магазина
@@ -171,7 +171,7 @@ export const theme = {
     cardShadow: '0 0.25rem 0.375rem rgba(0, 0, 0, 0.1)', // Тень для карточки задачи
   },
   notifications: {
-    backgroundColor: '#ffffff', // Фон уведомления
+    backgroundColor: 'transparent', // Фон уведомления
     textColor: '#000000', // Цвет текста уведомления
     starColor: '#FFD700', // Цвет звездочки
     congratsBoxBackground: '#f0f0f0', // Фон для прямоугольника с поздравлением

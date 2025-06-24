@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { BarIcon } from '../DataIMGHeader';
 import styled from 'styled-components';
 
 const BtcContainer = styled.div`
@@ -16,11 +15,6 @@ const BtcContainer = styled.div`
   }
 `;
 
-const ImgBtc = styled.img`
-  width: ${({ theme }) => theme.sizes.iconSizeSmall};
-  height: ${({ theme }) => theme.sizes.iconSizeSmall};
-`;
-
 const BalanceBtc = styled.span`
   font-family: ${({ theme }) => theme.fonts.main};
   font-size: ${({ theme }) => theme.fonts.sizes.smaller};
@@ -31,11 +25,11 @@ const BalanceBtc = styled.span`
 
 const Btc = () => {
   const btcBalance = useSelector((state) => state.balance.btc);
+  const customColors = useSelector((state) => state.customColors);
 
   return (
-    <BtcContainer>
-      <ImgBtc src={BarIcon.btc.image} alt="BTC" />
-      <BalanceBtc>{btcBalance} BTC</BalanceBtc>
+    <BtcContainer style={{ background: customColors['header_btc_background'] || undefined }}>
+      <BalanceBtc style={{ color: customColors['header_btc_text'] || undefined }}>{btcBalance} BTC</BalanceBtc>
     </BtcContainer>
   );
 };

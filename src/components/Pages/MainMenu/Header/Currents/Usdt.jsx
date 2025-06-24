@@ -2,7 +2,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BarIcon } from '../DataIMGHeader';
 import styled from 'styled-components';
 
 const UsdtContainer = styled.section`
@@ -18,11 +17,6 @@ const UsdtContainer = styled.section`
   }
 `;
 
-const ImgUsdt = styled.img`
-  width: ${({ theme }) => theme.sizes.iconSizeSmall};
-  height: ${({ theme }) => theme.sizes.iconSizeSmall};
-`;
-
 const BalanceUsdt = styled.span`
   font-family: ${({ theme }) => theme.fonts.main};
   font-size: ${({ theme }) => theme.fonts.sizes.smaller};
@@ -33,6 +27,7 @@ const BalanceUsdt = styled.span`
 
 const Usdt = () => {
   const usdtBalance = useSelector((state) => state.balance.usdt);
+  const customColors = useSelector((state) => state.customColors);
 
   // Функция для форматирования баланса с суффиксами K, M, B
   const formatBalance = (number) => {
@@ -53,11 +48,8 @@ const Usdt = () => {
   const displayBalance = formatBalance(usdtBalance);
 
   return (
-    <UsdtContainer>
-      <ImgUsdt src={BarIcon.usdt.image} alt="Usdt" />
-      <BalanceUsdt>
-        <span>{displayBalance}</span>
-      </BalanceUsdt>
+    <UsdtContainer style={{ background: customColors['header_usdt_background'] || undefined }}>
+      <BalanceUsdt style={{ color: customColors['header_usdt_text'] || undefined }}>{usdtBalance} USDT</BalanceUsdt>
     </UsdtContainer>
   );
 };

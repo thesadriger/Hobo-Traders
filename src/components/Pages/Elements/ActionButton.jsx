@@ -11,12 +11,13 @@ const StyledActionButton = styled(Button)`
   font-size: ${({ theme }) => theme.sizes.taskButtonFontSize};
   transition: all 0.3s ease-in-out;
   margin-left: auto;
+  margin-right: 1rem;
 
   --clr-font-main: hsla(0, 0%, 20%, 1);
   --btn-bg-1: hsla(194, 100%, 69%, 1);
   --btn-bg-2: hsla(217, 100%, 56%, 1);
   --btn-bg-color: hsla(360, 100%, 100%, 1);
-  --radii: 0.5em;
+  --radii: ${({ theme }) => theme.borderRadius.medium};
 
   background-size: 280% auto;
   background-image: linear-gradient(
@@ -49,8 +50,8 @@ const StyledActionButton = styled(Button)`
       0 0 0 6px var(--btn-bg-2);
   }
 
-  ${({ isInactive, theme }) =>
-    isInactive &&
+  ${({ $isInactive, theme }) =>
+    $isInactive &&
     css`
         background-image: none;
         background-color: ${theme.colors.actionButtonDisabledBackground};
@@ -63,9 +64,15 @@ const StyledActionButton = styled(Button)`
   @media (max-width: ${({ theme }) => theme.breakpoints.medium}) {
     height: ${({ theme }) => theme.sizes.taskButtonHeightMobile};
     font-size: ${({ theme }) => theme.sizes.taskButtonFontSizeMobile};
-    margin-left: 0;
-    margin-top: ${({ theme }) => theme.sizes.marginSmall};
+    margin-right: 0.5rem;
+    margin-top: 0;
   }
+
+  opacity: ${({ $isInactive }) => ($isInactive ? 0.5 : 1)};
+  background-color: ${({ $isInactive }) => ($isInactive ? '#d9d9d9' : '')};
+  border-color: ${({ $isInactive }) => ($isInactive ? '#d9d9d9' : '')};
+  color: ${({ $isInactive }) => ($isInactive ? '#888' : '')};
+  pointer-events: ${({ $isInactive }) => ($isInactive ? 'none' : 'auto')};
 `;
 
 const ActionButton = ({ children, onClick, ...rest }) => {
@@ -84,11 +91,51 @@ const ActionButton = ({ children, onClick, ...rest }) => {
   return (
     <StyledActionButton
       {...rest}
-      isInactive={isInactive}
+      $isInactive={isInactive}
       onClick={handleClick}
       disabled={isInactive}
     >
-      {children}
+      {(() => {
+        const text = typeof children === 'string' ? children : (Array.isArray(children) ? children.join('') : '');
+        const fontSize = text.length > 6 ? '0.65rem' : '0.95rem';
+        if (text.includes('HBTRD')) {
+          // Разделяем число и валюту
+          const match = text.match(/([\d.,KMB]+)\s*HBTRD/);
+          if (match) {
+            const number = match[1];
+            return (
+              <span style={{
+                display: 'inline-block',
+                maxWidth: '90%',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'normal',
+                fontSize,
+                wordBreak: 'break-all',
+                textAlign: 'center',
+                lineHeight: 1.1,
+              }}>
+                <span style={{ display: 'block', fontWeight: 700 }}>{number}</span>
+                <span style={{ display: 'block', fontSize: '1em', letterSpacing: 1 }}>HBTRD</span>
+              </span>
+            );
+          }
+        }
+        return (
+          <span style={{
+            display: 'inline-block',
+            maxWidth: '90%',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            fontSize,
+            wordBreak: 'break-all',
+            textAlign: 'center',
+          }}>
+            {children}
+          </span>
+        );
+      })()}
     </StyledActionButton>
   );
 };

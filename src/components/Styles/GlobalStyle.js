@@ -22,7 +22,9 @@ const GlobalStyle = createGlobalStyle`
     --p3: ${({ theme }) => theme.colors.backgroundPatternColor3};
     --p4: ${({ theme }) => theme.colors.backgroundPatternColor4};
   }
-
+img, svg {
+  vertical-align: baseline !important;
+}
   body, #root {
     margin: 0;
     padding: 0;
@@ -49,7 +51,6 @@ const GlobalStyle = createGlobalStyle`
     animation: animateBackground 60s linear infinite;
 
     color: ${({ theme }) => theme.colors.text};
-    background-color: ${({ theme }) => theme.colors.background};
   }
 
   /* Ключевые кадры для анимации фона */
@@ -90,7 +91,6 @@ const GlobalStyle = createGlobalStyle`
   @media (prefers-color-scheme: light) {
     :root {
       color: #213547;
-      background-color: #ffffff;
     }
   }
 `;

@@ -3,10 +3,25 @@ import React from 'react';
 import styled from 'styled-components';
 import { TasksList } from './TaskFoodList';
 import TaskFoodSection from './TaskFoodSection';
+import { FixedSizeList as List } from 'react-window';
+
+// Кастомный контейнер для центрирования списка
+const CenteredListContainer = React.forwardRef((props, ref) => (
+  <div
+    ref={ref}
+    style={{
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      ...props.style,
+    }}
+    {...props}
+  />
+));
 
 // Стили для страницы
 const PageWrapper = styled.div`
-  background-color: ${({ theme }) => theme.colors.pageBackground};
+  background: transparent;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -17,27 +32,72 @@ const PageWrapper = styled.div`
 const TaskWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
-  max-width: ${({ theme }) => theme.breakpoints.large}; /* Используем точку останова из темы */
-  gap: 0.1rem; /* Отступ между задачами */
-  padding: ${({ theme }) => theme.sizes.paddingSmall}; /* Отступ от краёв */
+  padding-bottom: 95px;
+  background: transparent;
 `;
 
-// Основной компонент страницы
+const getListWidth = () => window.innerWidth;
+
+const getDockHeight = () => (window.innerWidth <= 600 ? 90 : 70);
+
+const getListHeight = (taskCount, itemSize) => {
+  const dockHeight = getDockHeight();
+  const bottomGap = 40; // небольшой запас
+  const maxHeight = window.innerHeight - dockHeight - bottomGap;
+  const totalHeight = taskCount * itemSize;
+  return Math.min(totalHeight, maxHeight);
+};
+
 const FoodPage = () => {
+  const taskKeys = Object.keys(TasksList);
+  const [listWidth, setListWidth] = React.useState(getListWidth());
+  const [listHeight, setListHeight] = React.useState(getListHeight(taskKeys.length, 110));
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setListWidth(getListWidth());
+      setListHeight(getListHeight(taskKeys.length, 110));
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [taskKeys.length]);
+
   return (
     <PageWrapper>
       <TaskWrapper>
-        {Object.keys(TasksList).map((taskKey) => {
-          const taskData = TasksList[taskKey];
-          return (
-            <TaskFoodSection
-              key={taskKey}
-              taskKey={taskKey}
-              taskData={taskData}
-            />
-          );
-        })}
+        <List
+          height={listHeight}
+          itemCount={taskKeys.length}
+          itemSize={90}
+          width={listWidth}
+          outerElementType={CenteredListContainer}
+          style={{ margin: '0 auto', width: listWidth }}
+        >
+          {({ index, style }) => {
+            const taskKey = taskKeys[index];
+            const taskData = TasksList[taskKey];
+            return (
+              <div
+                style={{
+                  ...style,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '100%',
+                }}
+                key={taskKey}
+              >
+                <TaskFoodSection
+                  taskKey={taskKey}
+                  taskData={taskData}
+                  isVisible={true}
+                />
+              </div>
+            );
+          }}
+        </List>
       </TaskWrapper>
     </PageWrapper>
   );

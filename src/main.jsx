@@ -17,7 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <LevelNotifier />
-        <GlobalStyle />
+        {/* <GlobalStyle /> */}
         <Router basename="/Hobo-Traders">
           <Routes>
             <Route path="/" element={<App />} />

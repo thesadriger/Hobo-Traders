@@ -1,4 +1,4 @@
-// src/components/Pages/MainMenu/Footer/Pages/TaskShopSection.jsx
+// src/components/Pages/MainMenu/Footer/Pages/ShopPage/TaskShopSection.jsx
 import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
 import { Card, message } from 'antd';
 import styled, { keyframes, css } from 'styled-components';
@@ -9,6 +9,9 @@ import { increaseLevel } from '@/store/slices/levelSlice';
 import { PlusOutlined, LockOutlined } from '@ant-design/icons';
 import { FaStar } from 'react-icons/fa';
 import DonateButton from '@/components/Pages/Elements/DonateButton';
+import { getTaskEmoji } from '../TaskSection';
+import Lottie from 'lottie-react';
+import starAnimation from '@/assets/animation_json/star.json';
 
 // Контейнер для иконки задачи
 const IconContainer = styled.div`
@@ -160,21 +163,38 @@ const OverlayContent = styled.div`
   justify-content: center;
 
   & > *:not(:last-child) {
-    margin-right: 8px; /* Отступ между замочком и уровнем */
+    margin-right: 8px;
   }
 `;
 
 const OverlayText = styled.div`
+  display: flex;
+  align-items: center;
   color: ${({ theme }) => theme.colors.overlayTextColor};
   font-size: ${({ theme }) => theme.fonts.sizes.overlayLevel};
   text-align: center;
+  font-weight: 600;
+  gap: 0.25em;
+`;
+
+const StarLottieSmall = styled.div`
   display: flex;
   align-items: center;
-
-  svg {
-    font-size: ${({ theme }) => theme.fonts.sizes.overlayStar};
-    margin-left: 4px;
-    color: ${({ theme }) => theme.colors.starIconColor};
+  width: 1.5em;
+  height: 1.5em;
+  min-width: 20px;
+  min-height: 20px;
+  max-width: 28px;
+  max-height: 28px;
+  vertical-align: baseline;
+  @media (max-width: ${({ theme }) => theme.breakpoints.medium}) {
+    width: 1.3em;
+    height: 1.3em;
+    min-width: 18px;
+    min-height: 18px;
+    max-width: 24px;
+    max-height: 24px;
+    margin-bottom: 15px;
   }
 `;
 
@@ -236,8 +256,13 @@ const formatBalance = (number, currency) => {
     const [isOverflow, setIsOverflow] = useState(false);
     const [fontSize, setFontSize] = useState(1); // Начальный размер шрифта
     const hasAdjustedFontSize = useRef(false); // Чтобы предотвратить бесконечные циклы
+    const [isStarPlaying, setIsStarPlaying] = useState(false);
+    const [isUnlocking, setIsUnlocking] = useState(false);
+    const overlayTextRef = useRef(null);
+    const [isTaskJustUnlocked, setIsTaskJustUnlocked] = useState(false);
   
     const titleRef = useRef(null);
+    const starLottieRef = useRef(null);
   
     // Проверка переполнения текста (остается без изменений)
     useLayoutEffect(() => {
@@ -260,6 +285,21 @@ const formatBalance = (number, currency) => {
         adjustFontSize();
       }
     }, [title, fontSize]);
+  
+    useEffect(() => {
+      if (isTaskUnlocked && !isTaskJustUnlocked) {
+        setIsTaskJustUnlocked(true);
+      }
+      if (!isTaskUnlocked) {
+        setIsTaskJustUnlocked(false);
+      }
+    }, [isTaskUnlocked]);
+  
+    useEffect(() => {
+      if (isTaskJustUnlocked) {
+        setIsUnlocking(false);
+      }
+    }, [isTaskJustUnlocked]);
   
     const handleTaskAction = () => {
       // Проверяем, достаточно ли средств для выполнения задачи
@@ -340,18 +380,39 @@ const formatBalance = (number, currency) => {
     return (
       <TaskCard>
         {!isTaskUnlocked && (
-          <Overlay>
+          <Overlay onClick={() => {
+            if (starLottieRef.current && !isStarPlaying && !isUnlocking) {
+              setIsStarPlaying(true);
+              starLottieRef.current.stop();
+              starLottieRef.current.play();
+            }
+          }} style={{ cursor: isUnlocking ? 'default' : 'pointer' }}>
             <OverlayContent>
-              <LockOutlined style={{ fontSize: '1.5rem', color: '#ffffff' }} />
-              <OverlayText>
-                {requiredLevel} <FaStar />
+              <OverlayText ref={overlayTextRef} style={{ pointerEvents: 'none', opacity: isUnlocking ? 1 : undefined }}>
+                <StarLottieSmall>
+                  <Lottie
+                    lottieRef={starLottieRef}
+                    animationData={starAnimation}
+                    loop={false}
+                    autoplay={false}
+                    style={{ width: '100%', height: '100%' }}
+                    onComplete={() => setIsStarPlaying(false)}
+                  />
+                </StarLottieSmall>
+                {requiredLevel}
               </OverlayText>
             </OverlayContent>
           </Overlay>
         )}
         <ContentWrapper isLocked={!isTaskUnlocked}>
-          {/* Контейнер для основной иконки задачи */}
-          <IconContainer>{icon}</IconContainer>
+          {/* Контейнер для основной иконки задачи с эмодзи */}
+          <IconContainer>
+            {getTaskEmoji(title) ? (
+              <span style={{ fontSize: '2rem' }}>{getTaskEmoji(title)}</span>
+            ) : (
+              icon
+            )}
+          </IconContainer>
   
           {/* Контейнер для информации о задаче */}
           <TaskInfo>
@@ -361,24 +422,42 @@ const formatBalance = (number, currency) => {
               </TaskTitle>
             </TaskTitleWrapper>
             <SubContainer>
-              {/* Маленький прямоугольник с кругом "+" */}
-              <ActionInfo>
-                <CircleIcon>
-                  <PlusOutlined style={{ fontSize: '8px' }} />
-                </CircleIcon>
-                {/* Дополнительный контейнер для иконки */}
-                <AnotherIconContainer>{additionalIcon}</AnotherIconContainer>
-              </ActionInfo>
+              {effects && Object.entries(effects).length > 0 && (
+                <div style={{ display: 'flex', gap: '8px', marginTop: 4 }}>
+                  {Object.entries(effects).map(([key, value]) => (
+                    <span key={key} style={{ fontSize: '0.9rem', background: '#f0fdfa', borderRadius: 8, padding: '2px 8px', color: '#4096ff', fontWeight: 600 }}>
+                      {key === 'food' && '🍗'}
+                      {key === 'health' && '❤️'}
+                      {key === 'fun' && '🎉'}
+                      +{value}
+                    </span>
+                  ))}
+                </div>
+              )}
+              {/* Показываем эмодзи для additionalIcon, если есть */}
+              {/* {getTaskEmoji(title) && (
+                <span style={{ fontSize: '1.3rem', marginLeft: 8 }}>{getTaskEmoji(title)}</span>
+              )} */}
             </SubContainer>
           </TaskInfo>
   
           {/* Кнопка "СДЕЛАТЬ" с ценой */}
           <DonateButton
-           type="primary"
-           onClick={handleTaskAction}
-           disabled={isButtonDisabled || !isTaskUnlocked}
+            type="primary"
+            onClick={handleTaskAction}
+            disabled={isButtonDisabled || !isTaskUnlocked}
           >
-            {initialPrice > 0 ? ` ${formatBalance(initialPrice, currency)}` : 'Сделать'}
+            <span style={{
+              display: 'inline-block',
+              fontSize: '0.75rem',
+              lineHeight: 1.1,
+              whiteSpace: 'normal',
+              wordBreak: 'break-word',
+              textAlign: 'center',
+              width: '100%',
+            }}>
+              {initialPrice > 0 ? ` ${formatBalance(initialPrice, currency)}` : 'Сделать'}
+            </span>
           </DonateButton>
         </ContentWrapper>
       </TaskCard>

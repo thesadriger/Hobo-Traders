@@ -1,82 +1,95 @@
 // Footer.jsx
 import React from 'react';
-import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { useSpring, animated } from '@react-spring/web';
+import { useGesture } from '@use-gesture/react';
+import styles from './Footer.module.scss';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectComponent } from '@/store/slices/editModeSlice';
 
-// Импортируйте иконки или компоненты для кнопок
 import Exchange from './Menu/Exchange.jsx';
+import Health from './Menu/Health.jsx';
+import Fun from './Menu/Fun.jsx';
+import Food from './Menu/Food.jsx';
+import Shop from './Menu/Shop.jsx';
 
-const FooterSection = styled.footer`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: ${({ theme }) => theme.colors.footerBackground}; // Цвет фона из темы
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  z-index: 1100; // Высокий z-index, чтобы подвал был поверх других элементов
-  padding: ${({ theme }) => theme.sizes.footerPadding}; // Отступы из темы
-`;
-
-const FooterButton = styled(NavLink)`
-  background-color: ${({ theme }) => theme.colors.footerBackground}; // Цвет фона кнопки из темы
-  border: none;
-  color: ${({ theme }) => theme.colors.footerTextColor}; // Цвет текста из темы
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  width: ${({ theme }) => theme.sizes.footerButtonWidth}; // Ширина кнопки из темы
-  aspect-ratio: 1 / 1; // Соотношение сторон 1:1 для квадратной кнопки
-  border-radius: ${({ theme }) => theme.sizes.footerButtonBorderRadius}; // Скругление углов из темы
-  text-decoration: none; // Убираем подчеркивание ссылок
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.footerHoverBackground}; // Цвет фона при наведении из темы
-  }
-
-  &.active {
-    background-color: ${({ theme }) => theme.colors.footerHoverBackground}; // Цвет фона в активном состоянии из темы
-  }
-
-   @media (max-width: ${({ theme }) => theme.breakpoints.medium}) {
-    width: 20%; // Изменяем ширину кнопок на средних экранах
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.small}) {
-    width: 25%; // Изменяем ширину кнопок на маленьких экранах
-  }
-`;
-
-const MainFooterSection = styled.section`
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  width: 100%;
-`;
+const icons = [
+  { to: '/exchange', label: 'Биржа', icon: <Exchange /> },
+  { to: '/health', label: 'Здоровье', icon: <Health /> },
+  { to: '/fun', label: 'Веселье', icon: <Fun /> },
+  { to: '/food', label: 'Еда', icon: <Food /> },
+  { to: '/shop', label: 'Магазин', icon: <Shop /> },
+];
 
 const Footer = () => {
+  const customColors = useSelector(state => state.customColors);
+  const editMode = useSelector(state => state.editMode.enabled);
+  const selectedComponent = useSelector(state => state.editMode.selectedComponent);
+  const dispatch = useDispatch();
+
+  const isSelected = selectedComponent === 'footer';
+  const handleClick = (e) => {
+    if (editMode) {
+      e.stopPropagation();
+      dispatch(selectComponent('footer'));
+    }
+  };
+
   return (
-    <FooterSection>
-      <MainFooterSection>
-        <FooterButton to="exchange" aria-label="Exchange">
-          <Exchange />
-        </FooterButton>
-        <FooterButton to="health" aria-label="Health">
-        <Exchange />
-        </FooterButton>
-        <FooterButton to="fun" aria-label="Fun">
-          <Exchange />
-        </FooterButton>
-        <FooterButton to="food" aria-label="Food">
-          <Exchange />
-        </FooterButton>
-        <FooterButton to="shop" aria-label="Shop">
-          <Exchange />
-        </FooterButton>
-      </MainFooterSection>
-    </FooterSection>
+    <div
+      className={styles.footerWrapper}
+      onClick={handleClick}
+      style={{
+        background: customColors['footer_footerWrapper_background'] || undefined,
+        outline: editMode ? (isSelected ? '3px solid #4caf50' : '2px dashed #4096ff') : undefined,
+        outlineOffset: editMode ? '2px' : undefined,
+        cursor: editMode ? 'pointer' : undefined,
+        zIndex: editMode ? 1200 : undefined,
+      }}
+    >
+      <div
+        className={styles.dockBar}
+        style={{
+          background: customColors['footer_dockBar_background'] || undefined,
+          border: customColors['footer_border'] ? `2px solid ${customColors['footer_border']}` : undefined,
+        }}
+      >
+        {icons.map(({ to, label, icon }) => (
+          <DockItem key={to} to={to} label={label} customColors={customColors}>
+            {icon}
+          </DockItem>
+        ))}
+      </div>
+    </div>
   );
 };
+
+function DockItem({ to, label, children, customColors }) {
+  const [style, api] = useSpring(() => ({ scale: 1 }));
+  const bind = useGesture({
+    onHover: ({ hovering }) => {
+      api.start({ scale: hovering ? 1.25 : 1, config: { tension: 300, friction: 18 } });
+    },
+  });
+  return (
+    <NavLink
+      to={to}
+      aria-label={label}
+      className={({ isActive }) =>
+        isActive ? `${styles.dockNavLink} ${styles.active}` : styles.dockNavLink
+      }
+      {...bind()}
+      style={{ color: customColors?.['footer_text'] || undefined }}
+    >
+      <animated.div
+        style={{ scale: style.scale, color: customColors?.['footer_icon'] || undefined }}
+        className={styles.iconWrap}
+      >
+        {children}
+      </animated.div>
+      <span className={styles.label} style={{ color: customColors?.['footer_text'] || undefined }}>{label}</span>
+    </NavLink>
+  );
+}
 
 export default Footer;

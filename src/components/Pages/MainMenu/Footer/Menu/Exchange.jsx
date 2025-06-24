@@ -1,7 +1,7 @@
 // Exchange.jsx
 import React, { useRef } from 'react';
 import Lottie from 'lottie-react';
-import animationData from '/src/assets/User.json';
+import animationData from '/src/assets/animation_json/up_clean.json';
 import IconContainer from './IconContainer';
 
 const Exchange = () => {

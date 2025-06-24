@@ -1,0 +1,29 @@
+.modal-wide .modal-dialog {
+  min-width: 520px !important;
+  width: 700px !important;
+  max-width: 90vw !important;
+  max-width: none !important;
+  margin: 1.75rem auto !important;
+}
+.modal-wide .modal-content {
+  min-width: 520px !important;
+  width: 700px !important;
+  max-width: 90vw !important;
+}
+@media (min-width: 576px) {
+  .modal-wide .modal-dialog {
+    max-width: 90vw !important;
+    min-width: 520px !important;
+    width: 700px !important;
+  }
+}
+.modal-wide-content .modal-dialog {
+  max-width: 900px !important;
+  width: 900px !important;
+  min-width: 600px !important;
+}
+.modal-wide-content .modal-content {
+  max-width: 900px !important;
+  width: 900px !important;
+  min-width: 600px !important;
+} 

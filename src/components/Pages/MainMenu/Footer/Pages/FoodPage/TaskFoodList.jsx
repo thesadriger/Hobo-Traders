@@ -101,7 +101,7 @@ export const TasksList = {
     additionalIcon: <SolutionOutlined />,
   },
   task10: {
-    title: 'Посетить ресторан',
+    title: 'Посетить рестик',
     effects: { food: 10, fun: 5  },
     initialPrice: 1000,
     currency: 'usdt',

@@ -1,76 +1,115 @@
+// AppartamentsPage.jsx
+
 import React, { useState } from 'react';
-import { Card, Button } from 'antd';
-import { styled } from 'styled-components';
-import { DollarOutlined } from '@ant-design/icons';
-const { Meta } = Card;
-import { AppartamentData } from '../Data';
+import styled from 'styled-components';
+import { AppartamentData } from './TaskApartList';
+import PurchaseSection from '../PurchaseSection';
+import TaskAppartamentsSection from './TaskAppartamentsSection';
+import { FixedSizeList as List } from 'react-window';
+import TaskSection from '/src/components/Pages/MainMenu/Footer/Pages//TaskSection';
 
-const AppartamentContainer = styled.div`
+const CenteredListContainer = React.forwardRef((props, ref) => (
+  <div
+    ref={ref}
+    style={{
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      ...props.style,
+    }}
+    {...props}
+  />
+));
+
+// Стили для страницы
+const PageWrapper = styled.div`
+  background: transparent;
+  min-height: 100vh;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 20px;
-  padding: 20px;
-  flex: 1;
-  overflow-y: auto;
-  width: 100%;
-
-  @media (max-width: 768px) {
-    padding: 10px;
-    gap: 10px;
-  }
+  flex-direction: column;
+  align-items: center;
 `;
 
-const AppartamentPage = () => {
-    const [purchasedItems, setPurchasedItems] = useState({});
-    
-    const handlePurchase = (itemKey) => {
-        setPurchasedItems((prev) => ({ ...prev, [itemKey]: true }));
-    };
+// Обертка для задач
+const TaskWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 95px;
+  background: transparent;
+`;
 
-    return (
-    <AppartamentContainer>
-          {Object.keys(AppartamentData).map((key) => {
-            const { image, title, description, price } = AppartamentData[key];
-            const isPurchased = purchasedItems[key] || false;
-    
+const getListWidth = () => window.innerWidth;
+
+const getDockHeight = () => (window.innerWidth <= 600 ? 90 : 70);
+
+const getListHeight = (taskCount, itemSize) => {
+  const dockHeight = getDockHeight();
+  const bottomGap = 40; // небольшой запас
+  const maxHeight = window.innerHeight - dockHeight - bottomGap;
+  const totalHeight = taskCount * itemSize;
+  return Math.min(totalHeight, maxHeight);
+};
+
+const AppartamentPage = () => {
+  const [purchasedItems, setPurchasedItems] = useState({});
+  const taskKeys = Object.keys(AppartamentData);
+  const [listWidth, setListWidth] = React.useState(getListWidth());
+  const [listHeight, setListHeight] = React.useState(getListHeight(taskKeys.length, 110));
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setListWidth(getListWidth());
+      setListHeight(getListHeight(taskKeys.length, 110));
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [taskKeys.length]);
+
+  const handlePurchase = (itemKey) => {
+    setPurchasedItems((prev) => ({ ...prev, [itemKey]: true }));
+  };
+
+  return (
+    <PageWrapper>
+      <TaskWrapper>
+        <List
+          height={listHeight}
+          itemCount={taskKeys.length}
+          itemSize={90}
+          width={listWidth}
+          outerElementType={CenteredListContainer}
+          style={{ margin: '0 auto', width: listWidth }}
+        >
+          {({ index, style }) => {
+            const taskKey = taskKeys[index];
+            const taskData = AppartamentData[taskKey];
             return (
-              <Card
-                key={key}
-                style={{ width: '100%', maxWidth: '300px' }} // Ограничиваем максимальную ширину
-                cover={
-                  <img
-                    alt={title}
-                    src={image}
-                    style={{ width: '100%', height: '200px', objectFit: 'cover' }}
-                  />
-                }
-                actions={[
-                  <Button
-                    type="primary"
-                    onClick={() => handlePurchase(key)}
-                    disabled={isPurchased}
-                    style={{
-                      width: '100%',
-                      height: '50px',
-                      fontSize: '15px',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <span>{isPurchased ? 'Куплено' : price}</span>
-                    <DollarOutlined style={{ marginLeft: '8px', fontSize: '20px' }} />
-                  </Button>,
-                ]}
+              <div
+                style={{
+                  ...style,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '100%',
+                }}
+                key={taskKey}
               >
-                <Meta title={title} description={description} />
-              </Card>
+                <TaskSection
+                  taskKey={taskKey}
+                  taskData={taskData}
+                  isPurchased={!!purchasedItems[taskKey]}
+                  onPurchase={() => handlePurchase(taskKey)}
+                  mode="purchase"
+                />
+              </div>
             );
-          })}
-        </AppartamentContainer>
-    );
+          }}
+        </List>
+      </TaskWrapper>
+    </PageWrapper>
+  );
 };
 
 export default AppartamentPage;

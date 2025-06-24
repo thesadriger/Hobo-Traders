@@ -17,10 +17,15 @@ const PageWrapper = styled.div`
 const TaskWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
   max-width: ${({ theme }) => theme.breakpoints.large};
   gap: 0.1rem;
   padding: ${({ theme }) => theme.sizes.paddingSmall};
+  padding-bottom: 110px;
+  @media (max-width: 600px) {
+    padding-bottom: 95px;
+  }
 `;
 
 // Основной компонент страницы

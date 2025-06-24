@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { BarIcon } from '../DataIMGHeader';
 import styled from 'styled-components';
 
 const HbtrdContainer = styled.section`
@@ -16,11 +15,6 @@ const HbtrdContainer = styled.section`
   }
 `;
 
-const ImgHbtrd = styled.img`
-  width: ${({ theme }) => theme.sizes.iconSizeSmall};
-  height: ${({ theme }) => theme.sizes.iconSizeSmall};
-`;
-
 const BalanceHbtrd = styled.span`
   font-family: ${({ theme }) => theme.fonts.main};
   font-size: ${({ theme }) => theme.fonts.sizes.tiny};
@@ -31,11 +25,11 @@ const BalanceHbtrd = styled.span`
 
 const Hbtrd = () => {
   const hbtrdBalance = useSelector((state) => state.balance.hbtrd);
+  const customColors = useSelector((state) => state.customColors);
 
   return (
-    <HbtrdContainer>
-      <ImgHbtrd src={BarIcon.hbtrd.image} alt="Hbtrd" />
-      <BalanceHbtrd>{hbtrdBalance} HBTRD</BalanceHbtrd>
+    <HbtrdContainer style={{ background: customColors['header_hbtrd_background'] || undefined }}>
+      <BalanceHbtrd style={{ color: customColors['header_hbtrd_text'] || undefined }}>{hbtrdBalance} HBTRD</BalanceHbtrd>
     </HbtrdContainer>
   );
 };

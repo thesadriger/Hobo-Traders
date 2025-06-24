@@ -1,7 +1,7 @@
 // Shop.jsx
 import React, { useRef } from 'react';
 import Lottie from 'lottie-react';
-import animationData from '/src/assets/User.json';
+import animationData from '/src/assets/animation_json/shop.json';
 import IconContainer from './IconContainer';
 
 const Shop = () => {
@@ -19,10 +19,7 @@ const Shop = () => {
       <Lottie
         lottieRef={lottieRef}
         animationData={animationData}
-        style={{
-          width: ({ theme }) => theme.sizes.iconWidth,
-          height: ({ theme }) => theme.sizes.iconHeight,
-        }}
+        style={{ width: '80%', height: '80%' }}
         loop={false}
       />
     </IconContainer>

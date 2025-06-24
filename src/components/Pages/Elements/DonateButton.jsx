@@ -63,8 +63,8 @@ const StyledDonateButton = styled(Button)`
   @media (max-width: ${({ theme }) => theme.breakpoints.medium}) {
     height: ${({ theme }) => theme.sizes.donateButtonHeightMobile};
     font-size: ${({ theme }) => theme.sizes.donateButtonFontSizeMobile};
-    margin-left: 0;
-    margin-top: ${({ theme }) => theme.sizes.marginSmall};
+    margin-right: 0.5rem;
+    margin-top: 0;
   }
 `;
 
@@ -81,6 +81,10 @@ const DonateButton = ({ children, onClick, ...rest }) => {
     }, 1000); // 1 секунда
   };
 
+  // Динамический размер шрифта для текста
+  const text = typeof children === 'string' ? children : (Array.isArray(children) ? children.join('') : '');
+  const fontSize = text.length > 10 ? '0.85rem' : '1rem';
+
   return (
     <StyledDonateButton
       {...rest}
@@ -88,7 +92,18 @@ const DonateButton = ({ children, onClick, ...rest }) => {
       onClick={handleClick}
       disabled={isInactive}
     >
-      {children}
+      <span style={{
+        display: 'inline-block',
+        maxWidth: '90%',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+        fontSize,
+        wordBreak: 'break-all',
+        textAlign: 'center',
+      }}>
+        {children}
+      </span>
     </StyledDonateButton>
   );
 };

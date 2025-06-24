@@ -21,11 +21,13 @@ const TaskHealthSection = ({ taskKey, taskData }) => {
   };
 
   return (
-    <TaskSection
-      taskKey={taskKey}
-      taskData={taskData}
-      indicatorDeductions={indicatorDeductions}
-    />
+    <div>
+      <TaskSection
+        taskKey={taskKey}
+        taskData={taskData}
+        indicatorDeductions={indicatorDeductions}
+      />
+    </div>
   );
 };
 

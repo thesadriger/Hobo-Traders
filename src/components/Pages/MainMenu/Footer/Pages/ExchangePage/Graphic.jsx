@@ -1,140 +1,221 @@
 // Graphic.js
-import React, { useEffect, useState, useMemo } from 'react';
-import { Line } from '@ant-design/plots';
+import React, { useRef, useEffect } from 'react';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
 import styled from 'styled-components';
 
+const CHART_HEIGHT = 220;
+
 const ChartWrapper = styled.div`
-  position: relative;
   width: 100%;
-  height: 100%;
-  border-radius: ${({ theme }) => theme.borderRadius.medium};
-  box-shadow: ${({ theme }) => theme.shadows.main};
-  border: 1px solid ${({ theme }) => theme.colors.borderColor};
-  background-color: ${({ theme }) => theme.colors.graphBackground};
-  padding: 10px;
+  height: ${CHART_HEIGHT}px;
+  min-height: ${CHART_HEIGHT}px;
+  max-height: ${CHART_HEIGHT}px;
+  background: #181a20;
+  border-radius: 16px;
   overflow: hidden;
+  margin-bottom: 8px;
+  display: flex;
 `;
 
-const BlurOverlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
+// Обёртка для recharts-responsive-container с height: 40vw
+const ResponsiveContainerWrapper = styled.div`
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(5px);
-  pointer-events: none;
-  opacity: ${({ isActive }) => (isActive ? 1 : 0)};
-  transition: opacity 0.3s;
+  min-height: ${CHART_HEIGHT}px;
+  max-height: ${CHART_HEIGHT}px;
 `;
 
-// Компонент графика
-const Graphic = ({ setCurrentPrice, intervalSpeed, isTradeActive, initialPrice, range }) => {
-  const [data, setData] = useState([]);
-
-  const minPrice = range[0];
-  const maxPrice = range[1];
-
-  // Функция для получения следующей цены
-  const getNextPrice = (currentPrice) => {
-    const change = (Math.random() * 0.2 - 0.1).toFixed(2);
-    let newPrice = parseFloat(currentPrice) + parseFloat(change);
-    if (newPrice < minPrice) newPrice = minPrice;
-    if (newPrice > maxPrice) newPrice = maxPrice;
-    return newPrice.toFixed(2);
-  };
-
-  // Генерация начальных данных с фиксированным индексом
-  const generateInitialData = () => {
-    const initialData = [];
-    let currentPrice = initialPrice;
-    for (let i = 1; i <= 50; i++) {
-      currentPrice = getNextPrice(currentPrice);
-      initialData.push({ index: i, value: parseFloat(currentPrice) });
-    }
-    return initialData;
-  };
-
-  // Обновляем данные при изменении монеты
-  useEffect(() => {
-    setData(generateInitialData());
-  }, [initialPrice, minPrice, maxPrice]);
-
-  useEffect(() => {
-    const updateChart = () => {
-      setData((prevData) => {
-        const newData = prevData.slice(1); // Удаляем первый элемент
-        const lastIndex = prevData[prevData.length - 1].index;
-        const newIndex = lastIndex + 1;
-        const newValue = getNextPrice(prevData[prevData.length - 1].value);
-
-        newData.push({ index: newIndex, value: parseFloat(newValue) });
-        return newData;
-      });
-    };
-
-    const interval = setInterval(updateChart, intervalSpeed);
-
-    return () => clearInterval(interval);
-  }, [intervalSpeed, minPrice, maxPrice]);
-
-  useEffect(() => {
-    const lastDataPoint = data[data.length - 1];
-    if (lastDataPoint && typeof setCurrentPrice === 'function') {
-      setCurrentPrice(lastDataPoint.value);
-    }
-  }, [data, setCurrentPrice]);
-
-  const config = useMemo(
-    () => ({
-      data,
-      padding: 'auto',
-      xField: 'index', // Используем 'index' вместо 'time'
-      yField: 'value',
-      smooth: false,
-      autoFit: true,
-      color: '#52c41a',
-      areaStyle: () => {
-        return { fill: 'l(270) 0:#ffffff 0.5:#52c41a 1:#52c41a' };
-      },
-      yAxis: {
-        label: {
-          formatter: (v) => `$${v}`,
-        },
-        min: minPrice,
-        max: maxPrice,
-      },
-      xAxis: {
-        label: {
-          autoHide: true,
-        },
-        tickCount: 5, // Устанавливаем количество меток на оси X
-      },
-      tooltip: false,
-      animation: {
-        appear: {
-          animation: 'path-in',
-          duration: 500,
-        },
-      },
-      interactions: [],
-    }),
-    [data, minPrice, maxPrice]
+const Graphic = React.memo(({ data, visible = true }) => {
+  console.log('[Graphic] data prop:', data); // DEBUG
+  const chartComponentRef = useRef(null);
+  const chartData = Array.isArray(data) ? data.slice(-200) : [];
+  const filteredData = chartData.filter(
+    d => typeof d.price === 'number' && !isNaN(d.price) && d.time
   );
+  console.log('[Graphic] filteredData:', filteredData); // DEBUG
+
+  if (!Array.isArray(data)) {
+    return <div style={{textAlign: 'center', color: '#aaa'}}>Некорректные данные для графика</div>;
+  }
+  if (filteredData.length === 0) {
+    return <div style={{textAlign: 'center', color: '#aaa'}}>Нет данных для графика (filteredData пуст)</div>;
+  }
+
+  // baseline — первая цена
+  const baseline = filteredData[0].price;
+  // Формируем массив цен
+  const prices = filteredData.map(d => d.price);
+  // Формируем массив времён (для X axis)
+  const times = filteredData.map(d => d.time);
+
+  // Формируем split area: массивы для зелёной и красной area
+  const areaGreen = prices.map(p => (p >= baseline ? p : null));
+  const areaRed = prices.map(p => (p < baseline ? p : null));
+
+  // Формируем цветную линию: массив цветов для каждого сегмента
+  const zones = prices.map((p, i) => ({
+    value: i,
+    color: p >= baseline ? '#16c784' : '#ea3943',
+  }));
+
+  // Highcharts options
+  const options = {
+    chart: {
+      backgroundColor: '#181a20',
+      height: CHART_HEIGHT,
+      style: { fontFamily: 'inherit' },
+      spacing: [16, 0, 0, 0],
+    },
+    title: { text: '' },
+    xAxis: {
+      categories: prices.map((_, i) => i),
+      visible: false,
+    },
+    yAxis: {
+      visible: true,
+      labels: { enabled: false },
+      gridLineWidth: 0,
+      min: Math.min(...prices, baseline),
+      max: Math.max(...prices, baseline),
+      plotLines: [{
+        value: baseline,
+        color: 'rgba(255,255,255,0.95)',
+        dashStyle: 'Dash',
+        width: 2,
+        zIndex: 20,
+      }],
+    },
+    tooltip: {
+      backgroundColor: '#222',
+      borderColor: 'none',
+      borderRadius: 8,
+      style: { color: '#fff', fontSize: '14px' },
+      formatter: function() {
+        const time = times[this.point.index];
+        const date = time ? new Date(time) : null;
+        const timeStr = date ? date.toLocaleTimeString() : '';
+        return `<b>${this.y.toFixed(2)}</b><br/>${timeStr}`;
+      },
+    },
+    plotOptions: {
+      series: {
+        marker: { enabled: false },
+        lineWidth: 2,
+        states: { hover: { enabled: false } },
+        animation: false,
+        enableMouseTracking: true,
+        shadow: {
+          color: 'rgba(22,199,132,0.5)',
+          width: 8,
+          offsetX: 0,
+          offsetY: 0,
+        },
+        turboThreshold: 500,
+      },
+      areaspline: {
+        fillOpacity: 0.3,
+        threshold: baseline,
+        turboThreshold: 500,
+      },
+    },
+    series: [
+      // Зелёная area
+      {
+        type: 'areaspline',
+        data: areaGreen,
+        color: '#16c784',
+        fillColor: {
+          linearGradient: [0, 0, 0, 300],
+          stops: [
+            [0, 'rgba(22,199,132,0.3)'],
+            [1, 'rgba(22,199,132,0)'],
+          ],
+        },
+        lineWidth: 0,
+        zIndex: 1,
+        enableMouseTracking: false,
+        connectNulls: false,
+        turboThreshold: 500,
+      },
+      // Красная area
+      {
+        type: 'areaspline',
+        data: areaRed,
+        color: '#ea3943',
+        fillColor: {
+          linearGradient: [0, 0, 0, 300],
+          stops: [
+            [0, 'rgba(234,57,67,0.3)'],
+            [1, 'rgba(234,57,67,0)'],
+          ],
+        },
+        lineWidth: 0,
+        zIndex: 1,
+        enableMouseTracking: false,
+        connectNulls: false,
+        turboThreshold: 500,
+      },
+      // Линия с динамическим цветом
+      {
+        type: 'spline',
+        data: prices,
+        color: '#16c784', // базовый цвет
+        lineWidth: 2,
+        zIndex: 2,
+        zones: zones,
+        zoneAxis: 'x',
+        marker: { enabled: false },
+        enableMouseTracking: true,
+        animation: false,
+        connectNulls: true,
+        turboThreshold: 500,
+      },
+    ],
+    credits: { enabled: false },
+    legend: { enabled: false },
+    responsive: {
+      rules: [
+        {
+          condition: { maxWidth: 600 },
+          chartOptions: {
+            chart: { height: 140 },
+          },
+        },
+      ],
+    },
+  };
+
+  // Адаптивная высота и reflow при появлении графика
+  useEffect(() => {
+    if (chartComponentRef.current && chartComponentRef.current.chart) {
+      chartComponentRef.current.chart.reflow();
+    }
+  }, [data, visible]);
+
+  // Добавить reflow при изменении размера окна
+  useEffect(() => {
+    const handleResize = () => {
+      if (chartComponentRef.current && chartComponentRef.current.chart) {
+        chartComponentRef.current.chart.reflow();
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <ChartWrapper>
-      <div
-        style={{
-          width: '100%',
-          height: '100%',
-          position: 'relative',
-        }}
-      >
-        <Line {...config} />
-        <BlurOverlay isActive={isTradeActive} />
-      </div>
+      <ResponsiveContainerWrapper>
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={options}
+          ref={chartComponentRef}
+          containerProps={{ style: { width: '100%', height: '100%' } }}
+        />
+      </ResponsiveContainerWrapper>
     </ChartWrapper>
   );
-};
+});
 
 export default Graphic;

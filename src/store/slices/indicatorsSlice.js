@@ -5,6 +5,9 @@ const initialState = {
   health: 100,
   fun: 100,
   food: 100,
+  healthZeroSteps: 0,
+  funZeroSteps: 0,
+  foodZeroSteps: 0,
 };
 
 const indicatorsSlice = createSlice({
@@ -34,8 +37,20 @@ const indicatorsSlice = createSlice({
       state.fun = 100;
       state.food = 100;
     },
+    increaseZeroStep: (state, action) => {
+      const key = action.payload;
+      if (key === 'health') state.healthZeroSteps += 1;
+      if (key === 'fun') state.funZeroSteps += 1;
+      if (key === 'food') state.foodZeroSteps += 1;
+    },
+    resetZeroStep: (state, action) => {
+      const key = action.payload;
+      if (key === 'health') state.healthZeroSteps = 0;
+      if (key === 'fun') state.funZeroSteps = 0;
+      if (key === 'food') state.foodZeroSteps = 0;
+    },
   },
 });
 
-export const { decreaseHealth, decreaseFun, decreaseFood, increaseFood, increaseFun, increaseHealth, resetIndicators } = indicatorsSlice.actions;
+export const { decreaseHealth, decreaseFun, decreaseFood, increaseFood, increaseFun, increaseHealth, resetIndicators, increaseZeroStep, resetZeroStep } = indicatorsSlice.actions;
 export default indicatorsSlice.reducer;
