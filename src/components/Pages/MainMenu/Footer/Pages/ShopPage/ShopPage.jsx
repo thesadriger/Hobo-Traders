@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { TasksList } from './TaskShopsList';
-import TaskShopSection from './TaskShopSection';
+import TaskSection from '../TaskSection';
 
 // Стили для страницы
 const PageWrapper = styled.div`
@@ -36,10 +36,11 @@ const ShopPage = () => {
         {Object.keys(TasksList).map((taskKey) => {
           const taskData = TasksList[taskKey];
           return (
-            <TaskShopSection
+            <TaskSection
               key={taskKey}
               taskKey={taskKey}
               taskData={taskData}
+              mode="purchase"
             />
           );
         })}

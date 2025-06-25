@@ -10,6 +10,7 @@ import newTasksBadgeReducer from './slices/newTasksBadgeSlice';
 import coinPricesReducer from './slices/coinPricesSlice';
 import customColorsReducer from './slices/customColorsSlice';
 import editModeReducer from './slices/editModeSlice';
+import purchasedItemsReducer from './slices/purchasedItemsSlice';
 // Импортируйте другие редьюсеры, если они есть
 
 
@@ -25,6 +26,7 @@ const store = configureStore({
     coinPrices: coinPricesReducer,
     customColors: customColorsReducer,
     editMode: editModeReducer,
+    purchasedItems: purchasedItemsReducer,
     // другие редьюсеры
   },
   // Подключение Redux DevTools Extension для удобной отладки

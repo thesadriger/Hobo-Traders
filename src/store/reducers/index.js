@@ -5,6 +5,7 @@ import indicatorsReducer from '../slices/indicatorsSlice';
 import levelReducer from '../slices/levelSlice';
 import totalWinningsReducer from '../slices/totalWinningsSlice';
 import coinHistory from '../slices/coinHistorySlice';
+import purchasedItemsReducer from '../slices/purchasedItemsSlice';
 
 const rootReducer = combineReducers({
   balance: balanceReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   level: levelReducer,
   totalWinnings: totalWinningsReducer,
   coinHistory,
+  purchasedItems: purchasedItemsReducer,
 });
 
 export default rootReducer;

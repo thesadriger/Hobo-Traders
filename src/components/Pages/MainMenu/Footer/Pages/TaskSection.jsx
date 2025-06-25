@@ -95,6 +95,54 @@ export const getTaskEmoji = (title) => {
   if (lower.includes('х10 объем кошелька')) return '🔟';
   if (lower.includes('котен')) return '🐱';
   if (lower.includes('щен')) return '🐶';
+  // --- Транспорт ---
+  if (lower.includes('босиком')) return '🦶';
+  if (lower.includes('носки')) return '🧦';
+  if (lower.includes('тапочки')) return '🥿';
+  if (lower.includes('кроссовки')) return '👟';
+  if (lower.includes('туфли')) return '👞';
+  if (lower.includes('скейт')) return '🛹';
+  if (lower.includes('велосипед')) return '🚲';
+  if (lower.includes('мопед')) return '🛵';
+  if (lower.includes('жигули')) return '🚗';
+  if (lower.includes('иномарка')) return '🚙';
+  if (lower.includes('люксовый авто')) return '🚘';
+  if (lower.includes('вертолет')) return '🚁';
+  if (lower.includes('самолет')) return '✈️';
+  if (lower.includes('шаттл')) return '🚀';
+  if (lower.includes('телепорт')) return '🌀';
+  // --- Образование ---
+  if (lower.includes('научиться читать')) return '🔤';
+  if (lower.includes('3 класса')) return '3️⃣';
+  if (lower.includes('9 классов')) return '9️⃣';
+  if (lower.includes('среднее образование')) return '🎓';
+  if (lower.includes('пту')) return '🏭';
+  if (lower.includes('высшее образование')) return '🏫';
+  if (lower.includes('нанять репетитора')) return '👨‍🏫';
+  if (lower.includes('образование за границей')) return '🌍';
+  if (lower.includes('академик')) return '🧑‍🔬';
+  if (lower.includes('заниматься с профессором')) return '👨‍🎓';
+  if (lower.includes('доктор наук')) return '👩‍🔬';
+  if (lower.includes('купить себе лабораторию')) return '🧪';
+  if (lower.includes('нобелевская премия')) return '🏅';
+  if (lower.includes('вживить в мозг компьютер')) return '🧠';
+  if (lower.includes('оцифровать сознание')) return '💾';
+  // --- Апартаменты ---
+  if (lower.includes('на дереве')) return '🌳';
+  if (lower.includes('мусорный бак')) return '🗑️';
+  if (lower.includes('коробка')) return '📦';
+  if (lower.includes('шалаш')) return '⛺';
+  if (lower.includes('подвал')) return '🚪';
+  if (lower.includes('чердак')) return '🏚️';
+  if (lower.includes('аренда комнаты')) return '🛏️';
+  if (lower.includes('аренда квартиры')) return '🔑';
+  if (lower.includes('квартира')) return '🏢';
+  if (lower.includes('пентхаус')) return '🌇';
+  if (lower.includes('коттедж')) return '🏡';
+  if (lower.includes('недвижимость за границей')) return '🏛️';
+  if (lower.includes('своя гостинница')) return '🏨';
+  if (lower.includes('свой остров')) return '🏝️';
+  if (lower.includes('белый дом')) return '🏰';
   // По умолчанию
   return null;
 };
@@ -133,6 +181,7 @@ const TaskSection = ({
   isPurchased = false,
   onPurchase,
   mode = 'action',
+  purchasedItems = {},
 }) => {
   const {
     title,
@@ -208,6 +257,8 @@ const TaskSection = ({
   const [isTaskJustUnlocked, setIsTaskJustUnlocked] = useState(false);
 
   const [activeEffectKey, setActiveEffectKey] = useState(null); // Какой эффект сейчас проигрывается (food, fun, health)
+
+  const isLongTitle = title && title.length > 1;
 
   useEffect(() => {
     if (!wasMountedRef.current) {
@@ -338,7 +389,7 @@ const TaskSection = ({
       );
     }
 
-    dispatch(increaseLevel(12));
+    dispatch(increaseLevel(1));
 
     if (afterTaskAction && typeof afterTaskAction === 'function') {
       afterTaskAction();
@@ -406,24 +457,13 @@ const TaskSection = ({
                 {title}
               </TaskTitle>
             </TaskTitleWrapper>
-            <SubContainer style={colorSubContainerBackground ? { background: colorSubContainerBackground } : {}}>
-              {effects && Object.entries(effects).length > 0 && (
-                <div style={{ display: 'flex', gap: '8px', marginTop: 4 }}>
-                  {Object.entries(effects).map(([key, value]) => (
-                    <span key={key} style={{ fontSize: '0.9rem', background: colorEffectBackground || '#f0fdfa', borderRadius: 8, padding: '2px 8px', color: colorSubContainerText || '#4096ff', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 4 }}>
-                      {activeEffectKey === key ? (
-                        <EffectLottie type={key} ref={effectRefs[key]} onComplete={() => setActiveEffectKey(null)} />
-                      ) : (
-                        <EffectIcon type={key} />
-                      )}
-                      +{value}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </SubContainer>
           </TaskInfo>
         }
+        effects={effects}
+        requirements={taskData.requirements}
+        purchasedItems={purchasedItems}
+        colorEffectBackground={colorEffectBackground}
+        colorSubContainerText={colorSubContainerText}
         actionButton={
           mode === 'purchase' ? (
             <ActionButton
@@ -456,6 +496,8 @@ const TaskSection = ({
         isEditMode={editMode}
         isSelected={selectedComponent === taskKey}
         onEditSelect={handleEditSelect}
+        isLongTitle={isLongTitle}
+        title={typeof title === 'string' ? title : String(title)}
       >
         {/* Lottie для Overlay (children) */}
         <Lottie

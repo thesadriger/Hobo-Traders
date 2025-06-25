@@ -54,6 +54,7 @@ export const TasksList = {
     requiredLevel: 21,
     icon: <SolutionOutlined style={{ fontSize: '24px', color: '#1890ff' }}/>,
     additionalIcon: <SmileOutlined />,
+    requirements: { car: 'shoes' },
   },
   task5: {
     title: 'Сходить на турники',
@@ -63,6 +64,7 @@ export const TasksList = {
     requiredLevel: 28,
     icon: <CarryOutOutlined style={{ fontSize: '24px', color: '#1890ff' }}/>,
     additionalIcon: <DollarOutlined />,
+    requirements: { appartament: 'room' },
   },
   task6: {
     title: 'Вызвать скорую',
@@ -72,6 +74,10 @@ export const TasksList = {
     requiredLevel: 30,
     icon: <SmileOutlined style={{ fontSize: '24px', color: '#1890ff' }}/>,
     additionalIcon: <CarryOutOutlined />,
+    requirements: {
+      appartament: ['arendakomnaty', 'cherdak', 'podval', 'shalash'],
+      education: ['nauchitsya_chitat']
+    },
   },
   task7: {
     title: 'Сходить в поликлинику',
@@ -81,6 +87,10 @@ export const TasksList = {
     requiredLevel: 42,
     icon: <SolutionOutlined style={{ fontSize: '24px', color: '#1890ff' }}/>,
     additionalIcon: <SmileOutlined />,
+    requirements: {
+      appartament: ['arendakvartiry', 'arendakomnaty', 'cherdak'],
+      education: ['treh_klassa', 'nauchitsya_chitat']
+    },
   },
   task8: {
     title: 'Пойти в фитнес-центр',
@@ -90,6 +100,10 @@ export const TasksList = {
     requiredLevel: 48,
     icon: <CarryOutOutlined style={{ fontSize: '24px', color: '#1890ff' }}/>,
     additionalIcon: <SmileOutlined />,
+    requirements: {
+      appartament: ['arendakvartiry', 'arendakomnaty', 'cherdak'],
+      education: ['treh_klassa', 'nauchitsya_chitat']
+    },
   },
   task9: {
     title: 'Персональный тренер',
@@ -99,6 +113,10 @@ export const TasksList = {
     requiredLevel: 54,
     icon: <CarryOutOutlined style={{ fontSize: '24px', color: '#1890ff' }}/>,
     additionalIcon: <SolutionOutlined />,
+    requirements: {
+      appartament: ['kvartira', 'arendakvartiry', 'arendakomnaty'],
+      education: ['treh_klassa', 'nauchitsya_chitat']
+    },
   },
   task10: {
     title: 'Посетить частный медцентр',
@@ -116,6 +134,10 @@ export const TasksList = {
     currency: 'hbtrd',
     icon: <CarryOutOutlined style={{ fontSize: '24px', color: '#1890ff' }}/>,
     requiredLevel: 69,
+    requirements: {
+      appartament: ['penthaus', 'kvartira', 'arendakvartiry'],
+      education: ['treh_klassa', 'nauchitsya_chitat']
+    },
   },
   task12: {
     title: 'Лечение заграницей',
@@ -134,6 +156,9 @@ export const TasksList = {
     requiredLevel: 78,
     icon: <CarryOutOutlined style={{ fontSize: '24px', color: '#1890ff' }}/>,
     additionalIcon: <SolutionOutlined />,
+    requirements: {
+      appartament: ['nedvizhimostzagr', 'kottedzh', 'penthaus', 'kvartira', 'arendakvartiry']
+    },
   },
   task14: {
     title: 'Генные модификации',
@@ -143,6 +168,10 @@ export const TasksList = {
     requiredLevel: 79,
     icon: <CarryOutOutlined style={{ fontSize: '24px', color: '#1890ff' }}/>,
     additionalIcon: <SolutionOutlined />,
+    requirements: {
+      appartament: ['svoiOstrov'],
+      education: ['obrazovanie_zagr', 'srednee_obrazovanie', 'devyat_klassov', 'treh_klassa']
+    },
   },
   task15: {
     title: 'Остановка старения',
@@ -152,5 +181,9 @@ export const TasksList = {
     requiredLevel: 80,
     icon: <CarryOutOutlined style={{ fontSize: '24px', color: '#1890ff' }}/>,
     additionalIcon: <SolutionOutlined />,
+    requirements: {
+      appartament: ['beliyDom'],
+      education: ['akademik', 'vysshee_obrazovanie', 'srednee_obrazovanie', 'devyat_klassov']
+    },
   },
 };

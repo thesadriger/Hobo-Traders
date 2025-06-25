@@ -8,7 +8,7 @@ import { decreaseUSDT, decreaseBTC, decreaseHBTRD} from '@/store/slices/balanceS
 import { increaseLevel } from '@/store/slices/levelSlice';
 import { PlusOutlined, LockOutlined } from '@ant-design/icons';
 import { FaStar } from 'react-icons/fa';
-import DonateButton from '@/components/Pages/Elements/DonateButton';
+import ActionButton from '@/components/Pages/Elements/ActionButton';
 import { getTaskEmoji } from '../TaskSection';
 import Lottie from 'lottie-react';
 import starAnimation from '@/assets/animation_json/star.json';
@@ -442,23 +442,13 @@ const formatBalance = (number, currency) => {
           </TaskInfo>
   
           {/* Кнопка "СДЕЛАТЬ" с ценой */}
-          <DonateButton
+          <ActionButton
             type="primary"
             onClick={handleTaskAction}
             disabled={isButtonDisabled || !isTaskUnlocked}
           >
-            <span style={{
-              display: 'inline-block',
-              fontSize: '0.75rem',
-              lineHeight: 1.1,
-              whiteSpace: 'normal',
-              wordBreak: 'break-word',
-              textAlign: 'center',
-              width: '100%',
-            }}>
-              {initialPrice > 0 ? ` ${formatBalance(initialPrice, currency)}` : 'Сделать'}
-            </span>
-          </DonateButton>
+            {initialPrice > 0 ? formatBalance(initialPrice, currency) : 'Сделать'}
+          </ActionButton>
         </ContentWrapper>
       </TaskCard>
     );

@@ -13,6 +13,7 @@ const ELEMENTS = [
   { key: 'button', label: 'Кнопка', default: 'linear-gradient(325deg, hsla(217, 100%, 56%, 1) 0%, hsla(194, 100%, 69%, 1) 55%, hsla(217, 100%, 56%, 1) 90%)' },
   { key: 'subContainerText', label: 'Текст блока эффектов', default: '#4096ff' },
   { key: 'effectBackground', label: 'Фон эффекта', default: '#f0fdfa' },
+  { key: 'requirementsShell', label: 'Оболочка требований', default: 'rgba(25, 25, 25, 0.7)' },
   { key: 'buttonShadow', label: 'Тень кнопки', default: '#4096ff' },
   { key: 'borderUnlocked', label: 'Обводка разблокированной задачи', default: '#4096ff' },
 ];
@@ -20,6 +21,7 @@ const ELEMENTS = [
 const LOCKED_ELEMENTS = [
   { key: 'background', label: 'Фон', default: 'linear-gradient(90deg, rgb(97, 113, 255), hsla(217, 100%, 56%, 1))' },
   { key: 'levelText', label: 'Цвет текста уровня', default: '#ffffff' },
+  { key: 'requirementsShell', label: 'Оболочка требований', default: 'rgba(25, 25, 25, 0.7)' },
 ];
 
 const getSelectedElementsLS = (componentKey, elementsToShow) => {

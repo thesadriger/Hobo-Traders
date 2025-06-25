@@ -7,6 +7,8 @@ import PurchaseSection from '../PurchaseSection';
 import TaskAppartamentsSection from './TaskAppartamentsSection';
 import { FixedSizeList as List } from 'react-window';
 import TaskSection from '/src/components/Pages/MainMenu/Footer/Pages//TaskSection';
+import { useSelector, useDispatch } from 'react-redux';
+import { purchaseItem } from '@/store/slices/purchasedItemsSlice';
 
 const CenteredListContainer = React.forwardRef((props, ref) => (
   <div
@@ -53,7 +55,8 @@ const getListHeight = (taskCount, itemSize) => {
 };
 
 const AppartamentPage = () => {
-  const [purchasedItems, setPurchasedItems] = useState({});
+  const dispatch = useDispatch();
+  const purchasedItems = useSelector(state => state.purchasedItems.appartament);
   const taskKeys = Object.keys(AppartamentData);
   const [listWidth, setListWidth] = React.useState(getListWidth());
   const [listHeight, setListHeight] = React.useState(getListHeight(taskKeys.length, 110));
@@ -68,7 +71,7 @@ const AppartamentPage = () => {
   }, [taskKeys.length]);
 
   const handlePurchase = (itemKey) => {
-    setPurchasedItems((prev) => ({ ...prev, [itemKey]: true }));
+    dispatch(purchaseItem({ category: 'appartament', itemKey }));
   };
 
   return (
@@ -99,9 +102,10 @@ const AppartamentPage = () => {
                 <TaskSection
                   taskKey={taskKey}
                   taskData={taskData}
-                  isPurchased={!!purchasedItems[taskKey]}
+                  isPurchased={!!purchasedItems?.[taskKey]}
                   onPurchase={() => handlePurchase(taskKey)}
                   mode="purchase"
+                  purchasedItems={purchasedItems}
                 />
               </div>
             );

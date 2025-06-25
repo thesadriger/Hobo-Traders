@@ -4,6 +4,13 @@ import Lottie from 'lottie-react';
 import starAnimation from '@/assets/animation_json/star.json';
 import { Spoiler } from 'spoiled';
 import { useSelector } from 'react-redux';
+import { AppartamentData } from '@/components/Pages/MainMenu/Main/Pages/AppartamentsPage/TaskApartList';
+import { CarsData } from '@/components/Pages/MainMenu/Main/Pages/CarsPage/TaskCarsList';
+import { EducationData } from '@/components/Pages/MainMenu/Main/Pages/EducationPage/TaskEducationList';
+import { TasksList as HealthTasks } from '@/components/Pages/MainMenu/Footer/Pages/HealthPage/TaskHealthList';
+import { TasksList as FunTasks } from '@/components/Pages/MainMenu/Footer/Pages/FunPage/TaskFunList';
+import { TasksList as FoodTasks } from '@/components/Pages/MainMenu/Footer/Pages/FoodPage/TaskFoodList';
+import { getTaskEmoji } from './TaskSection';
 
 // TaskCard — основной контейнер карточки задания
 // Отвечает за внешний вид карточки, отступы, скругления, тени и адаптивность
@@ -138,6 +145,172 @@ const SpoilerNoBg = createGlobalStyle`
   }
 `;
 
+// Новый блок для эффектов
+const EffectsBlock = styled.div`
+  display: flex;
+  gap: 4px;
+  flex-wrap: nowrap;
+  @media (max-width: 600px) {
+  }
+`;
+const EffectItem = styled.span`
+  font-size: 0.7rem;
+  background: ${({ bg }) => bg || '#f0fdfa'};
+  border-radius: 15px;
+  padding: 1px 5px;
+  color: ${({ color }) => color || '#4096ff'};
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  min-width: 50px;
+  justify-content: center;
+  height: 25px;
+  line-height: 1;
+`;
+// Новый блок для требований
+const RequirementsBlock = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  width: 100%;
+  @media (max-width: 600px) {
+  }
+`;
+const RequirementItem = styled.span`
+  font-size: 1.1rem;
+  background: #f6f6fa;
+  border-radius: 6px;
+  padding: 1px 7px;
+  color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e0e0e0;
+  line-height: 1.2;
+`;
+
+// Новый блок для эффектов и требований
+const EffectsAndRequirementsRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 0 1rem 0 1rem;
+  flex-wrap: nowrap;
+  @media (max-width: 600px) {
+  }
+`;
+
+// Новый компонент-обёртка для taskInfo и эффектов/требований с динамическим flex-direction
+const TaskInfoRow = ({ title, children }) => {
+  const titleStr = typeof title === 'string' ? title : String(title);
+  const isLong = titleStr.length > 1;
+  const childrenArray = React.Children.toArray(children);
+  if (isLong) {
+    // Если длинное название — выводим его отдельной строкой сверху
+    return (
+      <div style={{
+        flex: 1,
+        display: 'flex',
+        minWidth: 0,
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        width: '100%'
+      }}>
+        <div style={{ width: '100%', minWidth: 0 }}>{childrenArray[0]}</div>
+        <div style={{ width: '100%', marginTop: 4, minWidth: 0 }}>{childrenArray[1]}</div>
+      </div>
+    );
+  }
+  // Короткое название — всё в одну строку
+  return (
+    <div style={{ flex: 1, display: 'flex', minWidth: 0, flexDirection: 'row', alignItems: 'center' }}>
+      {children}
+    </div>
+  );
+};
+
+const taskMaps = {
+  appartament: AppartamentData,
+  car: CarsData,
+  education: EducationData,
+  health: HealthTasks,
+  fun: FunTasks,
+  food: FoodTasks,
+};
+
+function getRequirementIcon(cat, key) {
+  const map = taskMaps[cat];
+  if (map && map[key]) {
+    return map[key].icon || null;
+  }
+  return null;
+}
+
+function getRequirementEmoji(cat, key) {
+  const map = taskMaps[cat];
+  if (map && map[key] && map[key].title) {
+    const emoji = getTaskEmoji(map[key].title);
+    if (emoji) return emoji;
+  }
+  return null;
+}
+
+// Новый компонент для отображения требований с подсветкой
+const RequirementsRow = ({ requirements, purchasedItems = {}, position = 'left' }) => {
+  if (!requirements || Object.keys(requirements).length === 0) return null;
+  // Собираем все требования в один массив [{cat, key}]
+  const reqArr = Object.entries(requirements).flatMap(([cat, value]) =>
+    Array.isArray(value)
+      ? value.map((key) => ({ cat, key }))
+      : [{ cat, key: value }]
+  );
+  // Делим массив пополам
+  const half = Math.ceil(reqArr.length / 2);
+  const leftReqs = reqArr.slice(0, half);
+  const rightReqs = reqArr.slice(half);
+  let renderReqs = [];
+  if (position === 'left') renderReqs = leftReqs;
+  else if (position === 'right') renderReqs = rightReqs;
+  else renderReqs = reqArr;
+  return (
+    <RequirementsBlock style={{ gap: 8 }}>
+      {renderReqs.map(({ cat, key }, idx) => {
+        // Проверяем, куплен ли предмет
+        let isOwned = false;
+        if (cat === 'appartament' || cat === 'education' || cat === 'car' || cat === 'food') {
+          isOwned = purchasedItems[key];
+        }
+        // Для левой части: последний элемент — marginRight: 1rem
+        // Для правой части: первый элемент — marginLeft: 1rem
+        let extraStyle = {};
+        if (position === 'left' && idx === renderReqs.length - 1) extraStyle.marginRight = '1rem';
+        if (position === 'right' && idx === 0) extraStyle.marginLeft = '1rem';
+        return (
+          <RequirementItem key={cat + key} style={{
+            background: isOwned ? '#e8f5e9' : '#ffebee',
+            color: isOwned ? '#388e3c' : '#d32f2f',
+            borderColor: isOwned ? '#a5d6a7' : '#ffcdd2',
+            fontWeight: 700,
+            ...extraStyle
+          }}>
+            {getRequirementEmoji(cat, key) || (
+              <>
+                {cat === 'food' && '🍗'}
+                {cat === 'fun' && '🎉'}
+                {cat === 'health' && '❤️'}
+                {cat === 'appartament' && '🏠'}
+                {cat === 'car' && '🚗'}
+                {cat === 'education' && '🎓'}
+              </>
+            )}
+          </RequirementItem>
+        );
+      })}
+    </RequirementsBlock>
+  );
+};
+
 // TaskSectionContainer — основной компонент-контейнер для секции задания
 // Отвечает за отображение состояния задания: разблокировано, только что разблокировано, заблокировано
 const TaskSectionContainer = memo(({
@@ -167,6 +340,14 @@ const TaskSectionContainer = memo(({
   const colorLockedBg = customColors['lockedTask_background'] || 'linear-gradient(90deg, rgb(49,87,145) 0%, rgb(88,150,247) 100%)';
   const colorLockedLevelText = customColors['lockedTask_levelText'] || '#fff';
 
+  // Получаем кастомный цвет оболочки требований
+  let colorRequirementsShell;
+  if (!isTaskUnlocked) {
+    colorRequirementsShell = customColors['lockedTask_requirementsShell'] || 'rgba(25, 25, 25, 0.7)';
+  } else {
+    colorRequirementsShell = customColors[`${taskKey}_requirementsShell`] || customColors['requirementsShell'] || 'rgba(25, 25, 25, 0.7)';
+  }
+
   // Обработчик клика по заблокированной задаче
   const handleStaticStarClick = () => {
     if (staticStarRef.current && !isStaticStarPlaying) {
@@ -182,39 +363,153 @@ const TaskSectionContainer = memo(({
   };
 
   // Новый компонент LevelUPBadge
-  const LevelUPBadge = ({ level, overlayTextRef, staticStarRef, handleStaticStarComplete }) => (
-    <Overlay
-      style={{
-        pointerEvents: 'none',
-        zIndex: 3,
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        background: 'transparent',
-      }}
-    >
-      <OverlayContent>
-        <OverlayText ref={overlayTextRef} style={{ color: colorLockedLevelText }}>
-          <StarLottieSmall>
-            <Lottie
-              lottieRef={staticStarRef}
-              animationData={starAnimation}
-              loop={false}
-              autoplay={false}
-              style={{ width: 22, height: 22 }}
-              onComplete={handleStaticStarComplete}
-            />
-          </StarLottieSmall>
-          {level}
-        </OverlayText>
-      </OverlayContent>
-    </Overlay>
-  );
+  const LevelUPBadge = ({ level, overlayTextRef, staticStarRef, handleStaticStarComplete, requirements, purchasedItems, taskKey }) => {
+    // Собираем требования
+    const reqArr = requirements && Object.keys(requirements).length > 0
+      ? Object.entries(requirements).flatMap(([cat, value]) =>
+          Array.isArray(value)
+            ? value.map((key) => ({ cat, key }))
+            : [{ cat, key: value }]
+        )
+      : [];
+    return (
+      <Overlay
+        style={{
+          pointerEvents: 'none',
+          zIndex: 3,
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: reqArr.length > 0 ? 'space-between' : 'center',
+          background: 'transparent',
+          padding: '0 2rem',
+        }}
+      >
+        {/* Левая часть — требования с оболочкой */}
+        {reqArr.length > 0 && (
+          <div style={{
+            background: colorRequirementsShell,
+            borderRadius: '12px',
+            padding: '4px 16px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+            boxShadow: '0 2px 8px rgba(64,150,255,0.07)',
+          }}>
+            {reqArr.map(({ cat, key }) => (
+              <RequirementItem key={cat + key} style={{
+                background: (cat === 'appartament' || cat === 'education' || cat === 'car' || cat === 'food') && purchasedItems[key] ? '#e8f5e9' : '#ffebee',
+                color: (cat === 'appartament' || cat === 'education' || cat === 'car' || cat === 'food') && purchasedItems[key] ? '#388e3c' : '#d32f2f',
+                borderColor: (cat === 'appartament' || cat === 'education' || cat === 'car' || cat === 'food') && purchasedItems[key] ? '#a5d6a7' : '#ffcdd2',
+                fontWeight: 700
+              }}>
+                {getRequirementEmoji(cat, key) || (
+                  <>
+                    {cat === 'food' && '🍗'}
+                    {cat === 'fun' && '🎉'}
+                    {cat === 'health' && '❤️'}
+                    {cat === 'appartament' && '🏠'}
+                    {cat === 'car' && '🚗'}
+                    {cat === 'education' && '🎓'}
+                  </>
+                )}
+              </RequirementItem>
+            ))}
+          </div>
+        )}
+        {/* Центр — пусто (или можно вставить основной контент, если потребуется) */}
+        {reqArr.length > 0 && <div style={{ flex: 1 }} />}
+        {/* Правая часть — уровень */}
+        <OverlayContent style={{ justifySelf: 'flex-end' }}>
+          <OverlayText ref={overlayTextRef} style={{ color: colorLockedLevelText }}>
+            <StarLottieSmall>
+              <Lottie
+                lottieRef={staticStarRef}
+                animationData={starAnimation}
+                loop={false}
+                autoplay={false}
+                style={{ width: 22, height: 22 }}
+                onComplete={handleStaticStarComplete}
+              />
+            </StarLottieSmall>
+            {level}
+          </OverlayText>
+        </OverlayContent>
+      </Overlay>
+    );
+  };
+
+  // Функция для эмодзи по ключу (скопировано из TaskSection)
+  const getTaskEmoji = (title) => {
+    const lower = String(title).toLowerCase();
+    if (lower.includes('персональный тренер')) return '🥋';
+    if (lower.includes('персональный врач')) return '👨🏻‍⚕️';
+    if (lower.includes('голуб')) return '🕊️';
+    if (lower.includes('помой')) return '🗑️';
+    if (lower.includes('шаурм')) return '🌯';
+    if (lower.includes('рестик')) return '🍽️';
+    if (lower.includes('основать')) return '📊';
+    if (lower.includes('ресторан')) return '🏣';
+    if (lower.includes('паб')) return '🍻';
+    if (lower.includes('кафе')) return '☕';
+    if (lower.includes('еда') || lower.includes('пожрать') || lower.includes('есть') || lower.includes('food')) return '🍗';
+    if (lower.includes('пельмен')) return '🥟';
+    if (lower.includes('искать')) return '🥡';
+    if (lower.includes('просроч')) return '🥫';
+    if (lower.includes('точк')) return '🍔';
+    if (lower.includes('заказать')) return '🍲';
+    if (lower.includes('жениться')) return '💒';
+    if (lower.includes('повар')) return '👨‍🍳';
+    if (lower.includes('весель')) return '🎉';
+    if (lower.includes('фейерверк')) return '🎇';
+    if (lower.includes('пук')) return '💨';
+    if (lower.includes('рыг')) return '🤮';
+    if (lower.includes('унитаз')) return '🚽';
+    if (lower.includes('памятник')) return '🪦';
+    if (lower.includes('пивас') || lower.includes('пиво')) return '🍺';
+    if (lower.includes('водк')) return '🥛';
+    if (lower.includes('вискар')) return '🥃';
+    if (lower.includes('кино')) return '🎬';
+    if (lower.includes('драк')) return '🥊';
+    if (lower.includes('девуш')) return '👯‍♀️';
+    if (lower.includes('бибер')) return '🎤';
+    if (lower.includes('актер')) return '🎭';
+    if (lower.includes('шампанск')) return '🍾';
+    if (lower.includes('сон') || lower.includes('поспать')) return '💤';
+    if (lower.includes('спорт')) return '🤸‍♂️';
+    if (lower.includes('трав')) return '🌿';
+    if (lower.includes('пробежк')) return '🏃‍♂️';
+    if (lower.includes('турник')) return '💪🏼';
+    if (lower.includes('скор')) return '🚑';
+    if (lower.includes('поликлиник')) return '🏥';
+    if (lower.includes('фитнес')) return '🏋️';
+    if (lower.includes('тренер')) return '🥋';
+    if (lower.includes('врач')) return '👨🏻‍⚕️';
+    if (lower.includes('медцентр')) return '🏬';
+    if (lower.includes('лечение')) return '💉';
+    if (lower.includes('орган')) return '🫀';
+    if (lower.includes('генные')) return '🧬';
+    if (lower.includes('старения')) return '⏳';
+    if (lower.includes('бесконечные ходы')) return '♾️';
+    if (lower.includes('500 ходов')) return '🔢';
+    if (lower.includes('восстановление')) return '💊';
+    if (lower.includes('5000 баксов')) return '🪙';
+    if (lower.includes('15000')) return '💵';
+    if (lower.includes('150000 баксов')) return '💰';
+    if (lower.includes('2550000 баксов')) return '🏦';
+    if (lower.includes('100000000 баксов')) return '🤑';
+    if (lower.includes('1500000000 баксов')) return '👑';
+    if (lower.includes('удвоить объем кошелька')) return '👝';
+    if (lower.includes('х10 объем кошелька')) return '🔟';
+    if (lower.includes('котен')) return '🐱';
+    if (lower.includes('щен')) return '🐶';
+    return null;
+  };
 
   return (
     <>
@@ -226,6 +521,9 @@ const TaskSectionContainer = memo(({
             overlayTextRef={overlayTextRef}
             staticStarRef={staticStarRef}
             handleStaticStarComplete={handleStaticStarComplete}
+            requirements={rest.requirements}
+            purchasedItems={rest.purchasedItems}
+            taskKey={taskKey}
           />
         )}
         {/* Если задача не открыта и не видима — показываем статичный fallback */}
@@ -256,7 +554,52 @@ const TaskSectionContainer = memo(({
               {!isTaskUnlocked && <BlurLayer />}
               <ContentWrapper>
                 {rest.iconContainer}
-                {rest.taskInfo}
+                {/* Вставляем TaskInfo, но прокидываем transient проп $isLongTitle */}
+                {rest.isLongTitle ? (
+                  <TaskInfoRow title={rest.title}>
+                    {rest.taskInfo}
+                    <EffectsAndRequirementsRow style={{ width: '100%', marginTop: 6 }}>
+                      {rest.effects && Object.entries(rest.effects).length > 0 && (
+                        <EffectsBlock>
+                          {Object.entries(rest.effects).map(([key, value]) => (
+                            <EffectItem key={key} bg={rest.colorEffectBackground} color={rest.colorSubContainerText}>
+                              {key === 'food' && '🍗'}
+                              {key === 'fun' && '🎉'}
+                              {key === 'health' && '❤️'}
+                              +{value}
+                            </EffectItem>
+                          ))}
+                        </EffectsBlock>
+                      )}
+                      {/* Требования показываем только если задача заблокирована */}
+                      {!isTaskUnlocked && rest.requirements && Object.keys(rest.requirements).length > 0 && (
+                        <RequirementsRow requirements={rest.requirements} purchasedItems={rest.purchasedItems} position="all" />
+                      )}
+                    </EffectsAndRequirementsRow>
+                  </TaskInfoRow>
+                ) : (
+                  <>
+                    {rest.taskInfo}
+                    <EffectsAndRequirementsRow>
+                      {rest.effects && Object.entries(rest.effects).length > 0 && (
+                        <EffectsBlock>
+                          {Object.entries(rest.effects).map(([key, value]) => (
+                            <EffectItem key={key} bg={rest.colorEffectBackground} color={rest.colorSubContainerText}>
+                              {key === 'food' && '🍗'}
+                              {key === 'fun' && '🎉'}
+                              {key === 'health' && '❤️'}
+                              +{value}
+                            </EffectItem>
+                          ))}
+                        </EffectsBlock>
+                      )}
+                      {/* Требования показываем только если задача заблокирована */}
+                      {!isTaskUnlocked && rest.requirements && Object.keys(rest.requirements).length > 0 && (
+                        <RequirementsRow requirements={rest.requirements} purchasedItems={rest.purchasedItems} position="all" />
+                      )}
+                    </EffectsAndRequirementsRow>
+                  </>
+                )}
                 {rest.actionButton}
               </ContentWrapper>
             </TaskCard>
@@ -285,6 +628,7 @@ export const TaskInfo = styled.div`
   margin-left: 1rem;
   overflow: hidden;
   min-width: 0;
+  justify-content: center;
 `;
 
 export const SubContainer = styled.div`
@@ -336,8 +680,14 @@ export const TaskTitle = styled.span`
   white-space: normal;
   overflow-wrap: break-word;
   word-break: break-word;
+  hyphens: auto;
   line-height: 1.1;
   display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  flex-shrink: 1;
+  justify-content: center;
 `;
 
 export const TaskTitleWrapper = styled.div`
@@ -345,6 +695,8 @@ export const TaskTitleWrapper = styled.div`
   overflow: visible;
   position: relative;
   min-height: 1.2em;
+  display: ${({ $isLongTitle }) => ($isLongTitle ? 'block' : 'flex')};
+  justify-content: flex-start;
 `;
 
 export const formatBalance = (number, currency) => {

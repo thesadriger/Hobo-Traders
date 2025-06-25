@@ -13,6 +13,7 @@ const TaskEducationSection = ({ purchasedItems, onPurchase }) => {
           isPurchased={!!purchasedItems[taskKey]}
           onPurchase={() => onPurchase(taskKey)}
           mode="purchase"
+          purchasedItems={purchasedItems}
         />
       ))}
     </div>

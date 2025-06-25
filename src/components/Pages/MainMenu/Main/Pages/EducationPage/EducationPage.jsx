@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import { EducationData } from './TaskEducationList';
 import { FixedSizeList as List } from 'react-window';
 import TaskSection from '/src/components/Pages/MainMenu/Footer/Pages/TaskSection';
+import { useSelector, useDispatch } from 'react-redux';
+import { purchaseItem } from '@/store/slices/purchasedItemsSlice';
 
 const CenteredListContainer = React.forwardRef((props, ref) => (
   <div
@@ -51,7 +53,8 @@ const getListHeight = (taskCount, itemSize) => {
 };
 
 const EducationPage = () => {
-  const [purchasedItems, setPurchasedItems] = useState({});
+  const dispatch = useDispatch();
+  const purchasedItems = useSelector(state => state.purchasedItems.education);
   const taskKeys = Object.keys(EducationData);
   const [listWidth, setListWidth] = React.useState(getListWidth());
   const [listHeight, setListHeight] = React.useState(getListHeight(taskKeys.length, 110));
@@ -66,7 +69,7 @@ const EducationPage = () => {
   }, [taskKeys.length]);
 
   const handlePurchase = (itemKey) => {
-    setPurchasedItems((prev) => ({ ...prev, [itemKey]: true }));
+    dispatch(purchaseItem({ category: 'education', itemKey }));
   };
 
   return (
@@ -97,9 +100,10 @@ const EducationPage = () => {
                 <TaskSection
                   taskKey={taskKey}
                   taskData={taskData}
-                  isPurchased={!!purchasedItems[taskKey]}
+                  isPurchased={!!purchasedItems?.[taskKey]}
                   onPurchase={() => handlePurchase(taskKey)}
                   mode="purchase"
+                  purchasedItems={purchasedItems}
                 />
               </div>
             );

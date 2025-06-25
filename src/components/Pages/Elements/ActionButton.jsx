@@ -97,30 +97,71 @@ const ActionButton = ({ children, onClick, ...rest }) => {
     >
       {(() => {
         const text = typeof children === 'string' ? children : (Array.isArray(children) ? children.join('') : '');
-        const fontSize = text.length > 6 ? '0.65rem' : '0.95rem';
-        if (text.includes('HBTRD')) {
-          // Разделяем число и валюту
-          const match = text.match(/([\d.,KMB]+)\s*HBTRD/);
-          if (match) {
-            const number = match[1];
-            return (
-              <span style={{
-                display: 'inline-block',
-                maxWidth: '90%',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'normal',
-                fontSize,
-                wordBreak: 'break-all',
-                textAlign: 'center',
-                lineHeight: 1.1,
-              }}>
-                <span style={{ display: 'block', fontWeight: 700 }}>{number}</span>
-                <span style={{ display: 'block', fontSize: '1em', letterSpacing: 1 }}>HBTRD</span>
-              </span>
-            );
-          }
+        // Универсальный парсер: отделяем число и валюту
+        const match = text.match(/^([\d.,KMBTBGB]+)\s*([A-Z$]+)$/i);
+        let number, currency;
+        if (match) {
+          number = match[1];
+          currency = match[2];
         }
+        // Меньший базовый размер шрифта для всех
+        let fontSize = '0.65rem'; // Устанавливаем базовый размер шрифта для текста на кнопке
+        if (number && number.length > 6) fontSize = '0.55rem'; // Если число длиннее 6 символов — уменьшаем шрифт
+        if (number && number.length > 10) fontSize = '0.45rem'; // Если число длиннее 10 символов — ещё сильнее уменьшаем шрифт
+        const isMobile = window.innerWidth < 600; // Проверяем, мобильное ли устройство по ширине экрана
+        if (isMobile && number && number.length > 6) fontSize = '0.55rem'; // На мобильных ещё сильнее уменьшаем шрифт для длинных чисел
+        // Если валюта $ и число короткое — не переносим, всё в одну строку
+        if (number && currency === '$') { // Если есть число и валюта доллар — отображаем в одну строку без переноса
+          return (
+            <span style={{
+              display: 'inline-block',
+              maxWidth: '100%',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              fontSize,
+              wordBreak: 'break-all',
+              textAlign: 'center',
+              lineHeight: 1.1,
+              fontWeight: 700,
+            }}>
+              {number}{currency}
+            </span>
+          );
+        }
+        // Для других валют — переносим
+        if (number && currency) {
+          return (
+            <span style={{
+              display: 'inline-block',
+              maxWidth: '100%',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'normal',
+              fontSize,
+              wordBreak: 'break-all',
+              textAlign: 'center',
+              lineHeight: 1.1,
+            }}>
+              <span style={{ display: 'block', fontWeight: 700 }}>{number}</span>
+              <span style={{ display: 'block', fontSize: '0.85em', letterSpacing: 1 }}>{currency}</span>
+            </span>
+          );
+        }
+        // Для "Сделать"/"Купить" — всегда показываем полностью, не уменьшаем
+        if (text === 'Сделать' || text === 'Купить') {
+          return (
+            <span style={{
+              display: 'inline-block',
+              maxWidth: '100%',
+              fontSize: '0.65rem',
+              fontWeight: 700,
+              whiteSpace: 'nowrap',
+              textAlign: 'center',
+            }}>{text}</span>
+          );
+        }
+        // Фоллбек — старое поведение
         return (
           <span style={{
             display: 'inline-block',
